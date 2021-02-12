@@ -1,14 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
-
-// Loading Bootcamp router
-const bootcamps = require('./routers/bootcamps');
-
-// Loading logger middleware
-const logger = require('./middleware/logger');
+const connectDB = require('./db');
 
 // Parsing .env and getting Environment variable in process object of node
 dotenv.config({ path: process.cwd() + '/config/config.env' });
+
+// Establishing DB Connection
+connectDB();
+
+// Loading Bootcamp router
+const bootcamps = require('./routers/bootcamps.route');
+
+// Loading logger middleware
+const logger = require('./middleware/logger');
 
 // Initializing express server
 const app = express();
@@ -22,9 +26,17 @@ app.use(logger);
 app.use('/api/v1/bootcamps', bootcamps);
 
 const PORT = process.env.PORT || 8000;
-app.listen(
+const server = app.listen(
 	PORT,
 	console.log(
 		`Server Running in ${process.env.NODE_ENV} mode on Port : ${PORT}`,
 	),
 );
+
+process.on('unhandledRejection', (error, promise) => {
+	console.log(`${error.name}: ${error.message}`);
+	// close server & exit process with 1
+	// 1 Error exit in node
+	// 0 Sucessful exit in node
+	server.close(() => process.exit(1));
+});

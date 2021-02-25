@@ -8,8 +8,6 @@ const asyncHandler = require('../middleware/async');
 // @access public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
 	const bootcamps = await Bootcamp.find();
-	if (bootcamps === null)
-		return next(new ErrorResponse('Bootcamps Not Found', 404));
 	res.status(200).json({
 		success: true,
 		count: bootcamps.length,

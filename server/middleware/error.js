@@ -6,7 +6,7 @@ const errorHandler = (err, req, res, next) => {
 
 	// Log For Developers
 	// console.log(err.stack);
-	console.log(err.name);
+	console.log(err);
 
 	// Mongoose Bad ObjectID Error
 	if (err.name === 'CastError') {
@@ -19,6 +19,14 @@ const errorHandler = (err, req, res, next) => {
 		const duplicateKey = Object.keys(err.keyValue);
 		const duplicateValue = Object.values(err.keyValue);
 		const message = ` { ${duplicateKey} : ${duplicateValue} } Already Exists in Record`;
+		error = new ErrorResponse(message, 400);
+	}
+
+	// Mongoose Validation Error
+	if (err.name === 'ValidationError') {
+		const message = Object.values(err.errors).map(
+			(value) => value.message,
+		);
 		error = new ErrorResponse(message, 400);
 	}
 

@@ -1,7 +1,13 @@
 const fs = require('fs');
 const colors = require('colors');
-const BootcampModel = require('./server/models/bootcamps. model');
 const Mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+// Parsing .env and getting Environment variable in process object of node
+dotenv.config({ path: process.cwd() + '/config/config.env' });
+
+// To use config in bootcamp model
+const BootcampModel = require('./server/models/bootcamps. model');
 
 async function connectDB() {
 	const conn = await Mongoose.connect(
@@ -18,19 +24,22 @@ async function connectDB() {
 	);
 }
 
-async function addAll() {
-	const data = fs.readFileSync('./_data/bootcamps.json', {
+const bootcamps = JSON.parse(
+	fs.readFileSync('./_data/bootcamps.json', {
 		encoding: 'utf8',
-	});
-	await BootcampModel.create(JSON.parse(data));
-	console.log(colors.green.inverse('Bootcamps added Sucessfully'));
-}
+	}),
+);
 
-async function removeAll() {
-	await BootcampModel.deleteMany();
+const importData = async (bootcamps) => {
+	const res = await BootcampModel.create(bootcamps);
+	console.log(colors.green.inverse('Bootcamps added Sucessfully'));
+};
+
+const deleteAllData = async () => {
+	const res = await BootcampModel.deleteMany();
 	console.log(colors.red.inverse('All Bootcamps Deleted Sucessfully'));
-}
+};
 
 connectDB();
-// addAll();
-removeAll();
+importData(bootcamps);
+// deleteAllData();

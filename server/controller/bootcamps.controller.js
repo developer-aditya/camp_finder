@@ -2,6 +2,7 @@
 const Bootcamp = require('../models/bootcamps. model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const geocoder = require('../utils/geocoder');
 
 // @desc  GET all bootcamps
 // @route /api/v1/bootcamps
@@ -13,6 +14,39 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 		count: bootcamps.length,
 		msg: 'Successfully Fetched Data',
 		data: bootcamps,
+	});
+});
+
+// @desc  GET all bootcamps within a radius
+// @route /api/v1/bootcamps/radius/:zipcode/:distance
+// @access public
+exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
+	const { zipcode, distance } = req.params;
+	const radius = distance / 3958.8;
+	// Point of zipcode
+	const loc = await geocoder.geocode(zipcode);
+
+	const bootcamp = await Bootcamp.find({
+		location: {
+			$geoWithin: {
+				$centerSphere: [[loc[0].longitude, loc[0].latitude], radius],
+			},
+		},
+	});
+
+	if (bootcamp === null) {
+		return next(
+			new ErrorResponse(
+				`Bootcamp Not Found Within ${distance} miles`,
+				404,
+			),
+		);
+	}
+
+	res.status(200).json({
+		success: true,
+		msg: `${bootcamp.length} Bootcamps Fetched Within ${distance}`,
+		data: bootcamp,
 	});
 });
 

@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
-const { default: slugify } = require('slugify');
 const Slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 const BootcampSchema = new Mongoose.Schema({
 	name: {
@@ -102,8 +102,25 @@ const BootcampSchema = new Mongoose.Schema({
 });
 
 // Mongoose Middlewares
+// Slugifying name
 BootcampSchema.pre('save', function (next) {
 	this.slug = Slugify(this.name, { lower: true });
+	next();
+});
+
+// Converting address to geocode
+BootcampSchema.pre('save', async function (next) {
+	const res = await geocoder.geocode(this.address);
+	this.location = {
+		type: 'Point',
+		coordinates: [res[0].longitude, res[0].latitude],
+		formattedAddress: res[0].formattedAddress,
+		street: ` ${res[0].streetName},  ${res[0].streetNumber}`,
+		city: res[0].city,
+		state: res[0].formattedAddress,
+		zipcode: res[0].zipcode,
+		country: res[0].countryCode,
+	};
 	next();
 });
 

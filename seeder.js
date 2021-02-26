@@ -41,5 +41,5 @@ const deleteAllData = async () => {
 };
 
 connectDB();
-importData(bootcamps);
-// deleteAllData();
+// importData(bootcamps);
+deleteAllData();

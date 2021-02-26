@@ -25,7 +25,7 @@ async function connectDB() {
 }
 
 const bootcamps = JSON.parse(
-	fs.readFileSync('./_data/bootcamps.json', {
+	fs.readFileSync(`${__dirname}/_data/bootcamps.json`, {
 		encoding: 'utf8',
 	}),
 );
@@ -41,5 +41,5 @@ const deleteAllData = async () => {
 };
 
 connectDB();
-// importData(bootcamps);
-deleteAllData();
+importData(bootcamps);
+// deleteAllData();

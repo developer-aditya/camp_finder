@@ -4,8 +4,10 @@ const connectDB = require('./db');
 const errorHandler = require('./middleware/error');
 // Loading logger middleware
 const logger = require('./middleware/logger');
-// Loading Bootcamp router
+
+// Importing Routers
 const bootcamps = require('./routers/bootcamps.route');
+const courses = require('./routers/courses.route');
 
 // Parsing .env and getting Environment variable in process object of node
 dotenv.config({ path: process.cwd() + '/config/config.env' });
@@ -23,8 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 // Logger Middleware
 app.use(logger);
 
-// Intializing routers
+// Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 // Error Middleware for custom error message
 app.use(errorHandler);

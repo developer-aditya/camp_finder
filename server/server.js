@@ -42,5 +42,12 @@ process.on('unhandledRejection', (error, promise) => {
 	// close server & exit process with 1
 	// 1 Error exit in node
 	// 0 Sucessful exit in node
-	server.close(() => process.exit(1));
+	server.close(() => {
+		console.log('Server Closed');
+		process.exit(1);
+	});
+});
+
+process.on('exit', function (code) {
+	return console.log(`Node Process about to close with code ${code}`);
 });

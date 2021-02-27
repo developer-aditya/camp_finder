@@ -8,16 +8,59 @@ const geocoder = require('../utils/geocoder');
 // @route /api/v1/bootcamps
 // @access public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-	let queryStr = JSON.stringify(req.query);
+	let query;
+	let reqQuery = { ...req.query };
 
-	// replacing operators with $operator
+	// feild in query string not to be included in reqQuery
+	const removeFeild = ['select', 'sort', 'limit', 'page'];
+	// Loop through remove field and delete from reqQuery
+	removeFeild.map((feild) => delete reqQuery[feild]);
+
+	let queryStr = JSON.stringify(reqQuery);
+	// Identifying and converting field to mongoDB operators
 	queryStr = queryStr.replace(
 		/\b(gt|gte|lt|lte|in)\b/g,
 		(match) => `$${match}`,
 	);
-	console.log(JSON.parse(queryStr));
+	reqQuery = JSON.parse(queryStr);
 
-	const bootcamps = await Bootcamp.find(JSON.parse(queryStr));
+	// FINDING RESOURCE
+	query = Bootcamp.find(reqQuery);
+
+	// 1. Handling select in query String
+	if (req.query.select) {
+		const selectQuery = req.query.select.split(',').join(' ');
+		query = query.select(selectQuery);
+	}
+
+	// 2. Handling sort in query String
+	if (req.query.sort) {
+		const sortQuery = req.query.sort.split(',').join(' ');
+		query = query.sort(sortQuery);
+	} else {
+		query = query.sort('-createdAt');
+	}
+
+	const page = req.query.page || 1;
+	const lim = req.query.limit || 10;
+	const lowerLim = (page - 1) * lim;
+	const upperLim = page * lim;
+	const total = await Bootcamp.countDocuments();
+	const pagination = {};
+
+	if (lowerLim > 0) {
+		pagination.prev = { page: page - 1, limit: lim };
+	}
+	if (upperLim < total) {
+		pagination.next = { page: page + 1, limit: lim };
+	}
+
+	query = query.skip(lowerLim).limit(upperLim);
+
+	// EXECUTING QUERY
+	const bootcamps = await query;
+
+	// RESPONSE
 	res.status(200).json({
 		success: true,
 		count: bootcamps.length,

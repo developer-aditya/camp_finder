@@ -51,7 +51,7 @@ const importData = async (bootcamps) => {
 
 const deleteAllData = async () => {
 	const resBootcamp = await Bootcamp.deleteMany();
-	const resCourse = await Bootcamp.deleteMany();
+	const resCourse = await Course.deleteMany();
 	console.log(colors.red.inverse('Data Deleted Sucessfully...'));
 	Mongoose.connection.close(() => {
 		console.log('Mongoose default connection is disconnected');

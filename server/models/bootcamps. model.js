@@ -124,4 +124,8 @@ BootcampSchema.pre('save', async function (next) {
 	next();
 });
 
-module.exports = Mongoose.model('Bootcamp', BootcampSchema);
+module.exports = Mongoose.model(
+	'Bootcamp',
+	BootcampSchema,
+	'bootcampsColl',
+);

@@ -4,7 +4,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const geocoder = require('../utils/geocoder');
 
-// @desc  GET all bootcamps
+// @desc  GET all bootcamps with query
 // @route /api/v1/bootcamps
 // @access public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
@@ -41,13 +41,14 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 		query = query.sort('-createdAt');
 	}
 
-	const page = req.query.page || 1;
-	const lim = req.query.limit || 10;
+	const page = parseInt(req.query.page, 10) || 1;
+	const lim = parseInt(req.query.limit, 10) || 10;
 	const lowerLim = (page - 1) * lim;
 	const upperLim = page * lim;
 	const total = await Bootcamp.countDocuments();
-	const pagination = {};
+	let pagination = {};
 
+	// check pagination
 	if (lowerLim > 0) {
 		pagination.prev = { page: page - 1, limit: lim };
 	}
@@ -64,6 +65,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		count: bootcamps.length,
+		pagination,
 		msg: 'Successfully Fetched Data',
 		data: bootcamps,
 	});

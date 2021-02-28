@@ -3,7 +3,7 @@
 // Collection -- Tables
 // Documents -- record/rows/tuple
 // Feilds -- column/attribute
-
+const colors = require('colors');
 const Mongoose = require('mongoose');
 
 const CourseSchema = new Mongoose.Schema({
@@ -42,6 +42,43 @@ const CourseSchema = new Mongoose.Schema({
 		ref: 'Bootcamp',
 		required: true,
 	},
+});
+
+// Static function are called on model directly and not on response from query run on model
+// find(), findByID(), create() are all predefined static function
+// getAverageCost() is a custom static function
+CourseSchema.statics.getAverageCost = async function (bootcampId) {
+	console.log(
+		colors.blue(
+			`Calculating Average Cost Of Bootcamp: ${bootcampId}.....`,
+		),
+	);
+	const Obj = await this.aggregate([
+		{
+			$match: { bootcamp: bootcampId },
+		},
+		{
+			$group: {
+				_id: '$bootcamp',
+				averageCost: { $avg: '$tuition' },
+			},
+		},
+	]);
+
+	await this.model('Bootcamp').findByIdAndUpdate(Obj[0]._id, {
+		averageCost: Math.ceil(Obj[0].averageCost),
+	});
+};
+
+// Middleware to get average cost after saving
+// this.model('Course') == this.constructor in Course Model File
+CourseSchema.post('save', function () {
+	this.model('Course').getAverageCost(this.bootcamp);
+});
+
+// Middleware to get average cost before saving
+CourseSchema.pre('remove', function () {
+	this.model('Course').getAverageCost(this.bootcamp);
 });
 
 module.exports = Mongoose.model('Course', CourseSchema, 'coursesColl');

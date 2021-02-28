@@ -114,8 +114,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 // @route /api/v1/courses/:id
 // @access public
 exports.deleteCourse = asyncHandler(async (req, res, next) => {
-	const course = await Course.findByIdAndDelete(req.params.id);
-
+	const course = await Course.findById(req.params.id);
 	if (!course) {
 		return next(
 			new ErrorResponse(
@@ -124,7 +123,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 			),
 		);
 	}
-
+	course.remove();
 	res.status(200).json({
 		success: true,
 		msg: `Course Delete for ID: ${req.params.id}`,

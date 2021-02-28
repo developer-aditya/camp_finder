@@ -44,9 +44,9 @@ const importData = async (bootcamps) => {
 	const resBootcamp = await Bootcamp.create(bootcamps);
 	const resCourse = await Course.create(courses);
 	console.log(colors.green.inverse('Data added Sucessfully...'));
-	Mongoose.connection.close(() => {
-		console.log('Mongoose default connection is disconnected');
-	});
+	// Mongoose.connection.close(() => {
+	// 	console.log('Mongoose default connection is disconnected');
+	// });
 };
 
 const deleteAllData = async () => {

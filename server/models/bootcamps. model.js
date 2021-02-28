@@ -145,7 +145,7 @@ BootcampSchema.pre('save', async function (next) {
 // 	next();
 // });
 
-// deleting all course of bootcamp as bootcamp is deleted
+// Cascade delete all course of bootcamp as bootcamp is deleted
 BootcampSchema.pre('remove', async function (next) {
 	console.log(
 		`Course related to bootcamp : ${this._id} is being deleted...`,

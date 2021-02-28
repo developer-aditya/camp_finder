@@ -59,14 +59,17 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 	query = query.skip(lowerLim).limit(upperLim);
 
 	// EXECUTING QUERY
-	const bootcamps = await query;
+	const bootcamps = await query.populate({
+		path: 'courses',
+		select: 'title weeks tuitions',
+	});
 
 	// RESPONSE
 	res.status(200).json({
 		success: true,
 		count: bootcamps.length,
 		pagination,
-		msg: 'Successfully Fetched Data',
+		msg: 'Successfully Fetched Bootcamps',
 		data: bootcamps,
 	});
 });
@@ -108,7 +111,10 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
 // @route /api/v1/bootcamps/:id
 // @access public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
-	const bootcamp = await Bootcamp.findById(req.params.id);
+	const bootcamp = await Bootcamp.findById(req.params.id).populate({
+		path: 'courses',
+		select: 'title weeks tuitions',
+	});
 	if (bootcamp === null) {
 		return next(
 			new ErrorResponse(

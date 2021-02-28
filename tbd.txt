@@ -1,0 +1,4 @@
+1. check pagination
+avg cost
+cascade delete
+2. Set proper access specifier for api in controllers

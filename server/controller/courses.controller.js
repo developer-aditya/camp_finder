@@ -2,6 +2,7 @@
 const Course = require('../models/courses.model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const Bootcamp = require('../models/bootcamps. model');
 
 // @desc  GET all courses
 // @route /api/v1/courses
@@ -36,16 +37,97 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 // @route /api/v1/courses/:id
 // @access public
 exports.getCourse = asyncHandler(async (req, res, next) => {
-	let query = Course.find({ _id: req.params.id }).populate({
+	const course = await Course.findById(req.params.id).populate({
 		path: 'bootcamp',
 		select: 'name description',
 	});
 
-	const course = await query;
+	if (!course) {
+		return next(
+			new ErrorResponse(
+				`Course Not Found With ID: ${req.params.id}`,
+				404,
+			),
+		);
+	}
 
 	res.status(200).json({
 		success: true,
-		msg: `Bootcamp Fetched With id: ${req.params.id}`,
+		msg: `Course Fetched With ID: ${req.params.id}`,
+		data: course,
+	});
+});
+
+// @desc  ADD course to bootcamps for bootcampID
+// @route /api/v1/bootcamps/:bootcampsId/courses
+// @access public
+exports.addCourse = asyncHandler(async (req, res, next) => {
+	// Adding bootcamp Id to req body to add that feild in course document
+	req.body.bootcamp = req.params.bootcampId;
+
+	const bootcamp = await Bootcamp.findById(req.params.bootcampId);
+
+	if (!bootcamp) {
+		return next(
+			new ErrorResponse(
+				`Bootcamp Not Found With ID: ${req.params.bootcampId}`,
+				404,
+			),
+		);
+	}
+
+	const course = await Course.create(req.body);
+
+	res.status(200).json({
+		success: true,
+		msg: `Course Created For Bootcamp: ${req.params.bootcampId}`,
+		data: course,
+	});
+});
+
+// @desc  PUT(UPDATE) course By Id
+// @route /api/v1/courses/:id
+// @access public
+exports.updateCourse = asyncHandler(async (req, res, next) => {
+	const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	if (!course) {
+		return next(
+			new ErrorResponse(
+				`Course Not Found With ID: ${req.params.id}`,
+				404,
+			),
+		);
+	}
+
+	res.status(200).json({
+		success: true,
+		msg: `Course Updated for ID: ${req.params.id}`,
+		data: course,
+	});
+});
+
+// @desc  DELETE course By Id
+// @route /api/v1/courses/:id
+// @access public
+exports.deleteCourse = asyncHandler(async (req, res, next) => {
+	const course = await Course.findByIdAndDelete(req.params.id);
+
+	if (!course) {
+		return next(
+			new ErrorResponse(
+				`Course Not Found With ID: ${req.params.id}`,
+				404,
+			),
+		);
+	}
+
+	res.status(200).json({
+		success: true,
+		msg: `Course Delete for ID: ${req.params.id}`,
 		data: course,
 	});
 });

@@ -1,3 +1,9 @@
+// MongoDB vs RelationalDB
+// Database -- Database
+// Collection -- Tables
+// Documents -- record/rows/tuple
+// Feilds -- column/attribute
+
 const Mongoose = require('mongoose');
 
 const CourseSchema = new Mongoose.Schema({

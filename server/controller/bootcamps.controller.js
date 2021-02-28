@@ -48,7 +48,6 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 	const total = await Bootcamp.countDocuments();
 	let pagination = {};
 
-	// check pagination
 	if (lowerLim > 0) {
 		pagination.prev = { page: page - 1, limit: lim };
 	}
@@ -91,15 +90,6 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
 		},
 	});
 
-	if (bootcamp === null) {
-		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found Within ${distance} miles`,
-				404,
-			),
-		);
-	}
-
 	res.status(200).json({
 		success: true,
 		msg: `${bootcamp.length} Bootcamps Fetched Within ${distance}`,
@@ -115,7 +105,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 		path: 'courses',
 		select: 'title weeks tuitions',
 	});
-	if (bootcamp === null) {
+	if (!bootcamp) {
 		return next(
 			new ErrorResponse(
 				`Bootcamp Not Found With ID: ${req.params.id}`,
@@ -154,7 +144,7 @@ exports.updateBootcamp = async (req, res, next) => {
 			runValidators: true,
 		},
 	);
-	if (bootcamp === null) {
+	if (!bootcamp) {
 		return next(
 			new ErrorResponse(
 				`Bootcamp Not Found With ID: ${req.params.id}`,
@@ -164,7 +154,7 @@ exports.updateBootcamp = async (req, res, next) => {
 	}
 	res.status(200).json({
 		success: true,
-		msg: 'data updated sucessfully',
+		msg: 'Bootcamp updated sucessfully',
 		data: bootcamp,
 	});
 };
@@ -173,8 +163,8 @@ exports.updateBootcamp = async (req, res, next) => {
 // @route /api/v1/bootcamps/:id
 // @access public
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
-	const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
-	if (bootcamp === null) {
+	const bootcamp = await Bootcamp.findById(req.params.id);
+	if (!bootcamp) {
 		return next(
 			new ErrorResponse(
 				`Bootcamp Not Found With ID: ${req.params.id}`,
@@ -182,6 +172,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 			),
 		);
 	}
+	bootcamp.remove();
 	res.status(200).json({
 		success: true,
 		msg: 'data deleted sucessfully',

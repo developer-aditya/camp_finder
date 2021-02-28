@@ -78,7 +78,6 @@ const BootcampSchema = new Mongoose.Schema(
 			min: [1, 'Rating must be at least 1'],
 			max: [10, 'Rating must can not be more than 10'],
 		},
-		avgCost: Number,
 		photo: {
 			type: String,
 			default: 'no-photo.jpg',
@@ -127,6 +126,34 @@ BootcampSchema.pre('save', async function (next) {
 		zipcode: res[0].zipcode,
 		country: res[0].countryCode,
 	};
+	next();
+});
+
+// // Static Function attached to Schema not model Like Static function in OOPS attached to classes not objects
+// // static function averageCost
+// BootcampSchema.static();
+
+// // calculating average cost after saving new Document(record)
+// BootcampSchema.post('save', async function (next) {
+// 	BootcampSchema.averageCost();
+// 	next();
+// });
+
+// // calculating average cost before removing existing Document(record)
+// BootcampSchema.pre('remove', async function (next) {
+// 	BootcampSchema.averageCost();
+// 	next();
+// });
+
+// deleting all course of bootcamp as bootcamp is deleted
+BootcampSchema.pre('remove', async function (next) {
+	console.log(
+		`Course related to bootcamp : ${this._id} is being deleted...`,
+	);
+	await this.model('Course').deleteMany({
+		bootcamp: this._id,
+	});
+
 	next();
 });
 

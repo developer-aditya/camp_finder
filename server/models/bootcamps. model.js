@@ -145,7 +145,7 @@ BootcampSchema.pre('remove', async function (next) {
 });
 
 // Reverse Populate Courses in Bootcamp
-BootcampSchema.virtual('courses', {
+BootcampSchema.virtual('course', {
 	ref: 'Course',
 	localField: '_id',
 	foreignField: 'bootcamp',

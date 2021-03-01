@@ -9,38 +9,38 @@ const Bootcamp = require('../models/bootcamps. model');
 // @route /api/v1/bootcamps/:bootcampId/courses
 // @access public
 exports.getCourses = asyncHandler(async (req, res, next) => {
-	let query;
-	let msg;
-
 	if (req.params.bootcampId) {
-		query = Course.find({ bootcamp: req.params.bootcampId });
-		msg = `Sucessfully fetched Courses of Bootcamps :${req.params.bootcampId}`;
-	} else {
-		query = Course.find().populate({
+		let bootcamp = await Bootcamp.findById(req.params.bootcampId);
+		if (!bootcamp) {
+			return next(
+				new ErrorResponse(
+					`Bootcamp Not Found with ID: ${req.params.bootcampId}`,
+					404,
+				),
+			);
+		}
+		let course = await Course.find({
+			bootcamp: req.params.bootcampId,
+		}).populate({
 			path: 'bootcamp',
 			select: 'name description',
 		});
-		msg = `Sucessfully fetched Courses `;
+		return res.status(200).json({
+			success: true,
+			count: course.length,
+			msg: `Sucessfully fetched courses of bootcamp: ${req.params.bootcampId}`,
+			data: course,
+		});
+	} else {
+		res.status(200).json(res.resource);
 	}
-
-	const course = await query;
-
-	res.status(200).json({
-		success: true,
-		count: course.length,
-		msg,
-		data: course,
-	});
 });
 
 // @desc  GET one courses by ID
 // @route /api/v1/courses/:id
 // @access public
 exports.getCourse = asyncHandler(async (req, res, next) => {
-	const course = await Course.findById(req.params.id).populate({
-		path: 'bootcamp',
-		select: 'name description',
-	});
+	const course = await Course.findById(req.params.id);
 
 	if (!course) {
 		return next(

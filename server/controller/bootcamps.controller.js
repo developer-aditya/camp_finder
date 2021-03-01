@@ -9,69 +9,8 @@ const path = require('path');
 // @route /api/v1/bootcamps
 // @access public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-	let query;
-	let reqQuery = { ...req.query };
-
-	// feild in query string not to be included in reqQuery
-	const removeFeild = ['select', 'sort', 'limit', 'page'];
-	// Loop through remove field and delete from reqQuery
-	removeFeild.map((feild) => delete reqQuery[feild]);
-
-	let queryStr = JSON.stringify(reqQuery);
-	// Identifying and converting field to mongoDB operators
-	queryStr = queryStr.replace(
-		/\b(gt|gte|lt|lte|in)\b/g,
-		(match) => `$${match}`,
-	);
-	reqQuery = JSON.parse(queryStr);
-
-	// FINDING RESOURCE
-	query = Bootcamp.find(reqQuery);
-
-	// 1. Handling select in query String
-	if (req.query.select) {
-		const selectQuery = req.query.select.split(',').join(' ');
-		query = query.select(selectQuery);
-	}
-
-	// 2. Handling sort in query String
-	if (req.query.sort) {
-		const sortQuery = req.query.sort.split(',').join(' ');
-		query = query.sort(sortQuery);
-	} else {
-		query = query.sort('-createdAt');
-	}
-
-	const page = parseInt(req.query.page, 10) || 1;
-	const lim = parseInt(req.query.limit, 10) || 10;
-	const lowerLim = (page - 1) * lim;
-	const upperLim = page * lim;
-	const total = await Bootcamp.countDocuments();
-	let pagination = {};
-
-	if (lowerLim > 0) {
-		pagination.prev = { page: page - 1, limit: lim };
-	}
-	if (upperLim < total) {
-		pagination.next = { page: page + 1, limit: lim };
-	}
-
-	query = query.skip(lowerLim).limit(upperLim);
-
-	// EXECUTING QUERY
-	const bootcamps = await query.populate({
-		path: 'courses',
-		select: 'title weeks tuitions',
-	});
-
 	// RESPONSE
-	res.status(200).json({
-		success: true,
-		count: bootcamps.length,
-		pagination,
-		msg: 'Successfully Fetched Bootcamps',
-		data: bootcamps,
-	});
+	res.status(200).json(res.resource);
 });
 
 // @desc  GET all bootcamps within a radius
@@ -102,10 +41,7 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
 // @route /api/v1/bootcamps/:id
 // @access public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
-	const bootcamp = await Bootcamp.findById(req.params.id).populate({
-		path: 'courses',
-		select: 'title weeks tuitions',
-	});
+	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
 		return next(
 			new ErrorResponse(

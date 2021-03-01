@@ -48,11 +48,6 @@ const CourseSchema = new Mongoose.Schema({
 // find(), findByID(), create() are all predefined static function
 // getAverageCost() is a custom static function
 CourseSchema.statics.getAverageCost = async function (bootcampId) {
-	console.log(
-		colors.blue(
-			`Calculating Average Cost Of Bootcamp: ${bootcampId}.....`,
-		),
-	);
 	const Obj = await this.aggregate([
 		{
 			$match: { bootcamp: bootcampId },

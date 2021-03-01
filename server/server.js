@@ -1,13 +1,16 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./db');
+const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
+const path = require('path');
+
 // Loading logger middleware
 const logger = require('./middleware/logger');
 
 // Importing Routers
-const bootcamps = require('./routers/bootcamps.route');
-const courses = require('./routers/courses.route');
+const bootcampRouter = require('./routers/bootcamps.route');
+const courseRouter = require('./routers/courses.route');
 
 // Parsing .env and getting Environment variable in process object of node
 dotenv.config({ path: process.cwd() + '/config/config.env' });
@@ -18,16 +21,21 @@ connectDB();
 // Initializing express server
 const app = express();
 
+// making public folder static
+app.use(express.static(path.join(__dirname, '/server/public')));
+
 // Middleware to read req body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// Middleware to upload file
+app.use(fileupload());
 
 // Logger Middleware
 app.use(logger);
 
 // Mount routers
-app.use('/api/v1/bootcamps', bootcamps);
-app.use('/api/v1/courses', courses);
+app.use('/api/v1/bootcamps', bootcampRouter);
+app.use('/api/v1/courses', courseRouter);
 
 // Error Middleware for custom error message
 app.use(errorHandler);

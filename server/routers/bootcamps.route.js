@@ -8,6 +8,7 @@ const {
 	addBootcamp,
 	updateBootcamp,
 	deleteBootcamp,
+	uploadBootcampPhoto,
 } = require('../controller/bootcamps.controller');
 
 // Other Resource Routers
@@ -26,5 +27,7 @@ router
 	.get(getBootcamp)
 	.put(updateBootcamp)
 	.delete(deleteBootcamp);
+
+router.route('/:id/photo').put(uploadBootcampPhoto);
 
 module.exports = router;

@@ -45,6 +45,7 @@ const CourseSchema = new Mongoose.Schema({
 });
 
 // Static function are called on model directly and not on response from query run on model
+// methods are functions that are called on response from query run on model
 // find(), findByID(), create() are all predefined static function
 // getAverageCost() is a custom static function
 CourseSchema.statics.getAverageCost = async function (bootcampId) {

@@ -11,6 +11,7 @@ const logger = require('./middleware/logger');
 // Importing Routers
 const bootcampRouter = require('./routers/bootcamps.route');
 const courseRouter = require('./routers/courses.route');
+const authRouter = require('./routers/auth.route');
 
 // Parsing .env and getting Environment variable in process object of node
 dotenv.config({ path: process.cwd() + '/config/config.env' });
@@ -36,6 +37,7 @@ app.use(logger);
 // Mount routers
 app.use('/api/v1/bootcamps', bootcampRouter);
 app.use('/api/v1/courses', courseRouter);
+app.use('/api/v1/auth', authRouter);
 
 // Error Middleware for custom error message
 app.use(errorHandler);

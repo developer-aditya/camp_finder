@@ -55,9 +55,14 @@ UserSchema.methods.validatePassword = async function (password) {
 
 // Method Function  to return token
 UserSchema.methods.getSignedJwt = function () {
-	return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRE_IN,
-	});
+	return jwt.sign(
+		{ id: this._id, name: this.name },
+		process.env.JWT_SECRET,
+		{
+			algorithm: 'HS256',
+			expiresIn: process.env.JWT_EXPIRE_IN,
+		},
+	);
 };
 
 module.exports = Mongoose.model('User', UserSchema, 'userColl');

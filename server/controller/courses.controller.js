@@ -67,6 +67,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 exports.addCourse = asyncHandler(async (req, res, next) => {
 	// Adding bootcamp Id to req body to add that feild in course document
 	req.body.bootcamp = req.params.bootcampId;
+	req.body.user = req.user._id;
 
 	const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
@@ -75,6 +76,18 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 			new ErrorResponse(
 				`Bootcamp Not Found With ID: ${req.params.bootcampId}`,
 				404,
+			),
+		);
+	}
+
+	if (
+		bootcamp.user.toString() !== req.user._id.toString() &&
+		req.user.role !== 'admin'
+	) {
+		return next(
+			new ErrorResponse(
+				`User ID: ${req.user._id} is not authorized to add course in Bootcamp: ${req.params.bootcampId}`,
+				401,
 			),
 		);
 	}
@@ -92,13 +105,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 // @route /api/v1/courses/:id
 // @access public
 exports.updateCourse = asyncHandler(async (req, res, next) => {
-	const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	}).populate({
-		path: 'bootcamp',
-		select: 'name description',
-	});
+	let course = await Course.findById(req.params.id);
 
 	if (!course) {
 		return next(
@@ -108,6 +115,26 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 			),
 		);
 	}
+
+	if (
+		course.user.toString() !== req.user._id.toString() &&
+		req.user.role !== 'admin'
+	) {
+		return next(
+			new ErrorResponse(
+				`User: ${req.user._id} is not authorized to update courses in Bootcamp: ${course.bootcamp._id}`,
+				401,
+			),
+		);
+	}
+
+	course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
+		runValidators: true,
+	}).populate({
+		path: 'bootcamp',
+		select: 'name description',
+	});
 
 	res.status(200).json({
 		success: true,
@@ -129,6 +156,19 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 			),
 		);
 	}
+
+	if (
+		course.user.toString() !== req.user._id.toString() &&
+		req.user.role !== 'admin'
+	) {
+		return next(
+			new ErrorResponse(
+				`User: ${req.user._id} is not authorized to delete courses in Bootcamp: ${course.bootcamp._id}`,
+				401,
+			),
+		);
+	}
+
 	course.remove();
 	res.status(200).json({
 		success: true,
@@ -136,5 +176,3 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 		data: course,
 	});
 });
-
-// Error in add delete bootcamp populate don't use it

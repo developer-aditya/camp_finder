@@ -7,6 +7,11 @@ const colors = require('colors');
 const Mongoose = require('mongoose');
 
 const CourseSchema = new Mongoose.Schema({
+	user: {
+		type: Mongoose.Schema.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 	title: {
 		type: String,
 		trim: true,

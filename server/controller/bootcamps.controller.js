@@ -62,7 +62,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 // @access public
 exports.addBootcamp = asyncHandler(async (req, res, next) => {
 	let published = await Bootcamp.findOne({ user: req.user._id });
-	console.log(published);
+
 	if (published && req.user.role !== 'admin') {
 		return next(
 			new ErrorResponse(

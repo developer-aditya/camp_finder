@@ -15,7 +15,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 		role,
 	});
 
-	// setTokenInCookie(user, res, 200, 'User Registered');
+	setTokenInCookie(user, res, 200, 'User Registered');
 });
 
 // @desc POST to send email/password to Server for auth

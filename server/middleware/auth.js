@@ -3,7 +3,8 @@ const asyncHandler = require('../middleware/async');
 const User = require('../models/user.model');
 const ErrorResponse = require('../utils/errorResponse');
 
-const protect = asyncHandler(async (req, res, next) => {
+// TO check if token exist and user of id in token exists in User Collection
+exports.protected = asyncHandler(async (req, res, next) => {
 	let token;
 
 	if (
@@ -36,4 +37,17 @@ const protect = asyncHandler(async (req, res, next) => {
 	}
 });
 
-module.exports = protect;
+// To check weather user role is authorized to access Route hit
+exports.authorized = (...roles) => {
+	return asyncHandler(async (req, res, next) => {
+		if (!roles.includes(req.user.role)) {
+			return next(
+				new ErrorResponse(
+					`${req.user.role} Not Authorized to access this route`,
+					401,
+				),
+			);
+		}
+		next();
+	});
+};

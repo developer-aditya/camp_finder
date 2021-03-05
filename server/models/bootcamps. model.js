@@ -4,6 +4,11 @@ const geocoder = require('../utils/geocoder');
 
 const BootcampSchema = new Mongoose.Schema(
 	{
+		user: {
+			type: Mongoose.Schema.ObjectId,
+			ref: 'User',
+			required: true,
+		},
 		name: {
 			type: String,
 			required: [true, 'Please Add The Name'],
@@ -134,9 +139,6 @@ BootcampSchema.pre('save', async function (next) {
 
 // Cascade delete all course of bootcamp as bootcamp is deleted
 BootcampSchema.pre('remove', async function (next) {
-	console.log(
-		`Course related to bootcamp : ${this._id} is being deleted...`,
-	);
 	await this.model('Course').deleteMany({
 		bootcamp: this._id,
 	});

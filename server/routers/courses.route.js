@@ -10,12 +10,17 @@ const {
 } = require('../controller/courses.controller');
 const Course = require('../models/courses.model');
 const advanceQueryResult = require('../middleware/advanceQuery');
+const protect = require('../middleware/auth');
 
 router
 	.route('/')
 	.get(advanceQueryResult(Course, 'bootcamp'), getCourses)
-	.post(addCourse);
+	.post(protect, addCourse);
 
-router.route('/:id').get(getCourse).put(updateCourse).delete(deleteCourse);
+router
+	.route('/:id')
+	.get(getCourse)
+	.put(protect, updateCourse)
+	.delete(protect, deleteCourse);
 
 module.exports = router;

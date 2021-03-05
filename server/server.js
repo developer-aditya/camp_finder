@@ -4,6 +4,7 @@ const connectDB = require('./db');
 const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 // Loading logger middleware
 const logger = require('./middleware/logger');
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Middleware to upload file
 app.use(fileupload());
+app.use(cookieParser());
 
 // Logger Middleware
 app.use(logger);

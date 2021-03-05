@@ -40,7 +40,10 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 // @route /api/v1/courses/:id
 // @access public
 exports.getCourse = asyncHandler(async (req, res, next) => {
-	const course = await Course.findById(req.params.id);
+	const course = await Course.findById(req.params.id).populate({
+		path: 'bootcamp',
+		select: 'name description',
+	});
 
 	if (!course) {
 		return next(
@@ -92,6 +95,9 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 	const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
+	}).populate({
+		path: 'bootcamp',
+		select: 'name description',
 	});
 
 	if (!course) {
@@ -130,3 +136,5 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 		data: course,
 	});
 });
+
+// Error in add delete bootcamp populate don't use it

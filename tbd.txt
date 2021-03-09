@@ -1,5 +1,9 @@
-1. check pagination
 2. Set proper access specifier for api in controllers
 3. Improve status code and response message
 // Error in add delete bootcamp: populate don't use it
 // FIND PROPER STEPS OF CREATING THIS APIS FROM DOCUMENTATION IN BRAD GITHUB
+// CREATE DB DIAGRAM WITH RELATION BETWEEN USER(type) BOOTCAMP AND COURSE with all pre psot static and method functions
+
+to run forgot password
+1. setup gmail password in config
+2. allow low security app to access google account

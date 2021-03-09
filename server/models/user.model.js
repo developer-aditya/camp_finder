@@ -59,7 +59,7 @@ UserSchema.methods.validatePassword = async function (password) {
 	return await bcrypt.compare(password, this.password);
 };
 
-// Method Function to Generate reset password token
+// Method Function to Generate random reset password token(not JWT)
 UserSchema.methods.resetPasswordTokenGenerator = function () {
 	const randomToken = crypto.randomBytes(20).toString('hex');
 	this.resetPasswordToken = crypto
@@ -71,7 +71,7 @@ UserSchema.methods.resetPasswordTokenGenerator = function () {
 	return randomToken;
 };
 
-// Method Function  to return token
+// Method Function to Generate return token (SECRET signed JWT that holds user id , name)
 UserSchema.methods.getSignedJwt = function () {
 	return jwt.sign(
 		{ id: this._id, name: this.name },

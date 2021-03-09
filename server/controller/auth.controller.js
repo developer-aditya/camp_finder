@@ -4,7 +4,7 @@ const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/mailer');
 const crypto = require('crypto');
 
-// @desc PUT User Data in DB
+// @desc POST Add New User Data in DB
 // @route /api/v1/auth/register
 // @access public
 exports.register = asyncHandler(async (req, res, next) => {
@@ -142,6 +142,68 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 		200,
 		'Password Changed Successfully : User Logged In',
 	);
+});
+
+// @desc PUT Update User name email
+// @route /api/v1/auth/updateuser
+// @access public
+exports.updateUser = asyncHandler(async (req, res, next) => {
+	const { password, resetPasswordToken, role } = req.body;
+	if (password || resetPasswordToken) {
+		return next(
+			new ErrorResponse(
+				'Unauthorized! update Password Not Allowed',
+				401,
+			),
+		);
+	}
+
+	// Must Not Update to admin
+	if (role && role === 'admin') {
+		return next(
+			new ErrorResponse(
+				'Unauthorized! Update to admin not allowed',
+				401,
+			),
+		);
+	}
+
+	// If Above condition was not there
+	// User Model Wont allow as role takes two enum values: 'user', 'publisher'
+	const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	res.status(200).json({
+		success: true,
+		msg: 'User Updated Successfully...',
+		data: user,
+	});
+});
+
+// @desc PUT Update User password
+// @route /api/v1/auth/updatepassword
+// @access public
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+	const { oldPassword, newPassword } = req.body;
+
+	const user = await User.findById(req.user.id).select('+password');
+	// verify old password
+	const verified = await user.validatePassword(oldPassword);
+	if (!verified) {
+		return next(
+			new ErrorResponse(
+				`Old Password does not match your current password`,
+				400,
+			),
+		);
+	}
+
+	user.password = newPassword;
+	user.save();
+
+	setTokenInCookie(user, res, 200, 'Password Updated Successfully...');
 });
 
 //

@@ -15,6 +15,9 @@ const Course = require('./server/models/courses.model');
 // use user model to create delete document
 const User = require('./server/models/user.model');
 
+// use Reviews model to create delete document
+const Review = require('./server/models/reviews.model');
+
 async function connectDB() {
 	const conn = await Mongoose.connect(
 		'mongodb://localhost:27017/devcamper',
@@ -49,10 +52,17 @@ const users = JSON.parse(
 	}),
 );
 
+const reviews = JSON.parse(
+	fs.readFileSync(`${__dirname}/_data/reviews.json`, {
+		encoding: 'utf8',
+	}),
+);
+
 const importData = async (bootcamps) => {
 	const resUser = await User.create(users);
 	const resBootcamp = await Bootcamp.create(bootcamps);
 	const resCourse = await Course.create(courses);
+	const resReview = await Review.create(reviews);
 	console.log(colors.green.inverse('Data added Sucessfully...'));
 	// Mongoose.connection.close(() => {
 	// 	console.log('Mongoose default connection is disconnected');
@@ -63,6 +73,7 @@ const deleteAllData = async () => {
 	const resCourse = await Course.deleteMany();
 	const resBootcamp = await Bootcamp.deleteMany();
 	const resUser = await User.deleteMany();
+	const resReview = await Review.deleteMany();
 	console.log(colors.red.inverse('Data Deleted Sucessfully...'));
 	Mongoose.connection.close(() => {
 		console.log('Mongoose default connection is disconnected');

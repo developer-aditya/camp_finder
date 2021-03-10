@@ -14,7 +14,13 @@ const { protected, authorized } = require('../middleware/auth');
 
 router
 	.route('/')
-	.get(advanceQueryResult(Course, 'bootcamp'), getCourses)
+	.get(
+		advanceQueryResult(Course, {
+			path: 'bootcamp',
+			select: 'name description',
+		}),
+		getCourses,
+	)
 	.post(protected, authorized('admin', 'publisher'), addCourse);
 
 router

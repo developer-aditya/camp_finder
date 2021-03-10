@@ -41,7 +41,6 @@ exports.addUser = asyncHandler(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		msg: 'User added Successfully...',
-		data: user,
 	});
 });
 
@@ -49,10 +48,15 @@ exports.addUser = asyncHandler(async (req, res, next) => {
 // @route /api/v1/users/:id
 // @access public
 exports.updateUser = asyncHandler(async (req, res, next) => {
-	let user = await User.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	});
+	const { name, email, role, password } = req.body;
+	let user = await User.findByIdAndUpdate(
+		req.params.id,
+		{ name, email, role },
+		{
+			new: true,
+			runValidators: true,
+		},
+	).select('+password');
 
 	if (!user) {
 		return next(
@@ -62,6 +66,9 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 			),
 		);
 	}
+
+	user.password = password;
+	user.save();
 
 	res.status(200).json({
 		success: true,

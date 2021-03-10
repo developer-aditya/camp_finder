@@ -16,16 +16,25 @@ const { protected, authorized } = require('../middleware/auth');
 
 // Other Resource Routers
 const courseRouter = require('./courses.route');
+const reviewRouter = require('./reviews.route');
 
 // Re-routing to other resources
 // Re-routing to courses for /bootcamps/:bootcampId/courses
 router.use('/:bootcampId/courses', courseRouter);
+// Re-routing to courses for /bootcamps/:bootcampId/reviews
+router.use('/:bootcampId/reviews', reviewRouter);
 
 router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
 
 router
 	.route('/')
-	.get(advanceQueryResult(Bootcamp, 'course'), getBootcamps)
+	.get(
+		advanceQueryResult(Bootcamp, {
+			path: 'course',
+			select: 'title description',
+		}),
+		getBootcamps,
+	)
 	.post(protected, authorized('publisher', 'admin'), addBootcamp);
 
 router

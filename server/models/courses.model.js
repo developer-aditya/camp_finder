@@ -66,19 +66,25 @@ CourseSchema.statics.getAverageCost = async function (bootcampId) {
 		},
 	]);
 
-	await this.model('Bootcamp').findByIdAndUpdate(Obj[0]._id, {
-		averageCost: Math.ceil(Obj[0].averageCost),
-	});
+	if (Obj.length !== 0) {
+		await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
+			averageCost: Math.ceil(Obj[0].averageCost),
+		});
+	} else {
+		await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
+			averageCost: 0,
+		});
+	}
 };
 
-// Middleware to get average cost after saving
+// Middleware to get average cost after saving document
 // this.model('Course') == this.constructor in Course Model File
 CourseSchema.post('save', function () {
 	this.model('Course').getAverageCost(this.bootcamp);
 });
 
-// Middleware to get average cost before saving
-CourseSchema.pre('remove', function () {
+// Middleware to get average cost after removing
+CourseSchema.post('remove', function () {
 	this.model('Course').getAverageCost(this.bootcamp);
 });
 

@@ -19,6 +19,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 				),
 			);
 		}
+
 		let review = await Review.find({
 			bootcamp: req.params.bootcampId,
 		}).populate({
@@ -81,11 +82,88 @@ exports.addReview = asyncHandler(async (req, res, next) => {
 		);
 	}
 
+	// calls the pre save in model as create internally raises save event: Calculates averageRating
 	const review = await Review.create(req.body);
 
 	res.status(200).json({
 		success: true,
 		msg: `Review Created For Bootcamp: ${req.params.bootcampId}`,
+		data: review,
+	});
+});
+
+// @desc  PUT one reviews by ID
+// @route /api/v1/reviews/:id
+// @access public
+exports.updateReview = asyncHandler(async (req, res, next) => {
+	let review = await Review.findById(req.params.id);
+
+	if (!review) {
+		return next(
+			new ErrorResponse(
+				`Review Not Found With ID: ${req.params.id}`,
+				404,
+			),
+		);
+	}
+
+	if (
+		review.user.toString() !== req.user._id.toString() &&
+		req.user.role !== 'admin'
+	) {
+		return next(
+			new ErrorResponse(
+				`Unathorized User can update his own Reviews Only`,
+				401,
+			),
+		);
+	}
+
+	review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	review.save();
+
+	res.status(200).json({
+		success: true,
+		msg: `Review  With ID: ${req.params.id} Updated...`,
+		data: review,
+	});
+});
+
+// @desc  DELETE one reviews by ID
+// @route /api/v1/reviews/:id
+// @access public
+exports.deleteReview = asyncHandler(async (req, res, next) => {
+	let review = await Review.findById(req.params.id);
+
+	if (!review) {
+		return next(
+			new ErrorResponse(
+				`Review Not Found With ID: ${req.params.id}`,
+				404,
+			),
+		);
+	}
+
+	if (
+		review.user.toString() !== req.user._id.toString() &&
+		req.user.role !== 'admin'
+	) {
+		return next(
+			new ErrorResponse(
+				`Unathorized User can delete his own Reviews Only`,
+				401,
+			),
+		);
+	}
+
+	review.remove();
+	res.status(200).json({
+		success: true,
+		msg: `Review  With ID: ${req.params.id} Deleted...`,
 		data: review,
 	});
 });

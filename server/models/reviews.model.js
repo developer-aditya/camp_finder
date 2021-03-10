@@ -34,6 +34,44 @@ const ReviewSchema = new Mongoose.Schema({
 	},
 });
 
+// Static function are called on model directly and not on response from query run on model
+// methods are functions that are called on response from query run on model
+// find(), findByID(), create() are all predefined static function
+// getAverageCost() is a custom static function
+ReviewSchema.statics.getAverageRating = async function (bootcampId) {
+	const Obj = await this.aggregate([
+		{
+			$match: { bootcamp: bootcampId },
+		},
+		{
+			$group: {
+				_id: '$bootcamp',
+				averageRating: { $avg: '$rating' },
+			},
+		},
+	]);
+
+	if (Obj.length !== 0) {
+		await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
+			averageRating: Math.ceil(Obj[0].averageRating),
+		});
+	} else {
+		await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
+			averageRating: null,
+		});
+	}
+};
+
+// Calculating average review after saving a document
+ReviewSchema.post('save', function () {
+	this.model('Review').getAverageRating(this.bootcamp);
+});
+
+// Calculating average review after removing a document
+ReviewSchema.pre('remove', function () {
+	this.model('Review').getAverageRating(this.bootcamp);
+});
+
 // restrict a user to add review to a particular bootcamp once
 // creating a index(primary key) using two feilds bootcamp and user
 // Both combined must be unique

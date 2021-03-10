@@ -82,6 +82,7 @@ const BootcampSchema = new Mongoose.Schema(
 			type: Number,
 			min: [1, 'Rating must be at least 1'],
 			max: [10, 'Rating must can not be more than 10'],
+			default: null,
 		},
 		averageCost: {
 			type: Number,

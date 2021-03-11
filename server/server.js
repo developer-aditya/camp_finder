@@ -72,6 +72,11 @@ app.use(limiter);
 // Prevent HTTP Params Pollution attack
 // Sending multiple params with same name in url express makes an array of it
 // which will cause backend code to crash : This would allow attacker make error in our code
+// mongoose will run the array and return result for all element in array if hpp not enabled
+// if hpp enabled req.params will have last value in array
+// EX- weeks=8&weeks=6 req.params.weeks === [8,6]
+// without hpp return result for both values
+// with hpp req.params.weeks === 6
 app.use(hpp());
 
 // Logger Middleware

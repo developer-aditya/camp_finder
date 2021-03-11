@@ -206,6 +206,21 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 	setTokenInCookie(user, res, 200, 'Password Updated Successfully...');
 });
 
+// @desc GET logout a user: clear token in cookie
+// @route /api/v1/auth/logout
+// @access public
+exports.logout = asyncHandler(async (req, res, next) => {
+	const options = {
+		expires: new Date(Date.now() + 10 * 1000),
+		sameSite: true,
+		httpOnly: true,
+	};
+
+	res.status(200)
+		.cookie('token', 'none', options)
+		.json({ success: true, data: {} });
+});
+
 //
 //
 //

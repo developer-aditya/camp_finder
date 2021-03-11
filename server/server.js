@@ -6,6 +6,13 @@ const errorHandler = require('./middleware/error');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
+// Security Packages
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+var xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+var hpp = require('hpp');
+
 // Loading logger middleware
 const logger = require('./middleware/logger');
 
@@ -34,6 +41,38 @@ app.use(express.urlencoded({ extended: false }));
 // Middleware to upload file
 app.use(fileupload());
 app.use(cookieParser());
+
+// SECURITY
+
+// Sanitizing data sent to api
+// used: to handle nosql injections
+// ex: email:{$gt: ""} will match first email in db
+// ex: password:{$gt: ""} will match first password in db if not hashed
+// user after express.json() that will parse req.body
+app.use(mongoSanitize());
+
+// Set Necessary Security feilds in header
+app.use(helmet());
+
+// Preventing Cross site scripting(xss) / script injection
+// adding <script></script> while creating bootcamp or something so that when that data loads in frontend
+// malcious scripts get into html
+// XSS-Clean converts < to HTML &lt; which shows on UI as < but in HTML it will BE &lt;
+// Sanitizing data sent to api
+app.use(xss());
+
+// Limiting Api calls from a single IP
+const limiter = rateLimit({
+	// 100 requests per 10 minutes for a single ip
+	windowMs: 10 * 60 * 1000, // 10 minutes
+	max: 100, // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
+// Prevent HTTP Params Pollution attack
+// Sending multiple params with same name in url express makes an array of it
+// which will cause backend code to crash : This would allow attacker make error in our code
+app.use(hpp());
 
 // Logger Middleware
 app.use(logger);

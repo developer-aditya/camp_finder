@@ -65,18 +65,18 @@ app.use(xss());
 const limiter = rateLimit({
 	// 100 requests per 10 minutes for a single ip
 	windowMs: 10 * 60 * 1000, // 10 minutes
-	max: 100, // limit each IP to 100 requests per windowMs
+	max: 100, // limit each IP to 100 requests per windowMsApi
 });
 app.use(limiter);
 
 // Prevent HTTP Params Pollution attack
-// Sending multiple params with same name in url express makes an array of it
+// Sending multiple query with same name in url express makes an array of it
 // which will cause backend code to crash : This would allow attacker make error in our code
 // mongoose will run the array and return result for all element in array if hpp not enabled
-// if hpp enabled req.params will have last value in array
-// EX- weeks=8&weeks=6 req.params.weeks === [8,6]
+// if hpp enabled req.query will have last value in array
+// EX- weeks=8&weeks=6 req.query.weeks === [8,6]
 // without hpp return result for both values
-// with hpp req.params.weeks === 6
+// with hpp req.query.weeks === 6
 app.use(hpp());
 
 // Logger Middleware

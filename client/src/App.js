@@ -19,7 +19,7 @@ function App() {
 	return (
 		<Router>
 			<div className='App'>
-				<Navbar title='BootCamp' icon='fas fa-laptop-house' />
+				<Navbar title='CampFinder' icon='fas fa-laptop-house' />
 				<SignIn />
 				<SignUp />
 				<Switch>

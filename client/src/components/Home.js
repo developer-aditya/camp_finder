@@ -9,7 +9,7 @@ const Home = () => {
 				className='showcase-inner center-align white-text'
 				style={showcaseInner}
 			>
-				<h2>Find a Code Bootcamp</h2>
+				<h2>Find a Coding Bootcamp</h2>
 				<p className='flow-text'>
 					Find, rate and read reviews on coding bootcamps
 				</p>

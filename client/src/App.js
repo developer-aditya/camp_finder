@@ -4,7 +4,7 @@ import './App.css';
 
 import Navbar from './components/layout/Navbar';
 import Home from './components/Home';
-import Bootcamps from './components/bootcamps';
+import Bootcamps from './components/bootcamps/bootcamps';
 import SignIn from './components/modals/SignIn';
 import SignUp from './components/modals/SignUp';
 

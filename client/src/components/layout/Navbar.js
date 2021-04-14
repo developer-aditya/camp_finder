@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Navbar = ({ icon, title }) => {
 	return (
-		<nav className='teal darken-3'>
+		<nav className='blue-grey darken-4'>
 			<div className='nav-wrapper container'>
 				<Link to='/' className='brand-logo'>
 					<i className={icon} style={{ fontSize: '2rem' }} />

@@ -35,7 +35,7 @@ const SignIn = () => {
 
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect waves-light teal modal-close'
+							className='btn waves-effect waves-light cyan modal-close'
 							type='submit'
 							name='action'
 							style={signInBtn}
@@ -45,7 +45,7 @@ const SignIn = () => {
 					</div>
 					<a
 						href='#forgot-password'
-						className='center teal-text'
+						className='center cyan-text'
 						style={{
 							fontSize: '1.15rem',
 						}}
@@ -59,7 +59,7 @@ const SignIn = () => {
 					Don't have a account?{' '}
 					<a
 						href='#signup-modal'
-						className='modal-trigger teal-text modal-close'
+						className='modal-trigger cyan-text modal-close'
 					>
 						Create One
 					</a>

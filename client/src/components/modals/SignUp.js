@@ -64,7 +64,7 @@ const SignIn = () => {
 
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect waves-light teal modal-close'
+							className='btn waves-effect waves-light cyan modal-close'
 							type='submit'
 							name='action'
 							style={signInBtn}

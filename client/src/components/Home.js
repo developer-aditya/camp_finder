@@ -2,7 +2,6 @@ import React from 'react';
 import image from '../public/image/background.jpg';
 
 const Home = () => {
-	console.log(image);
 	return (
 		<div style={showcase} className='valign-wrapper'>
 			<div
@@ -19,8 +18,9 @@ const Home = () => {
 							<div className='input-group'>
 								<input
 									type='text'
-									name='miles'
-									placeholder='Miles From'
+									name='distance'
+									placeholder='Distance From'
+									className='white-text'
 								/>
 							</div>
 						</div>
@@ -28,8 +28,9 @@ const Home = () => {
 							<div className='input-group'>
 								<input
 									type='text'
-									name='zipcode'
-									placeholder='Enter Zipcode'
+									name='pincode'
+									placeholder='Enter Pincode'
+									className='white-text'
 								/>
 							</div>
 						</div>
@@ -37,7 +38,7 @@ const Home = () => {
 					<input
 						type='submit'
 						value='Find Bootcamps'
-						className='btn cyan darken-2'
+						className='btn cyan darken-1'
 						style={submitBtn}
 					/>
 				</form>

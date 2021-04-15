@@ -4,7 +4,7 @@ import './App.css';
 
 import Navbar from './components/layout/Navbar';
 import Home from './components/Home';
-import Bootcamps from './components/bootcamps/bootcamps';
+import Bootcamps from './components/bootcamps/Bootcamps';
 import SignIn from './components/modals/SignIn';
 import SignUp from './components/modals/SignUp';
 
@@ -14,6 +14,13 @@ import M from '../node_modules/materialize-css/dist/js/materialize.min';
 function App() {
 	useEffect(() => {
 		M.AutoInit();
+		let elems = document.querySelectorAll('.dropdown-trigger');
+		const options = {
+			coverTrigger: false,
+			hover: true,
+			constrainWidth: false,
+		};
+		M.Dropdown.init(elems, options);
 	}, []);
 
 	return (

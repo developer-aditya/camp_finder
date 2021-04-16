@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Bootcamps from './components/bootcamps/Bootcamps';
 import SignIn from './components/modals/SignIn';
 import SignUp from './components/modals/SignUp';
+import SingleBootcamp from './components/bootcamps/SingleBootcamp';
 
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import M from '../node_modules/materialize-css/dist/js/materialize.min';
@@ -32,6 +33,11 @@ function App() {
 				<Switch>
 					<Route exact path='/' component={Home}></Route>
 					<Route exact path='/bootcamps' component={Bootcamps}></Route>
+					<Route
+						exact
+						path='/singleBootcamp'
+						component={SingleBootcamp}
+					></Route>
 				</Switch>
 			</div>
 		</Router>

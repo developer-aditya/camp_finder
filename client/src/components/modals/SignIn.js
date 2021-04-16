@@ -9,7 +9,7 @@ const SignIn = () => {
 		>
 			<div
 				className='modal-content center-align'
-				style={{ padding: '2.5rem' }}
+				style={{ padding: '2rem 2.5rem 1rem 2.5rem' }}
 			>
 				<i className=' fas fa-times modal-close' style={closeBtn}></i>
 				<h3>Sign In</h3>

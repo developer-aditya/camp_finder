@@ -5,7 +5,7 @@ const SignIn = () => {
 		<div id='signup-modal' className='modal' style={modalStyle}>
 			<div
 				className='modal-content center-align'
-				style={{ padding: '2.5rem', paddingBottom: '1rem' }}
+				style={{ padding: '2rem 2.5rem 1rem 2.5rem' }}
 			>
 				<i className=' fas fa-times modal-close' style={closeBtn}></i>
 				<h3>Create Account</h3>
@@ -85,7 +85,7 @@ const SignIn = () => {
 
 const modalStyle = {
 	width: '500px',
-	height: '80%',
+	minHeight: '81%',
 	color: '#555',
 	maxHeight: '80%',
 };
@@ -99,10 +99,9 @@ const signInBtn = {
 	width: '100%',
 	textTransform: 'capitalize',
 	fontSize: '1.5rem',
-	height: '3rem',
+	height: '3.25rem',
 	borderRadius: '5px',
 	boxShadow: 'none',
-	margin: 'auto',
 };
 
 export default SignIn;

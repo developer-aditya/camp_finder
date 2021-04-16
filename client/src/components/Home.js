@@ -35,12 +35,13 @@ const Home = () => {
 							</div>
 						</div>
 					</div>
-					<input
+					<button
 						type='submit'
-						value='Find Bootcamps'
-						className='btn cyan darken-1'
+						className='btn waves-effect cyan darken-1'
 						style={submitBtn}
-					/>
+					>
+						Find Bootcamps
+					</button>
 				</form>
 			</div>
 		</div>

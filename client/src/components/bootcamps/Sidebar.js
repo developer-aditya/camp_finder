@@ -28,12 +28,13 @@ const Sidebar = () => {
 								</div>
 							</div>
 						</div>
-						<input
+						<button
 							type='submit'
-							value='Find Bootcamps'
-							className='btn waves-effect cyan'
+							className='btn waves-effect cyan darken-1'
 							style={findBootcampBtn}
-						/>
+						>
+							Find Bootcamps
+						</button>
 					</form>
 				</div>
 			</div>
@@ -77,12 +78,13 @@ const Sidebar = () => {
 								</div>
 							</div>
 						</div>
-						<input
+						<button
 							type='submit'
-							value='Find Bootcamps'
-							className='btn waves-effect cyan'
+							className='btn waves-effect cyan darken-1'
 							style={findBootcampBtn}
-						/>
+						>
+							Find Bootcamps
+						</button>
 					</form>
 				</div>
 			</div>

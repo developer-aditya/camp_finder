@@ -8,20 +8,26 @@ const Navbar = ({ icon, title }) => {
 			<ul id='account' className='dropdown-content'>
 				{/* Manage Bootcamp for publisher user */}
 				<li>
-					<a href='#!'>Manage Bootcamp</a>
+					<Link to='#!' className='blue-grey-text'>
+						Manage Bootcamp
+					</Link>
 				</li>
 				{/* Manage Review for normal user */}
 				<li>
-					<a href='#!'>Manage Reviews</a>
+					<Link to='#!' className='blue-grey-text'>
+						Manage Reviews
+					</Link>
 				</li>
 				{/* For all users */}
 				<li>
-					<a href='#!'>Manage Account</a>
+					<Link to='#!' className='blue-grey-text'>
+						Manage Account
+					</Link>
 				</li>
 				<li>
-					<a href='#!'>
+					<Link to='/' className='blue-grey-text'>
 						<i class='fas fa-sign-out-alt'></i>Logout
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<nav className='blue-grey darken-4'>

@@ -5,7 +5,7 @@ function SingleBootcampDetails() {
 	const arr = [1, 2, 3];
 	return (
 		<React.Fragment>
-			<h3 style={{ marginTop: '0', textAlign: 'center' }}>
+			<h3 className='center' style={{ marginTop: '0' }}>
 				Devworks Bootcamp
 			</h3>
 			<p>
@@ -21,19 +21,10 @@ function SingleBootcampDetails() {
 			</div>
 
 			<p className='flow-text'>
-				Average Cost:{' '}
-				<span className='cyan' style={badge}>
-					$12000
-				</span>
+				Average Cost: <span className='cyan custom-badge'>$12000</span>
 			</p>
 		</React.Fragment>
 	);
 }
-
-const badge = {
-	color: 'white',
-	padding: '0.75rem',
-	borderRadius: '5px',
-};
 
 export default SingleBootcampDetails;

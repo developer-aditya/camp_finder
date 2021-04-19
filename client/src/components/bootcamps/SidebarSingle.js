@@ -25,23 +25,20 @@ function SidebarSingle() {
 					<div style={{ padding: '2rem 1rem' }}>
 						<Link
 							to='/singleBootcamp/readReview'
-							className='btn waves-effect blue-grey lighten-1 white-text'
-							style={sideBtn}
+							className='btn waves-effect blue-grey lighten-1 white-text side-btn'
 						>
 							<i className='far fa-comments'></i> Read Reviews
 						</Link>
 						{/* Show only for normal users not even publisher */}
 						<Link
 							to='/singleBootcamp/writeReview'
-							className='btn waves-effect blue-grey lighten-5 blue-grey-text modal-trigger'
-							style={sideBtn}
+							className='btn waves-effect blue-grey lighten-5 blue-grey-text modal-trigger side-btn'
 						>
 							<i className='fas fa-pen'></i> Write A Review
 						</Link>
 						<a
 							href='#website'
-							className='btn waves-effect cyan white-text '
-							style={sideBtn}
+							className='btn waves-effect cyan white-text  side-btn'
 						>
 							<i className='fas fa-globe'></i> Visit Website
 						</a>
@@ -84,14 +81,5 @@ function SidebarSingle() {
 		</React.Fragment>
 	);
 }
-
-const sideBtn = {
-	width: '100%',
-	marginBottom: '1rem',
-	textTransform: 'capitalize',
-	fontSize: '1.1rem',
-	height: '3.25rem',
-	lineHeight: '48px',
-};
 
 export default SidebarSingle;

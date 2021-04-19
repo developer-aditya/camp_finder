@@ -30,8 +30,7 @@ const Sidebar = () => {
 						</div>
 						<button
 							type='submit'
-							className='btn waves-effect cyan darken-1'
-							style={findBootcampBtn}
+							className='btn waves-effect cyan darken-1 find-bootcamp-btn'
 						>
 							Find Bootcamps
 						</button>
@@ -80,8 +79,7 @@ const Sidebar = () => {
 						</div>
 						<button
 							type='submit'
-							className='btn waves-effect cyan darken-1'
-							style={findBootcampBtn}
+							className='btn waves-effect cyan darken-1 find-bootcamp-btn'
 						>
 							Find Bootcamps
 						</button>
@@ -90,13 +88,6 @@ const Sidebar = () => {
 			</div>
 		</React.Fragment>
 	);
-};
-
-const findBootcampBtn = {
-	width: '100%',
-	textTransform: 'capitalize',
-	height: '3rem',
-	borderRadius: '5px',
 };
 
 export default Sidebar;

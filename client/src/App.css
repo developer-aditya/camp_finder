@@ -16,11 +16,57 @@ body {
 	color: #333;
 }
 
+.w-100 {
+	width: 100% !important;
+}
+.w-50 {
+	width: 50% !important;
+}
+
 .submit-btn {
 	width: 100%;
 	text-transform: capitalize !important;
 	font-size: 1.5rem !important;
 	height: 4rem !important;
+}
+
+.find-bootcamp-btn {
+	width: 100% !important;
+	text-transform: capitalize !important;
+	height: 3rem !important;
+	border-radius: 5px !important;
+}
+
+.side-btn {
+	width: 100% !important;
+	margin-bottom: 1rem !important;
+	text-transform: capitalize !important;
+	font-size: 1.1rem !important;
+	height: 3.25rem !important;
+	line-height: 48px !important;
+}
+
+.close-btn {
+	position: absolute !important;
+	top: 0 !important;
+	right: 0 !important;
+	margin: 0.75rem !important;
+}
+
+.sign-btn {
+	width: 100% !important;
+	text-transform: capitalize !important;
+	font-size: 1.5rem !important;
+	height: 3.25rem !important;
+	border-radius: 5px !important;
+	box-shadow: none !important;
+	margin-bottom: 2rem !important;
+}
+
+.custom-badge {
+	color: white !important;
+	padding: 0.75rem !important;
+	border-radius: 5px !important;
 }
 
 .text-area {
@@ -51,4 +97,19 @@ body {
 }
 .img-block:hover .upload-img-block {
 	display: flex !important;
+}
+
+.showcase {
+	position: relative !important;
+	width: 100% !important;
+	min-height: 91.5vh !important;
+	background: url(./public/image/background.jpg) no-repeat center top/cover !important;
+}
+
+.showcase-inner {
+	z-index: 2 !important;
+	padding: 2rem !important;
+	margin: auto !important;
+	border-radius: 5px !important;
+	background: rgba(0, 0, 0, 0.4) !important;
 }

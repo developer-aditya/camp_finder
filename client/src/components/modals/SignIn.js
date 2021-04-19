@@ -11,7 +11,7 @@ const SignIn = () => {
 				className='modal-content center-align'
 				style={{ padding: '2rem 2.5rem 1rem 2.5rem' }}
 			>
-				<i className=' fas fa-times modal-close' style={closeBtn}></i>
+				<i className=' fas fa-times modal-close close-btn'></i>
 				<h3>Sign In</h3>
 				<div style={{ paddingTop: '2rem' }}>
 					<div className='input-field'>
@@ -34,10 +34,9 @@ const SignIn = () => {
 					</div>
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect cyan modal-close'
+							className='btn waves-effect cyan modal-close sign-btn'
 							type='submit'
 							name='action'
-							style={signInBtn}
 						>
 							Sign In
 						</button>
@@ -52,7 +51,7 @@ const SignIn = () => {
 				</div>
 			</div>
 			<div className='modal-footer valign-wrapper'>
-				<p style={{ margin: 'auto' }}>
+				<p className='center w-100'>
 					Don't have a account?{' '}
 					<a
 						href='#signup-modal'
@@ -69,21 +68,6 @@ const SignIn = () => {
 const modalStyle = {
 	width: '450px',
 	color: '#555',
-};
-const closeBtn = {
-	position: 'absolute',
-	top: '0',
-	right: '0',
-	margin: '0.75rem',
-};
-const signInBtn = {
-	width: '100%',
-	textTransform: 'capitalize',
-	fontSize: '1.5rem',
-	height: '3.25rem',
-	borderRadius: '5px',
-	boxShadow: 'none',
-	marginBottom: '2rem',
 };
 
 export default SignIn;

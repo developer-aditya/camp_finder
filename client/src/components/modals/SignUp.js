@@ -7,7 +7,7 @@ const SignIn = () => {
 				className='modal-content center-align'
 				style={{ padding: '2rem 2.5rem 1rem 2.5rem' }}
 			>
-				<i className=' fas fa-times modal-close' style={closeBtn}></i>
+				<i className=' fas fa-times modal-close close-btn'></i>
 				<h3>Create Account</h3>
 				<p className='grey-text'>It's a free and fast process</p>
 				<div>
@@ -64,10 +64,9 @@ const SignIn = () => {
 
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect cyan modal-close'
+							className='btn waves-effect cyan modal-close sign-btn'
 							type='submit'
 							name='action'
-							style={signInBtn}
 						>
 							Sign Up
 						</button>
@@ -85,23 +84,8 @@ const SignIn = () => {
 
 const modalStyle = {
 	width: '500px',
-	minHeight: '81%',
+	minHeight: '83%',
 	color: '#555',
-	maxHeight: '80%',
-};
-const closeBtn = {
-	position: 'absolute',
-	top: '0',
-	right: '0',
-	margin: '0.75rem',
-};
-const signInBtn = {
-	width: '100%',
-	textTransform: 'capitalize',
-	fontSize: '1.5rem',
-	height: '3.25rem',
-	borderRadius: '5px',
-	boxShadow: 'none',
 };
 
 export default SignIn;

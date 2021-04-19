@@ -47,10 +47,9 @@ function WriteReview() {
 
 							<div className='input-feild'>
 								<button
-									className='btn waves-effect cyan modal-close'
+									className='btn waves-effect cyan submit-btn'
 									type='submit'
 									name='action'
-									style={submit}
 								>
 									Submit
 								</button>
@@ -62,15 +61,5 @@ function WriteReview() {
 		</div>
 	);
 }
-
-const submit = {
-	width: '100%',
-	textTransform: 'capitalize',
-	fontSize: '1.5rem',
-	height: '3.25rem',
-	borderRadius: '5px',
-	boxShadow: 'none',
-	marginTop: '1rem',
-};
 
 export default WriteReview;

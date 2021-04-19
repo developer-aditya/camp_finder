@@ -38,7 +38,7 @@ function ManageReview() {
 							</ul>
 						</div>
 						<div className='card-action'>
-							<a href='#delete' className='btn red'>
+							<a href='#delete' className='btn red darken-2'>
 								<i class='fas fa-minus-circle'></i> Delete All Reviews
 							</a>
 						</div>

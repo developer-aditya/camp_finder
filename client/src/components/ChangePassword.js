@@ -10,8 +10,7 @@ function ChangePassword() {
 					<div className='col s12 m8'>
 						<Link
 							to='/manageAccount'
-							className='btn blue-grey darken-3 '
-							style={{ marginTop: '0' }}
+							className='btn blue-grey darken-3 mt-0'
 						>
 							<i className='fas fa-arrow-circle-left'></i> Manage Account
 						</Link>

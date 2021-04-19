@@ -5,9 +5,7 @@ function SingleBootcampDetails() {
 	const arr = [1, 2, 3];
 	return (
 		<React.Fragment>
-			<h3 className='center' style={{ marginTop: '0' }}>
-				Devworks Bootcamp
-			</h3>
+			<h3 className='center mt-0'>Devworks Bootcamp</h3>
 			<p>
 				Devworks is a full stack JavaScript Bootcamp located in the heart of
 				Boston that focuses on the technologies you need to get a high

@@ -8,10 +8,7 @@ function ManageReview() {
 				<div className='col s12 l4'>
 					<div className='card'>
 						<div className='card-content'>
-							<h4
-								className='blue-grey-text center'
-								style={{ marginTop: '0' }}
-							>
+							<h4 className='blue-grey-text center mt-0'>
 								Your Reviews
 							</h4>
 							<ul className='collection'>

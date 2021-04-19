@@ -5,9 +5,7 @@ function ManageCourse() {
 	return (
 		<div className='card '>
 			<div className='card-content'>
-				<h4 className='blue-grey-text center' style={{ marginTop: '0' }}>
-					Courses
-				</h4>
+				<h4 className='blue-grey-text center mt-0'>Courses</h4>
 				<ul className='collection'>
 					<li
 						className='collection-item'

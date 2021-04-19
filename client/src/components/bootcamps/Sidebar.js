@@ -5,7 +5,7 @@ const Sidebar = () => {
 		<React.Fragment>
 			<div className='card'>
 				<div className='card-content'>
-					<h5 style={{ marginTop: '0' }}>By Location...</h5>
+					<h5 className='mt-0'>By Location...</h5>
 					<form>
 						<div className='row'>
 							<div className='col s6'>
@@ -40,7 +40,7 @@ const Sidebar = () => {
 
 			<div className='card'>
 				<div className='card-content'>
-					<h5 style={{ marginTop: '0' }}>Filter...</h5>
+					<h5 className='mt-0'>Filter...</h5>
 					<form>
 						<div className='row'>
 							<div className='col s12'>

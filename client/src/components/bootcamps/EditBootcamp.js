@@ -10,7 +10,7 @@ function EditBootcamp(props) {
 		<div className='grey lighten-4  page-layout'>
 			<div className='container'>
 				<div className='center'>
-					<h3 style={{ marginTop: '0' }}>{props.type} Bootcamp</h3>
+					<h3 className='mt-0'>{props.type} Bootcamp</h3>
 					<p>
 						Important: You must be affiliated with a bootcamp to add to
 						CampFinder

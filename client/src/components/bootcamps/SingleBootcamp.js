@@ -37,8 +37,7 @@ const SingleBootcamp = () => {
 										<React.Fragment>
 											<Link
 												to='/singleBootcamp'
-												className='btn blue-grey darken-3 '
-												style={{ marginTop: '0' }}
+												className='btn blue-grey darken-3 mt-0'
 											>
 												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
@@ -56,8 +55,7 @@ const SingleBootcamp = () => {
 										<React.Fragment>
 											<Link
 												to='/singleBootcamp'
-												className='btn blue-grey darken-3 '
-												style={{ marginTop: '0' }}
+												className='btn blue-grey darken-3 mt-0'
 											>
 												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details

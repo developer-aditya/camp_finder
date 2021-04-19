@@ -32,7 +32,6 @@ const SignIn = () => {
 							placeholder='Password'
 						/>
 					</div>
-
 					<div className='input-feild'>
 						<button
 							className='btn waves-effect cyan modal-close'
@@ -43,14 +42,12 @@ const SignIn = () => {
 							Sign In
 						</button>
 					</div>
+					Forgot Password?{' '}
 					<a
-						href='#forgot-password'
-						className='center cyan-text'
-						style={{
-							fontSize: '1.15rem',
-						}}
+						href='#forgot-modal'
+						className='modal-trigger center cyan-text modal-close'
 					>
-						Forgot Password?
+						Reset Here
 					</a>
 				</div>
 			</div>

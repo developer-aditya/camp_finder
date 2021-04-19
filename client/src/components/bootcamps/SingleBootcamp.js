@@ -17,10 +17,7 @@ const SingleBootcamp = () => {
 	const arr = [1, 2, 3];
 	return (
 		<Router>
-			<div
-				className='grey lighten-4'
-				style={{ padding: '3rem 2rem', minHeight: '90vh' }}
-			>
+			<div className='grey lighten-4 page-layout'>
 				<div className='row'>
 					<div className='col s12 m5 l4 xl3'>
 						<SidebarSingle />
@@ -43,7 +40,7 @@ const SingleBootcamp = () => {
 												className='btn blue-grey darken-3 '
 												style={{ marginTop: '0' }}
 											>
-												<i class='fas fa-arrow-circle-left'></i>{' '}
+												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
 											</Link>
 											{arr.map((element) => (
@@ -62,7 +59,7 @@ const SingleBootcamp = () => {
 												className='btn blue-grey darken-3 '
 												style={{ marginTop: '0' }}
 											>
-												<i class='fas fa-arrow-circle-left'></i>{' '}
+												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
 											</Link>
 											<WriteReview />

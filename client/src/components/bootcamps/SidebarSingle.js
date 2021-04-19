@@ -7,7 +7,7 @@ function SidebarSingle() {
 			<img
 				width='100%'
 				src='https://source.unsplash.com/user/erondu/1600x900'
-				class='materialboxed'
+				className='materialboxed'
 				alt='bootcamp-img'
 			/>
 			<div className='card blue-grey darken-3 white-text center-align'>
@@ -28,7 +28,7 @@ function SidebarSingle() {
 							className='btn waves-effect blue-grey lighten-1 white-text'
 							style={sideBtn}
 						>
-							<i class='far fa-comments'></i> Read Reviews
+							<i className='far fa-comments'></i> Read Reviews
 						</Link>
 						{/* Show only for normal users not even publisher */}
 						<Link
@@ -36,46 +36,46 @@ function SidebarSingle() {
 							className='btn waves-effect blue-grey lighten-5 blue-grey-text modal-trigger'
 							style={sideBtn}
 						>
-							<i class='fas fa-pen'></i> Write A Review
+							<i className='fas fa-pen'></i> Write A Review
 						</Link>
 						<a
 							href='#website'
 							className='btn waves-effect cyan white-text '
 							style={sideBtn}
 						>
-							<i class='fas fa-globe'></i> Visit Website
+							<i className='fas fa-globe'></i> Visit Website
 						</a>
 					</div>
 				</div>
 			</div>
 			<div className='card '>
 				<div className='card-content'>
-					<ul class='collection with-header'>
-						<li class='collection-header center blue-grey-text'>
+					<ul className='collection with-header'>
+						<li className='collection-header center blue-grey-text'>
 							<p className='flow-text'>Features</p>
 						</li>
-						<li class='collection-item'>
+						<li className='collection-item'>
 							Housing{' '}
 							<span className='secondary-content'>
-								<i class='fas fa-check'></i>
+								<i className='fas fa-check'></i>
 							</span>
 						</li>
-						<li class='collection-item'>
+						<li className='collection-item'>
 							Job Assistance{' '}
 							<span className='secondary-content'>
-								<i class='fas fa-check'></i>
+								<i className='fas fa-check'></i>
 							</span>
 						</li>
-						<li class='collection-item'>
+						<li className='collection-item'>
 							Job Guarantee{' '}
 							<span className='secondary-content'>
-								<i class='fas fa-times red-text'></i>
+								<i className='fas fa-times red-text'></i>
 							</span>
 						</li>
-						<li class='collection-item'>
+						<li className='collection-item'>
 							Accepts GI Bill{' '}
 							<span className='secondary-content'>
-								<i class='fas fa-times red-text'></i>
+								<i className='fas fa-times red-text'></i>
 							</span>
 						</li>
 					</ul>

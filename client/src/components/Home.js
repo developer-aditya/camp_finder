@@ -9,7 +9,7 @@ const Home = () => {
 				style={showcaseInner}
 			>
 				<h2>Find a Coding Bootcamp</h2>
-				<p className='flow-text'>
+				<p className='flow-text' style={{ marginBottom: '1rem' }}>
 					Find, rate and read reviews on coding bootcamps
 				</p>
 				<form>
@@ -37,10 +37,9 @@ const Home = () => {
 					</div>
 					<button
 						type='submit'
-						className='btn waves-effect cyan darken-1'
-						style={submitBtn}
+						className='btn waves-effect cyan submit-btn'
 					>
-						Find Bootcamps
+						<i class='fas fa-search'></i> Find Bootcamps
 					</button>
 				</form>
 			</div>
@@ -60,14 +59,6 @@ const showcaseInner = {
 	margin: 'auto',
 	borderRadius: '5px',
 	background: 'rgba(0, 0, 0, 0.4)',
-};
-
-const submitBtn = {
-	width: '100%',
-	textTransform: 'capitalize',
-	fontSize: '1.5rem',
-	height: '4rem',
-	borderRadius: '5px',
 };
 
 export default Home;

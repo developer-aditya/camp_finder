@@ -3,14 +3,14 @@ import React from 'react';
 const Course = (props) => {
 	return (
 		<React.Fragment>
-			<div class='card' key={props.element}>
+			<div className='card' key={props.element}>
 				<div
-					class='card-title blue-grey darken-3 white-text'
+					className='card-title blue-grey darken-3 white-text'
 					style={{ padding: '0.75rem 1.5rem' }}
 				>
 					Full Stack web Development
 				</div>
-				<div class='card-content'>
+				<div className='card-content'>
 					<p className='flow-text blue-grey-text'>Duration: 8 Week</p>
 					<p>
 						This course will provide you with all of the essentials to
@@ -19,12 +19,12 @@ const Course = (props) => {
 						like Git, VSCode and front end frameworks like Vue
 					</p>
 					<ul
-						class='collection blue-grey-text'
+						className='collection blue-grey-text'
 						style={{ margin: '1rem 0' }}
 					>
-						<li class='collection-item'>Cost: $8,000 USD</li>
-						<li class='collection-item'>Skill Required: Beginner</li>
-						<li class='collection-item'>
+						<li className='collection-item'>Cost: $8,000 USD</li>
+						<li className='collection-item'>Skill Required: Beginner</li>
+						<li className='collection-item'>
 							Scholarship Available:{' '}
 							<i className='fas fa-check green-text'></i>
 						</li>

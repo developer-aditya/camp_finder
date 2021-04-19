@@ -6,7 +6,7 @@ function WriteReview() {
 			<div className='col s12 l10'>
 				<div className='card'>
 					<div
-						class='card-title blue-grey lighten-1 white-text'
+						className='card-title blue-grey lighten-1 white-text'
 						style={{ padding: '0.75rem 1.5rem' }}
 					>
 						Submit Your Review
@@ -20,7 +20,7 @@ function WriteReview() {
 							<p>
 								Rating: <span className='cyan-text'>8</span>
 							</p>
-							<div class='input-feild'>
+							<div className='input-feild'>
 								<input
 									type='range'
 									min='1'
@@ -31,13 +31,13 @@ function WriteReview() {
 								/>
 							</div>
 
-							<div class='input-feild'>
+							<div className='input-feild'>
 								<label htmlFor='title'>Review title</label>
 								<input type='text' name='title' id='title' />
 							</div>
 
-							<div class='input-feild'>
-								<label htmlFor='title'>Your review</label>
+							<div className='input-feild'>
+								<label htmlFor='review'>Your review</label>
 								<textarea
 									name='review'
 									id='review'

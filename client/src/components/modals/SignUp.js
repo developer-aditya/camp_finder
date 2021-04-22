@@ -75,7 +75,7 @@ const SignIn = () => {
 			</div>
 			<div className='modal-footer'>
 				<p className='center-align'>
-					You must be affiliated with the bootcamp to add it to DevCamper
+					You must be affiliated with the bootcamp to add it to Camp Finder
 				</p>
 			</div>
 		</div>

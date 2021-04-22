@@ -19,19 +19,14 @@ const User = require('./server/models/user.model');
 const Review = require('./server/models/reviews.model');
 
 async function connectDB() {
-	const conn = await Mongoose.connect(
-		'mongodb://localhost:27017/devcamper',
-		{
-			useNewUrlParser: true,
-			useCreateIndex: true,
-			useFindAndModify: false,
-			useUnifiedTopology: true,
-		},
-	);
+	const conn = await Mongoose.connect('mongodb://localhost:27017/campfinder', {
+		useNewUrlParser: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
+		useUnifiedTopology: true,
+	});
 
-	console.log(
-		`Connected To ${conn.connection.host}:${conn.connection.port} `,
-	);
+	console.log(`Connected To ${conn.connection.host}:${conn.connection.port} `);
 }
 
 const bootcamps = JSON.parse(

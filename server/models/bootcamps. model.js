@@ -16,7 +16,7 @@ const BootcampSchema = new Mongoose.Schema(
 			trim: true,
 			maxlength: [50, 'Name cannot be greater than 50 words'],
 		},
-		// Slug is lowercase simplified form of name (url friendly) (DevCamper Bootcamp ->devcamper-bootcamp)
+		// Slug is lowercase simplified form of name (url friendly) (CampFinder Bootcamp ->CampFinder-bootcamp)
 		slug: String,
 		description: {
 			type: String,
@@ -32,10 +32,7 @@ const BootcampSchema = new Mongoose.Schema(
 		},
 		phone: {
 			type: String,
-			maxlength: [
-				20,
-				'Phone number can not be longer than 20 characters',
-			],
+			maxlength: [20, 'Phone number can not be longer than 20 characters'],
 		},
 		email: {
 			type: String,
@@ -155,8 +152,4 @@ BootcampSchema.virtual('course', {
 	justOne: false,
 });
 
-module.exports = Mongoose.model(
-	'Bootcamp',
-	BootcampSchema,
-	'bootcampsColl',
-);
+module.exports = Mongoose.model('Bootcamp', BootcampSchema, 'bootcampsColl');

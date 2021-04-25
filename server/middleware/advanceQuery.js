@@ -1,3 +1,5 @@
+const geocoder = require('../utils/geocoder');
+
 const advanceQueryResult = (model, populate) => async (req, res, next) => {
 	let query;
 	let reqQuery = { ...req.query };
@@ -21,6 +23,22 @@ const advanceQueryResult = (model, populate) => async (req, res, next) => {
 		else if (reqQuery[element] === 'false') reqQuery[element] = false;
 	});
 
+	// If request made by /:zipcode/:radius route -- adding location feild to query
+	if (JSON.stringify(req.params) !== '{}') {
+		const { zipcode, distance } = req.params;
+		const radius = distance / 3958.8;
+		// Point of zipcode
+		const loc = await geocoder.geocode(zipcode);
+		reqQuery = {
+			...reqQuery,
+			location: {
+				$geoWithin: {
+					$centerSphere: [[loc[0].longitude, loc[0].latitude], radius],
+				},
+			},
+		};
+	}
+
 	// FINDING RESOURCE
 	query = model.find(reqQuery);
 
@@ -39,7 +57,7 @@ const advanceQueryResult = (model, populate) => async (req, res, next) => {
 	}
 
 	const page = parseInt(req.query.page, 10) || 1;
-	const lim = parseInt(req.query.limit, 10) || 10;
+	const lim = parseInt(req.query.limit, 10) || 5;
 	const lowerLim = (page - 1) * lim;
 	const upperLim = page * lim;
 	const total = await model.countDocuments();

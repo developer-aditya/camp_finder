@@ -1,42 +1,103 @@
-import React from 'react';
-import BootcampListItem from './BootcampListItem';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const BootcampList = () => {
-	const arr = [1, 2, 3, 4, 5];
+import { connect } from 'react-redux';
+import {
+	getAllBootcamp,
+	getDistanceBootcamp,
+} from '../../actions/bootcampAction';
+
+const BootcampList = ({
+	bootcamp: { loading, bootcamps, pagination, params },
+	queryState,
+	getAllBootcamp,
+	getDistanceBootcamp,
+}) => {
+	const [page, setPage] = useState(1);
+
+	useEffect(() => {
+		let query = `select=name,location,careers,averageRating,averageCost&page=${page}`;
+		if (queryState.rating !== '0') {
+			query = query + `&averageRating=${queryState.rating}`;
+		}
+		query =
+			query +
+			`&averageCost[gte]=${queryState.range[0]}&&averageCost[lte]=${queryState.range[1]}`;
+
+		if (params === null) getAllBootcamp(query);
+		else getDistanceBootcamp(query, params.distance, params.pincode);
+		// eslint-disable-next-line
+	}, [page, params, queryState]);
+
+	if (loading)
+		return (
+			<div className='progress'>
+				<div className='indeterminate'></div>
+			</div>
+		);
+
 	return (
 		<React.Fragment>
-			{arr.map((element) => (
-				<BootcampListItem element={element} key={element} />
+			{bootcamps.map((element) => (
+				<div
+					className='card horizontal'
+					style={{ marginBottom: '2rem' }}
+					key={element.id}
+				>
+					<div className='card-image'>
+						<img
+							src='https://source.unsplash.com/user/erondu/1600x900'
+							alt='camp-img'
+						/>
+					</div>
+					<div className='card-stacked'>
+						<div className='card-content'>
+							<div className='card-title'>
+								<Link to='/singleBootcamp'>{element.name}</Link>
+								<span className='light-blue right white-text valign-wrapper rating'>
+									{element.averageRating}
+								</span>
+							</div>
+							<p className='blue-grey-text'>
+								{element.location.city} , {element.location.country}
+							</p>
+							<ul>
+								{element.careers.map((career, index) => (
+									<li key={index}>{career}</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				</div>
 			))}
-			<ul className='pagination center-align' style={{ marginTop: '3rem' }}>
-				<li className='disabled'>
-					<a href='#!'>
-						<i className='fas fa-angle-left'></i>
-					</a>
-				</li>
-				<li className='active cyan'>
-					<a href='#!'>1</a>
-				</li>
-				<li className='waves-effect'>
-					<a href='#!'>2</a>
-				</li>
-				<li className='waves-effect'>
-					<a href='#!'>3</a>
-				</li>
-				<li className='waves-effect'>
-					<a href='#!'>4</a>
-				</li>
-				<li className='waves-effect'>
-					<a href='#!'>5</a>
-				</li>
-				<li className='waves-effect'>
-					<a href='#!'>
-						<i className='fas fa-angle-right'></i>
-					</a>
-				</li>
-			</ul>
+			{pagination.next ? (
+				<button
+					className='btn light-blue right'
+					style={{ textTransform: 'capitalize' }}
+					onClick={(e) => setPage(pagination.next.page)}
+				>
+					Next Page <i class='fas fa-arrow-alt-circle-right'></i>
+				</button>
+			) : (
+				''
+			)}
+			{pagination.prev ? (
+				<button
+					className='btn light-blue circle left'
+					style={{ textTransform: 'capitalize' }}
+					onClick={(e) => setPage(pagination.prev.page)}
+				>
+					<i class='fas fa-arrow-alt-circle-left'></i> Previous Page
+				</button>
+			) : (
+				''
+			)}
 		</React.Fragment>
 	);
 };
 
-export default BootcampList;
+const mapStateToProps = (state) => ({ bootcamp: state.bootcamp });
+export default connect(mapStateToProps, {
+	getAllBootcamp,
+	getDistanceBootcamp,
+})(BootcampList);

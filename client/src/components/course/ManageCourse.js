@@ -33,7 +33,7 @@ function ManageCourse() {
 				</ul>
 			</div>
 			<div className='card-action'>
-				<Link to='/manageBootcamp/editCourse' className='btn cyan'>
+				<Link to='/manageBootcamp/editCourse' className='btn light-blue'>
 					<i className='fas fa-plus-circle'></i> Add New Course
 				</Link>
 			</div>

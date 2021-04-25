@@ -18,7 +18,7 @@ function WriteReview() {
 						</p>
 						<form style={{ padding: '1rem 2rem' }}>
 							<p>
-								Rating: <span className='cyan-text'>8</span>
+								Rating: <span className='light-blue-text'>8</span>
 							</p>
 							<div className='input-feild'>
 								<input
@@ -47,7 +47,7 @@ function WriteReview() {
 
 							<div className='input-feild'>
 								<button
-									className='btn waves-effect cyan submit-btn'
+									className='btn waves-effect light-blue submit-btn'
 									type='submit'
 									name='action'
 								>

@@ -4,14 +4,14 @@ function ReadReview(props) {
 	return (
 		<div>
 			<React.Fragment>
-				<div class='card' key={props.element}>
+				<div className='card' key={props.element}>
 					<p
-						class='flow-text blue-grey darken-3 white-text'
+						className='flow-text blue-grey darken-3 white-text'
 						style={{ padding: '0.5rem 1.5rem' }}
 					>
 						Fantastic Bootcamp
 					</p>
-					<div class='card-content'>
+					<div className='card-content'>
 						<p className='flow-text blue-grey-text'>
 							Rating: <span className='green-text'>8</span>
 						</p>

@@ -72,10 +72,11 @@ ReviewSchema.pre('remove', function () {
 	this.model('Review').getAverageRating(this.bootcamp);
 });
 
-// restrict a user to add review to a particular bootcamp once
-// creating a index(primary key) using two feilds bootcamp and user
-// Both combined must be unique
-// this is called Composite Key
+// restrict a user to add review to a particular bootcamp twice
+// creating a index using two feilds bootcamp and user and make it unique
+// Indexing helps to serach faster by hashing that feild otherwise searching is done linearly
+// below code will create new index with bootcamp user values combined and that would be unique
+// By default _id feild is indexed and made unique
 ReviewSchema.index({ bootcamp: 1, user: 1 }, { unique: true });
 
 module.exports = Mongoose.model('Review', ReviewSchema, 'reviewsColl');

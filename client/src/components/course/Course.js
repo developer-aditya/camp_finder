@@ -3,7 +3,7 @@ import React from 'react';
 const Course = (props) => {
 	return (
 		<React.Fragment>
-			<div className='card' key={props.element}>
+			<div className='card'>
 				<div
 					className='card-title blue-grey darken-3 white-text'
 					style={{ padding: '0.75rem 1.5rem' }}

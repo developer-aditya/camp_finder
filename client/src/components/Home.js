@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Home = () => {
+import { setParams } from '../actions/bootcampAction';
+import { connect } from 'react-redux';
+
+import M from '../../node_modules/materialize-css/dist/js/materialize.min';
+
+const Home = ({ setParams, history }) => {
+	const [distance, setDistance] = useState('');
+	const [pincode, setPincode] = useState('');
+
+	const setParamsState = (e) => {
+		if (distance === '' || pincode === '') {
+			M.toast({ html: 'Please Enter Pincode and Distance' });
+		} else if (
+			!/^\+?(0|[1-9]\d*)$/.test(distance) ||
+			!/^[0-9]{1}[0-9]{2}\s{0,1}[0-9]{2}$/.test(pincode)
+		) {
+			M.toast({ html: 'Distance and Pincode must be valid' });
+		} else {
+			setParams(distance, pincode);
+			history.push('/bootcamps');
+		}
+		e.preventDefault();
+	};
+
 	return (
 		<div className='showcase valign-wrapper'>
 			<div className='showcase-inner center-align white-text'>
@@ -17,6 +40,8 @@ const Home = () => {
 									name='distance'
 									placeholder='Distance From'
 									className='white-text'
+									value={distance}
+									onChange={(e) => setDistance(e.target.value)}
 								/>
 							</div>
 						</div>
@@ -27,15 +52,17 @@ const Home = () => {
 									name='pincode'
 									placeholder='Enter Pincode'
 									className='white-text'
+									value={pincode}
+									onChange={(e) => setPincode(e.target.value)}
 								/>
 							</div>
 						</div>
 					</div>
 					<button
-						type='submit'
-						className='btn waves-effect cyan submit-btn'
+						className='btn waves-effect light-blue submit-btn'
+						onClick={setParamsState}
 					>
-						<i class='fas fa-search'></i> Find Bootcamps
+						<i className='fas fa-search'></i> Find Bootcamps
 					</button>
 				</form>
 			</div>
@@ -43,4 +70,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default connect(null, { setParams })(Home);

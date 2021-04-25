@@ -24,7 +24,13 @@ router.use('/:bootcampId/courses', courseRouter);
 // Re-routing to courses for /bootcamps/:bootcampId/reviews
 router.use('/:bootcampId/reviews', reviewRouter);
 
-router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
+router.route('/radius/:zipcode/:distance').get(
+	advanceQueryResult(Bootcamp, {
+		path: 'course',
+		select: 'title description',
+	}),
+	getBootcampsInRadius,
+);
 
 router
 	.route('/')

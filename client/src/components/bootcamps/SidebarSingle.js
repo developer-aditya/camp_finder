@@ -14,10 +14,7 @@ function SidebarSingle() {
 				<div className='card-content'>
 					<p className='flow-text'>
 						Average Rating
-						<span
-							className='cyan circle'
-							style={{ padding: '0.75rem', marginLeft: '1rem' }}
-						>
+						<span className='light-blue right white-text valign-wrapper rating'>
 							8.8
 						</span>
 					</p>
@@ -38,7 +35,7 @@ function SidebarSingle() {
 						</Link>
 						<a
 							href='#website'
-							className='btn waves-effect cyan white-text  side-btn'
+							className='btn waves-effect light-blue white-text  side-btn'
 						>
 							<i className='fas fa-globe'></i> Visit Website
 						</a>

@@ -43,7 +43,7 @@ function ManageBootcampDetail() {
 					<h5 className='card-title'>
 						<Link to='/singleBootcamp'>Devworks Bootcamp</Link>
 						<span
-							className='cyan circle right white-text'
+							className='light-blue circle right white-text'
 							style={{ padding: '0.5rem', marginLeft: '1rem' }}
 						>
 							8.8

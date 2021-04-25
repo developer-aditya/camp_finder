@@ -58,7 +58,7 @@ function ChangePassword() {
 							<div className='col s6'>
 								<a
 									href='#submit'
-									className='btn cyan waves-effect w-100'
+									className='btn light-blue waves-effect w-100'
 								>
 									Update Password
 								</a>

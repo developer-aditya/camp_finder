@@ -138,7 +138,7 @@ function EditBootcamp(props) {
 				</div>
 				<div className='row'>
 					<div className=' center'>
-						<button className='btn submit-btn waves-effect cyan w-50'>
+						<button className='btn submit-btn waves-effect light-blue w-50'>
 							{props.type} Bootcamp
 						</button>
 					</div>

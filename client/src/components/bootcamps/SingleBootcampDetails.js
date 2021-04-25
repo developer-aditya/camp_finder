@@ -14,12 +14,13 @@ function SingleBootcampDetails() {
 
 			<div style={{ margin: '2rem 0' }}>
 				{arr.map((element) => (
-					<Course element={element} />
+					<Course element={element} key={element} />
 				))}
 			</div>
 
 			<p className='flow-text'>
-				Average Cost: <span className='cyan custom-badge'>$12000</span>
+				Average Cost:{' '}
+				<span className='light-blue custom-badge'>$12000</span>
 			</p>
 		</React.Fragment>
 	);

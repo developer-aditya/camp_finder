@@ -2,7 +2,6 @@
 const Bootcamp = require('../models/bootcamps. model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const geocoder = require('../utils/geocoder');
 const path = require('path');
 
 // @desc  GET all bootcamps with query
@@ -17,24 +16,8 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 // @route /api/v1/bootcamps/radius/:zipcode/:distance
 // @access public
 exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
-	const { zipcode, distance } = req.params;
-	const radius = distance / 3958.8;
-	// Point of zipcode
-	const loc = await geocoder.geocode(zipcode);
-
-	const bootcamp = await Bootcamp.find({
-		location: {
-			$geoWithin: {
-				$centerSphere: [[loc[0].longitude, loc[0].latitude], radius],
-			},
-		},
-	});
-
-	res.status(200).json({
-		success: true,
-		msg: `${bootcamp.length} Bootcamps Fetched Within ${distance}`,
-		data: bootcamp,
-	});
+	// RESOURCE
+	res.status(200).json(res.resource);
 });
 
 // @desc  GET one bootcamp by id
@@ -44,10 +27,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 	res.status(200).json({
@@ -89,10 +69,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -127,10 +104,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -162,10 +136,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 

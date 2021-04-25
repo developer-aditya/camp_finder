@@ -26,7 +26,7 @@ const ForgotPassword = () => {
 					</div>
 
 					<div className='row center'>
-						<button className='btn waves-effect cyan w-50'>
+						<button className='btn waves-effect light-blue w-50'>
 							Send Reset Link
 						</button>
 					</div>

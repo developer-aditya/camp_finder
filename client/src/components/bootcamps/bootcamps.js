@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import BootcampList from './BootcampList';
 
 const Bootcamps = () => {
+	const [filter, setFilter] = useState({ rating: '0', range: ['0', '20000'] });
+
+	const setQueryUtil = (ratingArg, rangeValue) => {
+		setFilter({ rating: ratingArg, range: rangeValue });
+	};
+
 	return (
 		<div className='grey lighten-4 page-layout'>
 			<div className='row'>
 				<div className='col col s12 m5 l4 xl3'>
-					<Sidebar />
+					<Sidebar setQuery={setQueryUtil} />
 				</div>
 				<div className='col s12 m7 l8 xl9'>
 					<div className='container'>
-						<BootcampList />
+						<BootcampList queryState={filter} />
 					</div>
 				</div>
 			</div>

@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ icon, title }) => {
+import { removeParams } from '../../actions/bootcampAction';
+import { connect } from 'react-redux';
+
+const Navbar = ({ icon, title, removeParams }) => {
 	return (
 		<React.Fragment>
 			<ul id='account' className='dropdown-content'>
@@ -66,8 +69,9 @@ const Navbar = ({ icon, title }) => {
 						</li>
 						{/* Always show */}
 						<li>
-							<Link to='/bootcamps'>
-								<i className='fas fa-search-location left'></i>Bootcamp
+							<Link to='/bootcamps' onClick={removeParams}>
+								<i className='fas fa-search-location left'></i> All
+								Bootcamp
 							</Link>
 						</li>
 					</ul>
@@ -82,4 +86,4 @@ Navbar.propTypes = {
 	title: PropTypes.string.isRequired,
 };
 
-export default Navbar;
+export default connect(null, { removeParams })(Navbar);

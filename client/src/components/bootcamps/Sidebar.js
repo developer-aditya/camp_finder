@@ -1,6 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Sidebar = () => {
+import { setParams } from '../../actions/bootcampAction';
+import { connect } from 'react-redux';
+
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+import noUiSlider from '../../../node_modules/materialize-css/extras/noUiSlider/nouislider.min';
+import '../../../node_modules/materialize-css/extras/noUiSlider/nouislider.css';
+
+const Sidebar = ({ setParams, setQuery }) => {
+	useEffect(() => {
+		let slider = document.getElementById('test-slider');
+		noUiSlider.create(slider, {
+			start: [500, 20000],
+			connect: true,
+			range: {
+				min: 500,
+				max: 20000,
+			},
+		});
+		// eslint-disable-next-line
+	}, []);
+
+	const [distance, setDistance] = useState('');
+	const [pincode, setPincode] = useState('');
+
+	const [rating, setRating] = useState('0');
+
+	const setParamsState = (e) => {
+		if (distance === '' || pincode === '') {
+			M.toast({ html: 'Please Enter Pincode and Distance' });
+		} else if (
+			!/^\+?(0|[1-9]\d*)$/.test(distance) ||
+			!/^[0-9]{1}[0-9]{2}\s{0,1}[0-9]{2}$/.test(pincode)
+		) {
+			M.toast({ html: 'Distance and Pincode must be valid' });
+		} else {
+			setParams(distance, pincode);
+		}
+		e.preventDefault();
+	};
+
 	return (
 		<React.Fragment>
 			<div className='card'>
@@ -14,6 +53,8 @@ const Sidebar = () => {
 										type='text'
 										name='distance'
 										placeholder='Distance From'
+										value={distance}
+										onChange={(e) => setDistance(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -21,16 +62,17 @@ const Sidebar = () => {
 								<div className='input-group'>
 									<input
 										type='text'
-										className='form-control'
 										name='pincode'
 										placeholder='Enter Pincode'
+										value={pincode}
+										onChange={(e) => setPincode(e.target.value)}
 									/>
 								</div>
 							</div>
 						</div>
 						<button
-							type='submit'
-							className='btn waves-effect cyan darken-1 find-bootcamp-btn'
+							className='btn waves-effect light-blue find-bootcamp-btn'
+							onClick={setParamsState}
 						>
 							Find Bootcamps
 						</button>
@@ -48,40 +90,45 @@ const Sidebar = () => {
 									<select
 										name='rating'
 										id='rating'
-										defaultValue={'0'}
+										value={rating}
+										onChange={(e) => setRating(e.target.value)}
 										className='browser-default'
 									>
-										<option value='0' disabled>
-											Rating
-										</option>
-										<option value='1'>2</option>
-										<option value='2'>1</option>
+										<option value='0'>Rating</option>
+										{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
+											(element) => (
+												<option value={element} key={element}>
+													{element}
+												</option>
+											),
+										)}
 									</select>
 								</div>
 							</div>
 
 							<div className='col s12'>
 								<div className='input-group'>
-									<select
-										name='budget'
-										id='budget'
-										defaultValue={'0'}
-										className='browser-default'
-									>
-										<option value='0' disabled>
-											Budget
-										</option>
-										<option value='1'>2</option>
-										<option value='2'>1</option>
-									</select>
+									<div
+										id='test-slider'
+										style={{ margin: '3.25rem 0 1rem 0' }}
+									></div>
+									<span>Average Cost</span>
 								</div>
 							</div>
 						</div>
 						<button
-							type='submit'
-							className='btn waves-effect cyan darken-1 find-bootcamp-btn'
+							className='btn waves-effect light-blue find-bootcamp-btn'
+							onClick={(e) => {
+								setQuery(
+									rating,
+									document
+										.getElementById('test-slider')
+										.noUiSlider.get(),
+								);
+								e.preventDefault();
+							}}
 						>
-							Find Bootcamps
+							Apply Filter
 						</button>
 					</form>
 				</div>
@@ -90,4 +137,4 @@ const Sidebar = () => {
 	);
 };
 
-export default Sidebar;
+export default connect(null, { setParams })(Sidebar);

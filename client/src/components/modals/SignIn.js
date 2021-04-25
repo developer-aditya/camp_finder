@@ -34,7 +34,7 @@ const SignIn = () => {
 					</div>
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect cyan modal-close sign-btn'
+							className='btn waves-effect light-blue modal-close sign-btn'
 							type='submit'
 							name='action'
 						>
@@ -44,7 +44,7 @@ const SignIn = () => {
 					Forgot Password?{' '}
 					<a
 						href='#forgot-modal'
-						className='modal-trigger center cyan-text modal-close'
+						className='modal-trigger center light-blue-text modal-close'
 					>
 						Reset Here
 					</a>
@@ -55,7 +55,7 @@ const SignIn = () => {
 					Don't have a account?{' '}
 					<a
 						href='#signup-modal'
-						className='modal-trigger cyan-text modal-close'
+						className='modal-trigger light-blue-text modal-close'
 					>
 						Create One
 					</a>

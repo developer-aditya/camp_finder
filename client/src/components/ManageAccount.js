@@ -40,7 +40,7 @@ function ManageAccount() {
 							<div className='col s6'>
 								<a
 									href='#submit'
-									className='btn cyan waves-effect'
+									className='btn light-blue waves-effect'
 									style={{ width: '100%' }}
 								>
 									Update Account

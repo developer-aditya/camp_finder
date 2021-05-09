@@ -27,9 +27,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 	const { email, password } = req.body;
 
 	if (!email || !password) {
-		return next(
-			new ErrorResponse(`Please Enter Email and Password`, 400),
-		);
+		return next(new ErrorResponse(`Please Enter Email and Password`, 400));
 	}
 
 	const user = await User.findOne({ email }).select('+password');
@@ -49,7 +47,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @route /api/v1/auth/me
 // @access public
 exports.getMe = asyncHandler(async (req, res, next) => {
-	res.status(200).json({ success: true, data: req.user });
+	const { role, name, email } = req.user;
+	res.status(200).json({ success: true, user: { role, name, email } });
 });
 
 // @desc POST user email for Forget Password Token to be sent to that email
@@ -69,7 +68,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
 	const resetRoute = `${req.protocol}://${req.get(
 		'host',
-	)}/api/v1/auth/resetpassword/${resetToken}`;
+	)}/manageAccount/resetPassword/${resetToken}`;
 
 	const message = `You have Recieved this email because you (or someone else) has requested reset password.\nPlease send a put request on the route to reset Password:\n\n ${resetRoute}`;
 
@@ -123,10 +122,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 	const samePassword = await user.validatePassword(req.body.password);
 	if (samePassword) {
 		return next(
-			new ErrorResponse(
-				`New Password Cannot same as Last 5 Password `,
-				400,
-			),
+			new ErrorResponse(`New Password Cannot same as Last 5 Password `, 400),
 		);
 	}
 
@@ -151,20 +147,14 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 	const { password, resetPasswordToken, role } = req.body;
 	if (password || resetPasswordToken) {
 		return next(
-			new ErrorResponse(
-				'Unauthorized! update Password Not Allowed',
-				401,
-			),
+			new ErrorResponse('Unauthorized! update Password Not Allowed', 401),
 		);
 	}
 
 	// Must Not Update to admin
 	if (role && role === 'admin') {
 		return next(
-			new ErrorResponse(
-				'Unauthorized! Update to admin not allowed',
-				401,
-			),
+			new ErrorResponse('Unauthorized! Update to admin not allowed', 401),
 		);
 	}
 
@@ -242,7 +232,10 @@ function setTokenInCookie(user, res, statusCode, msg) {
 		options.secure = true;
 	}
 
-	res.status(statusCode)
-		.cookie('token', token, options)
-		.json({ success: true, msg, token });
+	const { role, email, name } = user;
+	res.status(statusCode).cookie('token', token, options).json({
+		success: true,
+		msg,
+		user: { role, email, name },
+	});
 }

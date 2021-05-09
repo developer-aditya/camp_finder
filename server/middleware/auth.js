@@ -7,16 +7,17 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.protected = asyncHandler(async (req, res, next) => {
 	let token;
 
-	// auth using bearer token
-	if (
-		req.headers.authorization &&
-		req.headers.authorization.startsWith('Bearer')
-	) {
-		// set token from bearer token
-		token = req.headers.authorization.split(' ')[1];
-	}
+	// // auth using bearer token
+	// if (
+	// 	req.headers.authorization &&
+	// 	req.headers.authorization.startsWith('Bearer')
+	// ) {
+	// 	// set token from bearer token
+	// 	token = req.headers.authorization.split(' ')[1];
+	// }
+
 	// auth using cookies sent in every request
-	else if (req.cookies.token) {
+	if (req.cookies.token) {
 		// set token from token in cookies
 		token = req.cookies.token;
 	}
@@ -37,10 +38,7 @@ exports.protected = asyncHandler(async (req, res, next) => {
 		next();
 	} catch (err) {
 		return next(
-			new ErrorResponse(
-				'User Not Authorized to access this route',
-				401,
-			),
+			new ErrorResponse('User Not Authorized to access this route', 401),
 		);
 	}
 });

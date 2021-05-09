@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
 	GETBOOTCAMP,
 	SETLOADING,
-	SETERROR,
+	BOOTCAMPERROR,
 	SETPARAMS,
 	REMOVEPARAMS,
 } from './types';
@@ -20,7 +20,7 @@ export const getAllBootcamp = (query) => async (dispatch) => {
 		dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
 		dispatch(setLoading(false));
 	} catch (error) {
-		dispatch({ type: SETERROR, payload: error });
+		dispatch({ type: BOOTCAMPERROR, payload: error });
 		dispatch(setLoading(false));
 	}
 };
@@ -40,7 +40,7 @@ export const getDistanceBootcamp = (query, distance, pincode) => async (
 		dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
 		dispatch(setLoading(false));
 	} catch (error) {
-		dispatch({ type: SETERROR, payload: error });
+		dispatch({ type: BOOTCAMPERROR, payload: error });
 		dispatch(setLoading(false));
 	}
 };

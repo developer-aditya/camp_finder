@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ForgotPassword = () => {
+import { resetPasswordLinkRequest } from '../../actions/authActions';
+import { connect } from 'react-redux';
+
+const ForgotPassword = ({ resetPasswordLinkRequest }) => {
+	const [email, setEmail] = useState('');
+
+	const submit = () => {
+		if (email === '') {
+			console.log('Please Enter User Email');
+		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
+			resetPasswordLinkRequest({ email });
+			setEmail('');
+		} else {
+			console.log('Wrong email');
+		}
+	};
+
 	return (
 		<div id='forgot-modal' className='modal' style={modalStyle}>
 			<div className='card' style={{ margin: '0' }}>
@@ -21,12 +37,20 @@ const ForgotPassword = () => {
 					</span>
 
 					<div className='input-field' style={{ margin: '2rem' }}>
-						<input id='reset_email' type='email' />
+						<input
+							id='reset_email'
+							type='email'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 						<label htmlFor='reset_email'>Enter Registered Email</label>
 					</div>
 
 					<div className='row center'>
-						<button className='btn waves-effect light-blue w-50'>
+						<button
+							className='btn waves-effect light-blue w-50'
+							onClick={submit}
+						>
 							Send Reset Link
 						</button>
 					</div>
@@ -41,4 +65,4 @@ const modalStyle = {
 	color: '#555',
 };
 
-export default ForgotPassword;
+export default connect(null, { resetPasswordLinkRequest })(ForgotPassword);

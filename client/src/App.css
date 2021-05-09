@@ -135,3 +135,15 @@ body {
 	border-radius: 5px !important;
 	background: rgba(0, 0, 0, 0.35) !important;
 }
+
+/* SignIn modal */
+#signin-modal {
+	max-width: 450px !important;
+	color: #555 !important;
+}
+
+#signup-modal {
+	max-width: 500px !important;
+	min-height: 83% !important;
+	color: #555 !important;
+}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function SidebarSingle() {
+import { connect } from 'react-redux';
+
+const SidebarSingle = ({ auth }) => {
 	return (
 		<React.Fragment>
 			<img
@@ -26,13 +28,16 @@ function SidebarSingle() {
 						>
 							<i className='far fa-comments'></i> Read Reviews
 						</Link>
-						{/* Show only for normal users not even publisher */}
-						<Link
-							to='/singleBootcamp/writeReview'
-							className='btn waves-effect blue-grey lighten-5 blue-grey-text modal-trigger side-btn'
-						>
-							<i className='fas fa-pen'></i> Write A Review
-						</Link>
+
+						{auth.isAuthenticated && auth.user.role === 'user' && (
+							<Link
+								to='/singleBootcamp/writeReview'
+								className='btn waves-effect blue-grey lighten-5 blue-grey-text modal-trigger side-btn'
+							>
+								<i className='fas fa-pen'></i> Write A Review
+							</Link>
+						)}
+
 						<a
 							href='#website'
 							className='btn waves-effect light-blue white-text  side-btn'
@@ -77,6 +82,8 @@ function SidebarSingle() {
 			</div>
 		</React.Fragment>
 	);
-}
+};
 
-export default SidebarSingle;
+const mapStateToProps = (state) => ({ auth: state.auth });
+
+export default connect(mapStateToProps, {})(SidebarSingle);

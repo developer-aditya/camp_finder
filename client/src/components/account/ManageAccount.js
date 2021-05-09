@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function ManageAccount() {
+import { updateAccount } from '../../actions/authActions';
+import { connect } from 'react-redux';
+
+const ManageAccount = ({ updateAccount }) => {
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+
+	const submit = () => {
+		let update = {};
+		if (name !== '') {
+			update['name'] = name;
+		}
+		if (email !== '') {
+			if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
+				update['email'] = email;
+			} else {
+				update = {};
+			}
+		}
+		if (JSON.stringify(update) === '{}') {
+			console.log('Please Enter One of the Details properly');
+		} else {
+			updateAccount(update);
+			setName('');
+			setEmail('');
+		}
+	};
+
 	return (
 		<div className='grey lighten-4 page-layout'>
 			<div className='container'>
@@ -23,7 +50,12 @@ function ManageAccount() {
 									className='input-field'
 									style={{ marginBottom: '1.5rem' }}
 								>
-									<input id='user_name' type='text' />
+									<input
+										id='user_name'
+										type='text'
+										value={name}
+										onChange={(e) => setName(e.target.value)}
+									/>
 									<label htmlFor='user_name'>User Name</label>
 								</div>
 
@@ -31,7 +63,12 @@ function ManageAccount() {
 									className='input-field'
 									style={{ marginBottom: '1.5rem' }}
 								>
-									<input id='user_email' type='email' />
+									<input
+										id='user_email'
+										type='email'
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
 									<label htmlFor='user_email'>Email</label>
 								</div>
 							</div>
@@ -42,6 +79,7 @@ function ManageAccount() {
 									href='#submit'
 									className='btn light-blue waves-effect'
 									style={{ width: '100%' }}
+									onClick={submit}
 								>
 									Update Account
 								</a>
@@ -61,6 +99,6 @@ function ManageAccount() {
 			</div>
 		</div>
 	);
-}
+};
 
-export default ManageAccount;
+export default connect(null, { updateAccount })(ManageAccount);

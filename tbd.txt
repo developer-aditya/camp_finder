@@ -9,3 +9,6 @@
 to run forgot password
 1. setup gmail password in config
 2. allow low security app to access google account
+
+// Setup fullscreen page spinner for all auth while getting response from action
+// Return Server response from action to calling function and display message on UI for all auth

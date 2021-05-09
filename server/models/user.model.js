@@ -74,7 +74,10 @@ UserSchema.methods.resetPasswordTokenGenerator = function () {
 // Method Function to Generate return token (SECRET signed JWT that holds user id , name)
 UserSchema.methods.getSignedJwt = function () {
 	return jwt.sign(
-		{ id: this._id, name: this.name },
+		{
+			id: this._id,
+			// name: this.name
+		},
 		process.env.JWT_SECRET,
 		{
 			algorithm: 'HS256',

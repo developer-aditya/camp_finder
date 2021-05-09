@@ -13,26 +13,28 @@ import EditBootcamp from './components/bootcamps/EditBootcamp';
 import EditCourse from './components/course/EditCourse';
 import ManageBootcamp from './components/bootcamps/ManageBootcamp';
 import ManageReview from './components/reviews/ManageReview';
-import ManageAccount from './components/ManageAccount';
-import ChangePassword from './components/ChangePassword';
+import ManageAccount from './components/account/ManageAccount';
+import ChangePassword from './components/account/ChangePassword';
+import ResetPassword from './components/account/ResetPassword';
 import ForgotPassword from './components/modals/ForgotPassword';
 
 import store from './store';
 import { Provider } from 'react-redux';
+import { userGet } from './actions/authActions';
 
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import M from '../node_modules/materialize-css/dist/js/materialize.min';
 
-function App() {
+const App = () => {
+	store.dispatch(userGet());
 	useEffect(() => {
 		M.AutoInit();
-
 		let elems = document.querySelectorAll('.dropdown-trigger');
 		const options = {
 			coverTrigger: false,
 			hover: true,
 			constrainWidth: false,
-			closeOnClick: false,
+			closeOnClick: true,
 		};
 		M.Dropdown.init(elems, options);
 	}, []);
@@ -83,11 +85,24 @@ function App() {
 							path='/manageAccount/changePassword'
 							component={ChangePassword}
 						></Route>
+						<Route
+							exact
+							path='/manageAccount/resetPassword/:resetToken'
+							component={ResetPassword}
+						></Route>
+						<Route
+							path='*'
+							render={(props) => (
+								<h3>
+									Have you ever been lost? If so, how did you feel?
+								</h3>
+							)}
+						></Route>
 					</Switch>
 				</div>
 			</Router>
 		</Provider>
 	);
-}
+};
 
 export default App;

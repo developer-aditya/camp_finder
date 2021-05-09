@@ -1,7 +1,7 @@
 import {
 	GETBOOTCAMP,
 	SETLOADING,
-	SETERROR,
+	BOOTCAMPERROR,
 	SETPARAMS,
 	REMOVEPARAMS,
 } from '../actions/types';
@@ -38,7 +38,7 @@ const bootcampReducer = (state = initialState, action) => {
 				...state,
 				params: null,
 			};
-		case SETERROR:
+		case BOOTCAMPERROR:
 			return {
 				...state,
 				error: action.payload,

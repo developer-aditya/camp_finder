@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const SignIn = () => {
+import { userLogin } from '../../actions/authActions';
+import { connect } from 'react-redux';
+
+const SignIn = ({ userLogin }) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const submit = () => {
+		if (email === '' || password === '') {
+			console.log('Please Enter User Credentials');
+		} else {
+			if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
+				userLogin({ email, password });
+				setEmail('');
+				setPassword('');
+			} else {
+				console.log('Wrong email');
+			}
+		}
+	};
+
 	return (
-		<div
-			id='signin-modal'
-			className='modal modal-fixed-footer'
-			style={modalStyle}
-		>
+		<div id='signin-modal' className='modal modal-fixed-footer'>
 			<div
 				className='modal-content center-align'
 				style={{ padding: '2rem 2.5rem 1rem 2.5rem' }}
@@ -18,25 +34,28 @@ const SignIn = () => {
 						<i className='fas fa-paper-plane prefix'></i>
 						<input
 							id='email'
-							type='text'
-							className='validate'
+							type='email'
 							placeholder='Email'
+							onChange={(e) => setEmail(e.target.value)}
+							value={email}
 						/>
 					</div>
 					<div className='input-field'>
 						<i className='fas fa-key prefix'></i>
 						<input
 							id='password'
-							type='tel'
-							className='validate'
+							type='password'
 							placeholder='Password'
+							onChange={(e) => setPassword(e.target.value)}
+							value={password}
 						/>
 					</div>
 					<div className='input-feild'>
 						<button
-							className='btn waves-effect light-blue modal-close sign-btn'
+							className='btn waves-effect light-blue sign-btn'
 							type='submit'
 							name='action'
+							onClick={submit}
 						>
 							Sign In
 						</button>
@@ -65,9 +84,4 @@ const SignIn = () => {
 	);
 };
 
-const modalStyle = {
-	width: '450px',
-	color: '#555',
-};
-
-export default SignIn;
+export default connect(null, { userLogin })(SignIn);

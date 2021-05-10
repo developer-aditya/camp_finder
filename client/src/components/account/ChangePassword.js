@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { updatePassword } from '../../actions/authActions';
+import { updatePassword } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
 const ChangePassword = ({ updatePassword }) => {

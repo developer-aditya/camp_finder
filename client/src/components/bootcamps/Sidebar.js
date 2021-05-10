@@ -41,99 +41,103 @@ const Sidebar = ({ setParams, setQuery }) => {
 	};
 
 	return (
-		<React.Fragment>
-			<div className='card'>
-				<div className='card-content'>
-					<h5 className='mt-0'>By Location...</h5>
-					<form>
-						<div className='row'>
-							<div className='col s6'>
-								<div className='input-group'>
-									<input
-										type='text'
-										name='distance'
-										placeholder='Distance From'
-										value={distance}
-										onChange={(e) => setDistance(e.target.value)}
-									/>
+		<div className='row'>
+			<div className='col s12 m1 l2 xl12'></div>
+			<div className='col s12 m5 l4 xl12'>
+				<div className='card'>
+					<div className='card-content'>
+						<h5 className='mt-0'>By Location...</h5>
+						<form>
+							<div className='row'>
+								<div className='col s6'>
+									<div className='input-group'>
+										<input
+											type='text'
+											name='distance'
+											placeholder='Distance From'
+											value={distance}
+											onChange={(e) => setDistance(e.target.value)}
+										/>
+									</div>
+								</div>
+								<div className='col s6'>
+									<div className='input-group'>
+										<input
+											type='text'
+											name='pincode'
+											placeholder='Enter Pincode'
+											value={pincode}
+											onChange={(e) => setPincode(e.target.value)}
+										/>
+									</div>
 								</div>
 							</div>
-							<div className='col s6'>
-								<div className='input-group'>
-									<input
-										type='text'
-										name='pincode'
-										placeholder='Enter Pincode'
-										value={pincode}
-										onChange={(e) => setPincode(e.target.value)}
-									/>
-								</div>
-							</div>
-						</div>
-						<button
-							className='btn waves-effect light-blue find-bootcamp-btn'
-							onClick={setParamsState}
-						>
-							Find Bootcamps
-						</button>
-					</form>
+							<button
+								className='btn waves-effect light-blue find-bootcamp-btn'
+								onClick={setParamsState}
+							>
+								Find Bootcamps
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
+			<div className='col s12 m5 l4 xl12'>
+				<div className='card'>
+					<div className='card-content'>
+						<h5 className='mt-0'>Filter...</h5>
+						<form>
+							<div className='row'>
+								<div className='col s12'>
+									<div className='input-group'>
+										<select
+											name='rating'
+											id='rating'
+											value={rating}
+											onChange={(e) => setRating(e.target.value)}
+											className='browser-default'
+										>
+											<option value='0'>Rating</option>
+											{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
+												(element) => (
+													<option value={element} key={element}>
+														{element}
+													</option>
+												),
+											)}
+										</select>
+									</div>
+								</div>
 
-			<div className='card'>
-				<div className='card-content'>
-					<h5 className='mt-0'>Filter...</h5>
-					<form>
-						<div className='row'>
-							<div className='col s12'>
-								<div className='input-group'>
-									<select
-										name='rating'
-										id='rating'
-										value={rating}
-										onChange={(e) => setRating(e.target.value)}
-										className='browser-default'
-									>
-										<option value='0'>Rating</option>
-										{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
-											(element) => (
-												<option value={element} key={element}>
-													{element}
-												</option>
-											),
-										)}
-									</select>
+								<div className='col s12'>
+									<div className='input-group'>
+										<div
+											id='test-slider'
+											style={{ margin: '3.25rem 0 1rem 0' }}
+										></div>
+										<span>Average Cost</span>
+									</div>
 								</div>
 							</div>
-
-							<div className='col s12'>
-								<div className='input-group'>
-									<div
-										id='test-slider'
-										style={{ margin: '3.25rem 0 1rem 0' }}
-									></div>
-									<span>Average Cost</span>
-								</div>
-							</div>
-						</div>
-						<button
-							className='btn waves-effect light-blue find-bootcamp-btn'
-							onClick={(e) => {
-								setQuery(
-									rating,
-									document
-										.getElementById('test-slider')
-										.noUiSlider.get(),
-								);
-								e.preventDefault();
-							}}
-						>
-							Apply Filter
-						</button>
-					</form>
+							<button
+								className='btn waves-effect light-blue find-bootcamp-btn'
+								onClick={(e) => {
+									setQuery(
+										rating,
+										document
+											.getElementById('test-slider')
+											.noUiSlider.get(),
+									);
+									e.preventDefault();
+								}}
+							>
+								Apply Filter
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
-		</React.Fragment>
+		</div>
 	);
 };
 

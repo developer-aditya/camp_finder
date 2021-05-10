@@ -6,21 +6,50 @@ import ReadReview from '../reviews/ReadReview';
 import WriteReview from '../reviews/WriteReview';
 import SingleBootcampDetails from './SingleBootcampDetails';
 
+import { connect } from 'react-redux';
+import { clearCurrent } from '../../actions/bootcampAction';
+
 import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
-const SingleBootcamp = () => {
+const SingleBootcamp = ({ current, clearCurrent }) => {
 	useEffect(() => {
 		var elems = document.querySelectorAll('.materialboxed');
 		M.Materialbox.init(elems, {});
+		console.log(current);
+	}, [current]);
+
+	useEffect(() => {
+		return () => {
+			clearCurrent();
+		};
+		// eslint-disable-next-line
 	}, []);
 
-	const arr = [1, 2, 3];
+	if (current === null)
+		return (
+			<div
+				className='progress'
+				style={{
+					position: 'absolute',
+					top: '50%',
+					left: '15%',
+					width: '70%',
+					backgroundColor: '#c0e7fa',
+				}}
+			>
+				<div
+					className='indeterminate'
+					style={{ backgroundColor: '#1c9fe0' }}
+				></div>
+			</div>
+		);
+
 	return (
 		<Router>
 			<div className='grey lighten-4 page-layout'>
 				<div className='row'>
 					<div className='col s12 m5 l4 xl3'>
-						<SidebarSingle />
+						<SidebarSingle current={current} />
 					</div>
 					<div className='col s12 m7 l8 xl9'>
 						<div className='container'>
@@ -28,7 +57,9 @@ const SingleBootcamp = () => {
 								<Route
 									exact
 									path='/singleBootcamp'
-									component={SingleBootcampDetails}
+									component={() => (
+										<SingleBootcampDetails current={current} />
+									)}
 								></Route>
 								<Route
 									exact
@@ -42,9 +73,7 @@ const SingleBootcamp = () => {
 												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
 											</Link>
-											{arr.map((element) => (
-												<ReadReview element={element} />
-											))}
+											<ReadReview id={current.id} />
 										</React.Fragment>
 									)}
 								></Route>
@@ -60,7 +89,7 @@ const SingleBootcamp = () => {
 												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
 											</Link>
-											<WriteReview />
+											<WriteReview id={current.id} />
 										</React.Fragment>
 									)}
 								></Route>
@@ -72,5 +101,8 @@ const SingleBootcamp = () => {
 		</Router>
 	);
 };
+const mapStateToProps = (state) => ({
+	current: state.bootcamp.currentBootcamp,
+});
 
-export default SingleBootcamp;
+export default connect(mapStateToProps, { clearCurrent })(SingleBootcamp);

@@ -3,21 +3,25 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-const SidebarSingle = ({ auth }) => {
+const SidebarSingle = ({ auth, current }) => {
 	return (
 		<React.Fragment>
 			<img
 				width='100%'
-				src='https://source.unsplash.com/user/erondu/1600x900'
+				src={`/uploads/${current.photo}`}
 				className='materialboxed'
 				alt='bootcamp-img'
+				style={{
+					boxShadow:
+						'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
+				}}
 			/>
 			<div className='card blue-grey darken-3 white-text center-align'>
 				<div className='card-content'>
 					<p className='flow-text'>
 						Average Rating
 						<span className='light-blue right white-text valign-wrapper rating'>
-							8.8
+							{current.averageRating}
 						</span>
 					</p>
 
@@ -39,7 +43,9 @@ const SidebarSingle = ({ auth }) => {
 						)}
 
 						<a
-							href='#website'
+							href={current.website}
+							target='_blank'
+							rel='noreferrer noopener'
 							className='btn waves-effect light-blue white-text  side-btn'
 						>
 							<i className='fas fa-globe'></i> Visit Website
@@ -56,25 +62,41 @@ const SidebarSingle = ({ auth }) => {
 						<li className='collection-item'>
 							Housing{' '}
 							<span className='secondary-content'>
-								<i className='fas fa-check'></i>
+								{current.housing ? (
+									<i className='fas fa-check green-text'></i>
+								) : (
+									<i className='fas fa-times red-text'></i>
+								)}
 							</span>
 						</li>
 						<li className='collection-item'>
 							Job Assistance{' '}
 							<span className='secondary-content'>
-								<i className='fas fa-check'></i>
+								{current.jobAssistance ? (
+									<i className='fas fa-check green-text'></i>
+								) : (
+									<i className='fas fa-times red-text'></i>
+								)}
 							</span>
 						</li>
 						<li className='collection-item'>
 							Job Guarantee{' '}
 							<span className='secondary-content'>
-								<i className='fas fa-times red-text'></i>
+								{current.jobGuarantee ? (
+									<i className='fas fa-check green-text'></i>
+								) : (
+									<i className='fas fa-times red-text'></i>
+								)}
 							</span>
 						</li>
 						<li className='collection-item'>
 							Accepts GI Bill{' '}
 							<span className='secondary-content'>
-								<i className='fas fa-times red-text'></i>
+								{current.acceptGi ? (
+									<i className='fas fa-check green-text'></i>
+								) : (
+									<i className='fas fa-times red-text'></i>
+								)}
 							</span>
 						</li>
 					</ul>
@@ -84,6 +106,8 @@ const SidebarSingle = ({ auth }) => {
 	);
 };
 
-const mapStateToProps = (state) => ({ auth: state.auth });
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+});
 
 export default connect(mapStateToProps, {})(SidebarSingle);

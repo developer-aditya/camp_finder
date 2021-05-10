@@ -1,29 +1,23 @@
 import React from 'react';
 import Course from '../course/Course';
 
-function SingleBootcampDetails() {
-	const arr = [1, 2, 3];
+const SingleBootcampDetails = ({ current }) => {
 	return (
 		<React.Fragment>
-			<h3 className='center mt-0'>Devworks Bootcamp</h3>
-			<p>
-				Devworks is a full stack JavaScript Bootcamp located in the heart of
-				Boston that focuses on the technologies you need to get a high
-				paying job as a web developer
-			</p>
-
+			<h3 className='center mt-0'>{current.name}</h3>
+			<p>{current.description}</p>
 			<div style={{ margin: '2rem 0' }}>
-				{arr.map((element) => (
-					<Course element={element} key={element} />
-				))}
+				<Course id={current.id} />
 			</div>
 
 			<p className='flow-text'>
 				Average Cost:{' '}
-				<span className='light-blue custom-badge'>$12000</span>
+				<span className='light-blue custom-badge'>
+					$ {current.averageCost}
+				</span>
 			</p>
 		</React.Fragment>
 	);
-}
+};
 
 export default SingleBootcampDetails;

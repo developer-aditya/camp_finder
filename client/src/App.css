@@ -130,10 +130,10 @@ body {
 }
 .showcase-inner {
 	z-index: 2 !important;
-	padding: 2rem !important;
+	padding: 2.5rem !important;
 	margin: auto !important;
 	border-radius: 5px !important;
-	background: rgba(0, 0, 0, 0.35) !important;
+	background: rgba(0, 0, 0, 0.45) !important;
 }
 
 /* SignIn modal */

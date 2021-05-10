@@ -15,10 +15,10 @@ const { protected, authorized } = require('../middleware/auth');
 router
 	.route('/')
 	.get(
-		advanceQueryResult(Review, {
-			path: 'user',
-			select: 'name role',
-		}),
+		// advanceQueryResult(Review, {
+		// 	path: 'user',
+		// 	select: 'name role',
+		// }),
 		getReviews,
 	)
 	.post(protected, authorized('user', 'admin'), addReview);

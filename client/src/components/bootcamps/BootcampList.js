@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
 	getAllBootcamp,
 	getDistanceBootcamp,
+	setCurrentBootcamp,
 } from '../../actions/bootcampAction';
 
 const BootcampList = ({
@@ -12,11 +12,13 @@ const BootcampList = ({
 	queryState,
 	getAllBootcamp,
 	getDistanceBootcamp,
+	setCurrentBootcamp,
 }) => {
 	const [page, setPage] = useState(1);
+	const history = useHistory();
 
 	useEffect(() => {
-		let query = `select=name,location,careers,averageRating,averageCost&page=${page}`;
+		let query = `select=name,location,careers,averageRating,averageCost,photo&page=${page}`;
 		if (queryState.rating !== '0') {
 			query = query + `&averageRating=${queryState.rating}`;
 		}
@@ -29,31 +31,41 @@ const BootcampList = ({
 		// eslint-disable-next-line
 	}, [page, params, queryState]);
 
+	const setCurrent = (id) => {
+		setCurrentBootcamp(id);
+		history.push('/singleBootcamp');
+	};
+
 	if (loading)
 		return (
-			<div className='progress'>
-				<div className='indeterminate'></div>
+			<div className='progress' style={{ backgroundColor: '#c0e7fa' }}>
+				<div
+					className='indeterminate'
+					style={{ backgroundColor: '#1c9fe0' }}
+				></div>
 			</div>
 		);
 
 	return (
 		<React.Fragment>
-			{bootcamps.map((element) => (
+			{bootcamps.map((element, index) => (
 				<div
 					className='card horizontal'
 					style={{ marginBottom: '2rem' }}
-					key={element.id}
+					key={index}
 				>
 					<div className='card-image'>
-						<img
-							src='https://source.unsplash.com/user/erondu/1600x900'
-							alt='camp-img'
-						/>
+						<img src={`/uploads/${element.photo}`} alt='camp-img' />
 					</div>
 					<div className='card-stacked'>
 						<div className='card-content'>
 							<div className='card-title'>
-								<Link to='/singleBootcamp'>{element.name}</Link>
+								<a
+									href='#single'
+									onClick={(e) => setCurrent(element.id)}
+								>
+									{element.name}
+								</a>
 								<span className='light-blue right white-text valign-wrapper rating'>
 									{element.averageRating}
 								</span>
@@ -100,4 +112,5 @@ const mapStateToProps = (state) => ({ bootcamp: state.bootcamp });
 export default connect(mapStateToProps, {
 	getAllBootcamp,
 	getDistanceBootcamp,
+	setCurrentBootcamp,
 })(BootcampList);

@@ -20,14 +20,14 @@ import ForgotPassword from './components/modals/ForgotPassword';
 
 import store from './store';
 import { Provider } from 'react-redux';
-import { userGet } from './actions/authActions';
+import { userGet } from './actions/authAction';
 
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import M from '../node_modules/materialize-css/dist/js/materialize.min';
 
 const App = () => {
-	store.dispatch(userGet());
 	useEffect(() => {
+		store.dispatch(userGet());
 		M.AutoInit();
 		let elems = document.querySelectorAll('.dropdown-trigger');
 		const options = {

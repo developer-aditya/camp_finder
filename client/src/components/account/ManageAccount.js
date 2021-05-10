@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { updateAccount } from '../../actions/authActions';
+import { updateAccount } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
 const ManageAccount = ({ updateAccount }) => {

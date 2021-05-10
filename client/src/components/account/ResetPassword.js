@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router';
 
-import { resetPassword } from '../../actions/authActions';
+import { resetPassword } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
 const ResetPassword = ({ resetPassword }) => {

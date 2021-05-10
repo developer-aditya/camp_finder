@@ -33,7 +33,7 @@ connectDB();
 const app = express();
 
 // making public folder static
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Middleware to read req body
 app.use(express.json());

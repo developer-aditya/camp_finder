@@ -4,6 +4,8 @@ import {
 	BOOTCAMPERROR,
 	SETPARAMS,
 	REMOVEPARAMS,
+	SETCURRENT,
+	CLEARCURRENT,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
 	error: null,
 	pagination: {},
 	params: null,
+	currentBootcamp: null,
 };
 
 const bootcampReducer = (state = initialState, action) => {
@@ -22,11 +25,12 @@ const bootcampReducer = (state = initialState, action) => {
 				bootcamps: action.payload.data,
 				pagination: action.payload.pagination,
 				error: null,
+				loading: false,
 			};
 		case SETLOADING:
 			return {
 				...state,
-				loading: action.payload,
+				loading: true,
 			};
 		case SETPARAMS:
 			return {
@@ -42,6 +46,17 @@ const bootcampReducer = (state = initialState, action) => {
 			return {
 				...state,
 				error: action.payload,
+				loading: false,
+			};
+		case SETCURRENT:
+			return {
+				...state,
+				currentBootcamp: action.payload,
+			};
+		case CLEARCURRENT:
+			return {
+				...state,
+				currentBootcamp: null,
 			};
 		default:
 			return state;

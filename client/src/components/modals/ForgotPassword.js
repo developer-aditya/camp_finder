@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { resetPasswordLinkRequest } from '../../actions/authActions';
+import { resetPasswordLinkRequest } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
 const ForgotPassword = ({ resetPasswordLinkRequest }) => {

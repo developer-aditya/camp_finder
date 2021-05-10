@@ -1,38 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const Course = (props) => {
-	return (
-		<React.Fragment>
-			<div className='card'>
+import { connect } from 'react-redux';
+import { getCourses } from '../../actions/courseAction';
+
+const Course = ({ id, getCourses, course: { loading, courses } }) => {
+	useEffect(() => {
+		getCourses(id);
+		// eslint-disable-next-line
+	}, []);
+
+	if (loading)
+		return (
+			<div className='progress' style={{ backgroundColor: '#c0e7fa' }}>
 				<div
-					className='card-title blue-grey darken-3 white-text'
-					style={{ padding: '0.75rem 1.5rem' }}
-				>
-					Full Stack web Development
-				</div>
-				<div className='card-content'>
-					<p className='flow-text blue-grey-text'>Duration: 8 Week</p>
-					<p>
-						This course will provide you with all of the essentials to
-						become a successful frontend web developer. You will learn to
-						master HTML, CSS and front end JavaScript, along with tools
-						like Git, VSCode and front end frameworks like Vue
-					</p>
-					<ul
-						className='collection blue-grey-text'
-						style={{ margin: '1rem 0' }}
-					>
-						<li className='collection-item'>Cost: $8,000 USD</li>
-						<li className='collection-item'>Skill Required: Beginner</li>
-						<li className='collection-item'>
-							Scholarship Available:{' '}
-							<i className='fas fa-check green-text'></i>
-						</li>
-					</ul>
-				</div>
+					className='indeterminate'
+					style={{ backgroundColor: '#1c9fe0' }}
+				></div>
 			</div>
-		</React.Fragment>
-	);
+		);
+
+	const jsx =
+		courses.length === 0 ? (
+			<p>No Courses Available Yet...</p>
+		) : (
+			courses.map((course, index) => (
+				<div className='card' key={index}>
+					<div
+						className='card-title blue-grey darken-3 white-text'
+						style={{ padding: '0.75rem 1.5rem' }}
+					>
+						{course.title}
+					</div>
+					<div className='card-content'>
+						<p className='flow-text blue-grey-text'>
+							Duration: {course.weeks} Week
+						</p>
+						<p>{course.description}</p>
+						<ul
+							className='collection blue-grey-text'
+							style={{ margin: '1rem 0' }}
+						>
+							<li className='collection-item'>
+								Cost: $ {course.tuition} USD
+							</li>
+							<li className='collection-item'>
+								Skill Required: {course.minimumSkill}
+							</li>
+							<li className='collection-item'>
+								Scholarship Available:{' '}
+								{course.scholarshipsAvailable ? (
+									<i className='fas fa-check green-text'></i>
+								) : (
+									<i className='fas fa-times red-text'></i>
+								)}
+							</li>
+						</ul>
+					</div>
+				</div>
+			))
+		);
+
+	return jsx;
 };
 
-export default Course;
+const mapStateToProps = (state) => ({ course: state.course });
+
+export default connect(mapStateToProps, { getCourses })(Course);

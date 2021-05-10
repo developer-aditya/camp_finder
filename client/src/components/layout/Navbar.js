@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { removeParams } from '../../actions/bootcampAction';
-import { userLogout } from '../../actions/authActions';
+import { userLogout } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
 const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {

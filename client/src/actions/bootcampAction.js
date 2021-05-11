@@ -53,9 +53,25 @@ export const removeParams = () => async (dispatch) => {
 
 export const setCurrentBootcamp = (bootcampId) => async (dispatch) => {
 	try {
+		dispatch(setLoading());
 		const option = {
 			method: 'GET',
 			url: `/api/v1/bootcamps/${bootcampId}`,
+			timeout: '4000',
+		};
+		const bootcamp = await axios(option);
+		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
+	} catch (error) {
+		dispatch({ type: BOOTCAMPERROR, payload: error });
+	}
+};
+
+export const getUserBootcamp = () => async (dispatch) => {
+	try {
+		dispatch(setLoading());
+		const option = {
+			method: 'GET',
+			url: `/api/v1/bootcamps/me`,
 			timeout: '4000',
 		};
 		const bootcamp = await axios(option);
@@ -70,6 +86,25 @@ export const clearCurrent = () => async (dispatch) => {
 		dispatch({ type: CLEARCURRENT });
 	} catch (error) {
 		dispatch({ type: BOOTCAMPERROR, payload: error });
+	}
+};
+
+// Put (upload) a new Bootcamp Image
+export const uploadImage = (id, formdata) => async (dispatch) => {
+	try {
+		const option = {
+			method: 'PUT',
+			url: `/api/v1/bootcamps/${id}/photo`,
+			headers: {
+				'Content-type': 'image/jpeg',
+			},
+			data: formdata,
+			timeout: '4000',
+		};
+		const bootcamp = await axios(option);
+		console.log(bootcamp.data);
+	} catch (error) {
+		console.log(error);
 	}
 };
 

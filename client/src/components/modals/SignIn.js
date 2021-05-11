@@ -7,7 +7,7 @@ const SignIn = ({ userLogin }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const submit = () => {
+	const submit = (e) => {
 		if (email === '' || password === '') {
 			console.log('Please Enter User Credentials');
 		} else {
@@ -19,6 +19,7 @@ const SignIn = ({ userLogin }) => {
 				console.log('Wrong email');
 			}
 		}
+		e.preventDefault();
 	};
 
 	return (
@@ -30,36 +31,39 @@ const SignIn = ({ userLogin }) => {
 				<i className=' fas fa-times modal-close close-btn'></i>
 				<h3>Sign In</h3>
 				<div style={{ paddingTop: '2rem' }}>
-					<div className='input-field'>
-						<i className='fas fa-paper-plane prefix'></i>
-						<input
-							id='email'
-							type='email'
-							placeholder='Email'
-							onChange={(e) => setEmail(e.target.value)}
-							value={email}
-						/>
-					</div>
-					<div className='input-field'>
-						<i className='fas fa-key prefix'></i>
-						<input
-							id='password'
-							type='password'
-							placeholder='Password'
-							onChange={(e) => setPassword(e.target.value)}
-							value={password}
-						/>
-					</div>
-					<div className='input-feild'>
-						<button
-							className='btn waves-effect light-blue sign-btn'
-							type='submit'
-							name='action'
-							onClick={submit}
-						>
-							Sign In
-						</button>
-					</div>
+					<form id='signin'>
+						<div className='input-field'>
+							<i className='fas fa-paper-plane prefix'></i>
+							<input
+								id='email'
+								type='email'
+								placeholder='Email'
+								onChange={(e) => setEmail(e.target.value)}
+								value={email}
+							/>
+						</div>
+						<div className='input-field'>
+							<i className='fas fa-key prefix'></i>
+							<input
+								id='password'
+								type='password'
+								placeholder='Password'
+								onChange={(e) => setPassword(e.target.value)}
+								value={password}
+							/>
+						</div>
+						<div className='input-feild'>
+							<button
+								className='btn waves-effect light-blue sign-btn'
+								type='submit'
+								form='signin'
+								name='action'
+								onClick={submit}
+							>
+								Sign In
+							</button>
+						</div>
+					</form>
 					Forgot Password?{' '}
 					<a
 						href='#forgot-modal'

@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
 const SidebarSingle = ({ auth, current }) => {
+	useEffect(() => {
+		var elems = document.querySelectorAll('.materialboxed');
+		M.Materialbox.init(elems, {});
+	}, []);
+
 	return (
 		<React.Fragment>
 			<img
@@ -14,6 +20,7 @@ const SidebarSingle = ({ auth, current }) => {
 				style={{
 					boxShadow:
 						'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
+					marginBottom: '1.5rem',
 				}}
 			/>
 			<div className='card blue-grey darken-3 white-text center-align'>

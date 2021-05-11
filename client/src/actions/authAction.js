@@ -9,7 +9,6 @@ import {
 	REGISTER_FAIL,
 } from './types';
 
-// Get Bootcamp by query
 export const userLogin = (userCredentials) => async (dispatch) => {
 	try {
 		dispatch(userLoading());

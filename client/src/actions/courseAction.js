@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SETLOADING, GETCOURSES, COURSEERROR } from './types';
+import { COURSELOADING, GETCOURSES, COURSEERROR } from './types';
 
 // Get Course by bootcamp Id
 export const getCourses = (id) => async (dispatch) => {
@@ -20,6 +20,6 @@ export const getCourses = (id) => async (dispatch) => {
 // Setting loading values
 export const setLoading = () => {
 	return {
-		type: SETLOADING,
+		type: COURSELOADING,
 	};
 };

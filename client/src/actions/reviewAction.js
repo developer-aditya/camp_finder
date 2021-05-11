@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { SETLOADING, GETREVIEWS, REVIEWERROR } from './types';
+import { REVIEWLOADING, GETREVIEWS, REVIEWERROR } from './types';
 
-// Get Course by bootcamp Id
+// Get Review by bootcamp Id
 export const getReviews = (id) => async (dispatch) => {
 	try {
 		dispatch(setLoading());
@@ -17,9 +17,29 @@ export const getReviews = (id) => async (dispatch) => {
 	}
 };
 
+// Post new Review by bootcamp Id
+export const addReview = (id, newReview) => async (dispatch) => {
+	try {
+		const option = {
+			method: 'POST',
+			url: `/api/v1/bootcamps/${id}/reviews`,
+			data: newReview,
+			timeout: '4000',
+		};
+		const review = await axios(option);
+		if (review.data.success === true) {
+			console.log('Review Added Successfully');
+		} else {
+			console.log('Review Cannot be Added');
+		}
+	} catch (error) {
+		dispatch({ type: REVIEWERROR, payload: error });
+	}
+};
+
 // Setting loading values
 export const setLoading = () => {
 	return {
-		type: SETLOADING,
+		type: REVIEWLOADING,
 	};
 };

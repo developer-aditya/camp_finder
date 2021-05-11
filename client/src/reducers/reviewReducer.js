@@ -1,4 +1,4 @@
-import { SETLOADING, GETREVIEWS, REVIEWERROR } from '../actions/types';
+import { REVIEWLOADING, GETREVIEWS, REVIEWERROR } from '../actions/types';
 
 const initialState = {
 	loading: false,
@@ -15,7 +15,7 @@ const reviewReducer = (state = initialState, action) => {
 				error: null,
 				loading: false,
 			};
-		case SETLOADING:
+		case REVIEWLOADING:
 			return {
 				...state,
 				loading: true,

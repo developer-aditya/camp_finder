@@ -1,4 +1,4 @@
-import { SETLOADING, GETCOURSES, COURSEERROR } from '../actions/types';
+import { COURSELOADING, GETCOURSES, COURSEERROR } from '../actions/types';
 
 const initialState = {
 	loading: false,
@@ -15,7 +15,7 @@ const courseReducer = (state = initialState, action) => {
 				error: null,
 				loading: false,
 			};
-		case SETLOADING:
+		case COURSELOADING:
 			return {
 				...state,
 				loading: true,

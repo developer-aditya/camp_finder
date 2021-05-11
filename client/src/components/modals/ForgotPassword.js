@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 	const [email, setEmail] = useState('');
 
-	const submit = () => {
+	const submit = (e) => {
 		if (email === '') {
 			console.log('Please Enter User Email');
 		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
@@ -15,6 +15,7 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 		} else {
 			console.log('Wrong email');
 		}
+		e.preventDefault();
 	};
 
 	return (
@@ -35,25 +36,27 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 						*Use this form to reset your password using the registered
 						email address.
 					</span>
+					<form id='reset'>
+						<div className='input-field' style={{ margin: '2rem' }}>
+							<input
+								id='reset_email'
+								type='email'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<label htmlFor='reset_email'>Enter Registered Email</label>
+						</div>
 
-					<div className='input-field' style={{ margin: '2rem' }}>
-						<input
-							id='reset_email'
-							type='email'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<label htmlFor='reset_email'>Enter Registered Email</label>
-					</div>
-
-					<div className='row center'>
-						<button
-							className='btn waves-effect light-blue w-50'
-							onClick={submit}
-						>
-							Send Reset Link
-						</button>
-					</div>
+						<div className='row center'>
+							<button
+								className='btn waves-effect light-blue w-50'
+								form='reset'
+								onClick={submit}
+							>
+								Send Reset Link
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

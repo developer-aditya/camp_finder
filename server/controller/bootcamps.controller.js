@@ -37,6 +37,23 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 	});
 });
 
+// @desc  GET Logged in user bootcamp
+// @route /api/v1/bootcamps/me
+// @access protected
+exports.getUserBootcamp = asyncHandler(async (req, res, next) => {
+	const bootcamp = await Bootcamp.findOne({ user: req.user.id });
+	if (!bootcamp) {
+		return next(
+			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 404),
+		);
+	}
+	res.status(200).json({
+		success: true,
+		msg: `Bootcamp Fetched For User ${req.user.id}`,
+		data: bootcamp,
+	});
+});
+
 // @desc  POST one bootcamp
 // @route /api/v1/bootcamps
 // @access public

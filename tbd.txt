@@ -12,3 +12,5 @@ to run forgot password
 
 // Setup fullscreen page spinner for all auth while getting response from action
 // Return Server response from action to calling function and display message on UI for all auth
+// above must be completed for all response show on UI
+// Average rating doesnt update on adding review 

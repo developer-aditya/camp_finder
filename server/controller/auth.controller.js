@@ -232,10 +232,10 @@ function setTokenInCookie(user, res, statusCode, msg) {
 		options.secure = true;
 	}
 
-	const { role, email, name } = user;
+	const { role, email, name, id } = user;
 	res.status(statusCode).cookie('token', token, options).json({
 		success: true,
 		msg,
-		user: { role, email, name },
+		user: { role, email, name, id },
 	});
 }

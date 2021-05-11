@@ -9,6 +9,7 @@ const {
 	updateBootcamp,
 	deleteBootcamp,
 	uploadBootcampPhoto,
+	getUserBootcamp,
 } = require('../controller/bootcamps.controller');
 const Bootcamp = require('../models/bootcamps. model');
 const advanceQueryResult = require('../middleware/advanceQuery');
@@ -42,6 +43,10 @@ router
 		getBootcamps,
 	)
 	.post(protected, authorized('publisher', 'admin'), addBootcamp);
+
+router
+	.route('/me')
+	.get(protected, authorized('publisher', 'admin'), getUserBootcamp);
 
 router
 	.route('/:id')

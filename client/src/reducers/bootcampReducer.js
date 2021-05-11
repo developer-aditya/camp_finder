@@ -47,10 +47,12 @@ const bootcampReducer = (state = initialState, action) => {
 				...state,
 				error: action.payload,
 				loading: false,
+				currentBootcamp: null,
 			};
 		case SETCURRENT:
 			return {
 				...state,
+				loading: false,
 				currentBootcamp: action.payload,
 			};
 		case CLEARCURRENT:

@@ -1,14 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function ManageBootcampDetail() {
+import { connect } from 'react-redux';
+import { uploadImage } from '../../actions/bootcampAction';
+
+const ManageBootcampDetail = ({ current, uploadImage }) => {
+	const submit = (e) => {
+		const imgInput = document.getElementById('img-input');
+		const file = imgInput.files[0];
+
+		if (!file || !file.type.match(/image.*/)) {
+			console.log('Please Select An Image File');
+		} else {
+			const fd = new FormData();
+			fd.append('file', file);
+			uploadImage(current.id, fd);
+		}
+		e.preventDefault();
+	};
+
 	return (
 		<React.Fragment>
 			<div className='card'>
 				<div className='img-block card-image'>
 					<div className='upload-img-block valign-wrapper'>
-						<form style={{ margin: 'auto' }}>
-							<div className='file-field input-field'>
+						<form
+							id='uploadImg'
+							onSubmit={submit}
+							style={{ margin: 'auto' }}
+						>
+							<div className='input-field file-field'>
 								<span className='flow-text valign-wrapper'>
 									<i
 										className='far fa-user-circle fa-2x'
@@ -16,15 +37,21 @@ function ManageBootcampDetail() {
 									></i>
 									Upload Image
 								</span>
-								<input type='file' id='img' />
+								<input type='file' id='img-input' accept='image/*' />
+							</div>
+							<div className='input-field center'>
+								<button
+									className='btn light-blue'
+									type='submit'
+									form='uploadImg'
+								>
+									Submit
+								</button>
 							</div>
 						</form>
 					</div>
 
-					<img
-						src='https://source.unsplash.com/user/erondu/1600x900'
-						alt='camp-img'
-					/>
+					<img src={`/uploads/${current.photo}`} alt='camp-img' />
 					<a
 						href='#d'
 						className='btn-floating btn-large halfway-fab waves-effect red darken-3 '
@@ -41,19 +68,20 @@ function ManageBootcampDetail() {
 				</div>
 				<div className='card-content'>
 					<h5 className='card-title'>
-						<Link to='/singleBootcamp'>Devworks Bootcamp</Link>
-						<span
-							className='light-blue circle right white-text'
-							style={{ padding: '0.5rem', marginLeft: '1rem' }}
-						>
-							8.8
+						<Link to='/singleBootcamp'>{current.name}</Link>
+						<span className='light-blue right white-text valign-wrapper rating'>
+							{current.averageRating}
 						</span>
 					</h5>
-					<p className='blue-grey-text'>Boston, MA</p>
-					<ul className='collection'>
-						<li className='collection-item'>Web Development</li>
-						<li className='collection-item'>UI/UX</li>
-						<li className='collection-item'>Mobile Development</li>
+					<p className='blue-grey-text'>
+						{current.location.city}, {current.location.country}
+					</p>
+					<ul className='collection' style={{ marginTop: '1.5rem' }}>
+						{current.careers.map((career, index) => (
+							<li className='collection-item' key={index}>
+								{career}
+							</li>
+						))}
 					</ul>
 					<p className='grey-text'>
 						* You can only add one bootcamp per account.
@@ -66,6 +94,6 @@ function ManageBootcampDetail() {
 			</div>
 		</React.Fragment>
 	);
-}
+};
 
-export default ManageBootcampDetail;
+export default connect(null, { uploadImage })(ManageBootcampDetail);

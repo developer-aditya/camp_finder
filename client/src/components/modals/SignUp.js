@@ -10,7 +10,7 @@ const SignUp = ({ userRegister }) => {
 	const [cnf, setCnf] = useState('');
 	const [type, setType] = useState('none');
 
-	const submit = () => {
+	const submit = (e) => {
 		if (name === '' || email === '' || password === '' || type === 'none') {
 			console.log('Please Enter All Details');
 		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false) {
@@ -30,14 +30,15 @@ const SignUp = ({ userRegister }) => {
 			setCnf('');
 			setType('none');
 		}
+		e.preventDefault();
 	};
 
 	const comparePassword = (e) => {
 		setCnf(e.target.value);
 		if (e.target.value !== password) {
-			e.target.previousElementSibling.style.color = 'red';
+			e.target.style.color = 'red';
 		} else {
-			e.target.previousElementSibling.style.color = 'green';
+			e.target.style.color = 'green';
 		}
 	};
 
@@ -87,7 +88,6 @@ const SignUp = ({ userRegister }) => {
 						<input
 							id='password_confirm'
 							type='password'
-							className='validate'
 							placeholder='Confirm Password'
 							value={cnf}
 							onChange={comparePassword}

@@ -13,6 +13,9 @@ body {
 	background-color: #fff;
 	color: #333;
 }
+button {
+	text-transform: capitalize !important;
+}
 
 /* No ui Slider customization */
 .noUi-tooltip span {
@@ -146,4 +149,19 @@ body {
 	max-width: 500px !important;
 	min-height: 83% !important;
 	color: #555 !important;
+}
+
+input:focus {
+	border-bottom: 1px solid #0391d8 !important;
+	box-shadow: 0 1px 0 0 #0391d8 !important;
+}
+label.active {
+	color: #0391d8 !important;
+}
+.prefix.active {
+	color: #0391d8 !important;
+}
+input[type='range']:focus {
+	border-bottom: none !important;
+	box-shadow: none !important;
 }

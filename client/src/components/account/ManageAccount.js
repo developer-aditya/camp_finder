@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { updateAccount } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
-const ManageAccount = ({ updateAccount }) => {
+const ManageAccount = ({ updateAccount, user }) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
+
+	useEffect(() => {
+		if (user !== null) {
+			setName(user.name);
+			setEmail(user.email);
+		}
+	}, [user]);
 
 	const submit = () => {
 		let update = {};
@@ -54,9 +61,12 @@ const ManageAccount = ({ updateAccount }) => {
 										id='user_name'
 										type='text'
 										value={name}
+										placeholder='Enter name...'
 										onChange={(e) => setName(e.target.value)}
 									/>
-									<label htmlFor='user_name'>User Name</label>
+									<label htmlFor='user_name' className='active'>
+										User Name
+									</label>
 								</div>
 
 								<div
@@ -67,9 +77,12 @@ const ManageAccount = ({ updateAccount }) => {
 										id='user_email'
 										type='email'
 										value={email}
+										placeholder='Enter email...'
 										onChange={(e) => setEmail(e.target.value)}
 									/>
-									<label htmlFor='user_email'>Email</label>
+									<label htmlFor='user_email' className='active'>
+										Email
+									</label>
 								</div>
 							</div>
 						</div>
@@ -101,4 +114,6 @@ const ManageAccount = ({ updateAccount }) => {
 	);
 };
 
-export default connect(null, { updateAccount })(ManageAccount);
+const mapStateToProps = (state) => ({ user: state.auth.user });
+
+export default connect(mapStateToProps, { updateAccount })(ManageAccount);

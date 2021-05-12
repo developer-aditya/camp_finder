@@ -67,7 +67,9 @@ const BootcampList = ({
 									{element.name}
 								</a>
 								<span className='light-blue right white-text valign-wrapper rating'>
-									{element.averageRating}
+									{element.averageRating === null
+										? 'UR'
+										: element.averageRating}
 								</span>
 							</div>
 							<p className='blue-grey-text'>

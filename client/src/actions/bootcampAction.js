@@ -43,14 +43,17 @@ export const getDistanceBootcamp = (query, distance, pincode) => async (
 	}
 };
 
+// Set Searching Distance & Pincode in State
 export const setParams = (distance, pincode) => async (dispatch) => {
 	dispatch({ type: SETPARAMS, payload: { distance, pincode } });
 };
 
+// Clear Searching Distance & Pincode in State
 export const removeParams = () => async (dispatch) => {
 	dispatch({ type: REMOVEPARAMS });
 };
 
+// Set Current Bootcamp Selected to Be viewed
 export const setCurrentBootcamp = (bootcampId) => async (dispatch) => {
 	try {
 		dispatch(setLoading());
@@ -66,6 +69,7 @@ export const setCurrentBootcamp = (bootcampId) => async (dispatch) => {
 	}
 };
 
+// Get Bootcamp Of logged in User and Set Current
 export const getUserBootcamp = () => async (dispatch) => {
 	try {
 		dispatch(setLoading());
@@ -81,8 +85,16 @@ export const getUserBootcamp = () => async (dispatch) => {
 	}
 };
 
-export const clearCurrent = () => async (dispatch) => {
+// delete Bootcamp
+export const deleteBootcamp = (bootcampId) => async (dispatch) => {
 	try {
+		dispatch(setLoading());
+		const option = {
+			method: 'DELETE',
+			url: `/api/v1/bootcamps/${bootcampId}`,
+			timeout: '4000',
+		};
+		await axios(option);
 		dispatch({ type: CLEARCURRENT });
 	} catch (error) {
 		dispatch({ type: BOOTCAMPERROR, payload: error });
@@ -108,9 +120,46 @@ export const uploadImage = (id, formdata) => async (dispatch) => {
 	}
 };
 
+// Update Bootcamp
+export const updateBootcamp = (bootcampId, Bootcamp) => async (dispatch) => {
+	try {
+		const option = {
+			method: 'PUT',
+			url: `/api/v1/bootcamps/${bootcampId}`,
+			data: Bootcamp,
+			timeout: '4000',
+		};
+		const bootcamp = await axios(option);
+		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
+	} catch (error) {
+		dispatch({ type: BOOTCAMPERROR, payload: error });
+	}
+};
+
+// Add New Bootcamp
+export const addBootcamp = (Bootcamp) => async (dispatch) => {
+	try {
+		const option = {
+			method: 'POST',
+			url: '/api/v1/bootcamps',
+			data: Bootcamp,
+			timeout: '4000',
+		};
+		const bootcamp = await axios(option);
+		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
+	} catch (error) {
+		dispatch({ type: BOOTCAMPERROR, payload: error });
+	}
+};
+
 // Setting loading values
 export const setLoading = () => {
 	return {
 		type: SETLOADING,
 	};
+};
+
+// Clear Current Bootcamp in Bootcamp State
+export const clearCurrent = () => async (dispatch) => {
+	dispatch({ type: CLEARCURRENT });
 };

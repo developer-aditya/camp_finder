@@ -7,6 +7,7 @@ import {
 	LOGOUT_SUCCESS,
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
+	UPDATEUSER,
 } from './types';
 
 export const userLogin = (userCredentials) => async (dispatch) => {
@@ -146,13 +147,10 @@ export const updateAccount = (update) => async (dispatch) => {
 			timeout: '4000',
 		};
 		const user = await axios(option);
-		if (user.data.success === true) {
-			console.log('Data Updated Sucessfully');
-		} else {
-			console.log('Data Update Failed, Try Again');
-		}
+		const { name, email, role } = user.data.data;
+		dispatch({ type: UPDATEUSER, payload: { name, email, role } });
 	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
+		console.log(error);
 	}
 };
 

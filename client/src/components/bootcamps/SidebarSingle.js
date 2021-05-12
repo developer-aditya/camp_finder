@@ -28,7 +28,9 @@ const SidebarSingle = ({ auth, current }) => {
 					<p className='flow-text'>
 						Average Rating
 						<span className='light-blue right white-text valign-wrapper rating'>
-							{current.averageRating}
+							{current.averageRating === null
+								? 'UR'
+								: current.averageRating}
 						</span>
 					</p>
 

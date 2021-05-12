@@ -9,8 +9,8 @@ import SignIn from './components/modals/SignIn';
 import SignUp from './components/modals/SignUp';
 import SingleBootcamp from './components/bootcamps/SingleBootcamp';
 
-import EditBootcamp from './components/bootcamps/EditBootcamp';
-import EditCourse from './components/course/EditCourse';
+import BootcampForm from './components/bootcamps/BootcampForm';
+import CourseForm from './components/course/CourseForm';
 import ManageBootcamp from './components/bootcamps/ManageBootcamp';
 import ManageReview from './components/reviews/ManageReview';
 import ManageAccount from './components/account/ManageAccount';
@@ -62,13 +62,13 @@ const App = () => {
 						></Route>
 						<Route
 							exact
-							path='/manageBootcamp/editBootcamp'
-							render={() => <EditBootcamp type={'Update'} />}
+							path='/manageBootcamp/bootcampForm'
+							component={BootcampForm}
 						></Route>
 						<Route
 							exact
-							path='/manageBootcamp/editCourse'
-							render={() => <EditCourse type={'Update'} />}
+							path='/manageBootcamp/courseForm'
+							component={CourseForm}
 						></Route>
 						<Route
 							exact

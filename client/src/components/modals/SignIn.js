@@ -35,7 +35,7 @@ const SignIn = ({ userLogin }) => {
 						<div className='input-field'>
 							<i className='fas fa-paper-plane prefix'></i>
 							<input
-								id='email'
+								id='login_email'
 								type='email'
 								placeholder='Email'
 								onChange={(e) => setEmail(e.target.value)}
@@ -45,7 +45,7 @@ const SignIn = ({ userLogin }) => {
 						<div className='input-field'>
 							<i className='fas fa-key prefix'></i>
 							<input
-								id='password'
+								id='login_password'
 								type='password'
 								placeholder='Password'
 								onChange={(e) => setPassword(e.target.value)}

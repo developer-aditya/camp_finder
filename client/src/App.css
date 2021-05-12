@@ -83,23 +83,13 @@ button {
 	border-radius: 5px !important;
 }
 
+/* Custom badge for Rating */
 .rating {
 	justify-content: center !important;
 	border-radius: 50% !important;
 	width: 50px !important;
 	height: 50px !important;
 	margin-left: 1rem !important;
-}
-
-/* Text area input style + remove focus stage style */
-.text-area {
-	border: 1px solid #ddd !important;
-	margin-top: 0.75rem !important;
-	min-height: 100px !important;
-	width: 100% !important;
-}
-.text-area:focus {
-	outline: none !important;
 }
 
 /* all pages basic style */
@@ -139,21 +129,28 @@ button {
 	background: rgba(0, 0, 0, 0.45) !important;
 }
 
-/* SignIn modal */
+/* SignIn Modal */
 #signin-modal {
 	max-width: 450px !important;
 	color: #555 !important;
 }
 
+/* SignUp Modal */
 #signup-modal {
 	max-width: 500px !important;
 	min-height: 83% !important;
 	color: #555 !important;
 }
 
-input:focus {
+/* Input Feilds custom color */
+input:focus,
+textarea:focus {
 	border-bottom: 1px solid #0391d8 !important;
 	box-shadow: 0 1px 0 0 #0391d8 !important;
+}
+input[type='checkbox']:checked + span:not(.lever):before {
+	border-right: 2px solid #0391d8 !important;
+	border-bottom: 2px solid #0391d8 !important;
 }
 label.active {
 	color: #0391d8 !important;
@@ -164,4 +161,10 @@ label.active {
 input[type='range']:focus {
 	border-bottom: none !important;
 	box-shadow: none !important;
+}
+
+/* Dropdown Custom Color */
+.dropdown-content li > a,
+.dropdown-content li > span {
+	color: #0391d8 !important;
 }

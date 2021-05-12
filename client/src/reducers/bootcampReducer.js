@@ -59,6 +59,7 @@ const bootcampReducer = (state = initialState, action) => {
 			return {
 				...state,
 				currentBootcamp: null,
+				loading: false,
 			};
 		default:
 			return state;

@@ -55,7 +55,7 @@ const SignUp = ({ userRegister }) => {
 					<div className='input-field'>
 						<i className='fas fa-user prefix'></i>
 						<input
-							id='name'
+							id='register_name'
 							type='text'
 							placeholder='Name'
 							value={name}

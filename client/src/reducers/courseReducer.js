@@ -1,4 +1,11 @@
-import { COURSELOADING, GETCOURSES, COURSEERROR } from '../actions/types';
+import {
+	COURSELOADING,
+	GETCOURSES,
+	COURSEERROR,
+	DELETECOURSE,
+	ADDCOURSE,
+	UPDATECOURSE,
+} from '../actions/types';
 
 const initialState = {
 	loading: false,
@@ -12,6 +19,32 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				courses: action.payload,
+				error: null,
+				loading: false,
+			};
+		case DELETECOURSE:
+			return {
+				...state,
+				courses: state.courses.filter(
+					(element) => element._id !== action.payload._id,
+				),
+				error: null,
+				loading: false,
+			};
+		case ADDCOURSE:
+			return {
+				...state,
+				courses: [...state.courses, action.payload],
+				error: null,
+				loading: false,
+			};
+
+		case UPDATECOURSE:
+			return {
+				...state,
+				courses: state.courses.map((course) =>
+					course._id === action.payload._id ? action.payload : course,
+				),
 				error: null,
 				loading: false,
 			};

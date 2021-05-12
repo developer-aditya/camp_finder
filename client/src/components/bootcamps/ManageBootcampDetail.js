@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { uploadImage } from '../../actions/bootcampAction';
+import { uploadImage, deleteBootcamp } from '../../actions/bootcampAction';
 
-const ManageBootcampDetail = ({ current, uploadImage }) => {
+const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 	const submit = (e) => {
 		const imgInput = document.getElementById('img-input');
 		const file = imgInput.files[0];
@@ -52,14 +52,20 @@ const ManageBootcampDetail = ({ current, uploadImage }) => {
 					</div>
 
 					<img src={`/uploads/${current.photo}`} alt='camp-img' />
-					<a
-						href='#d'
+					<button
 						className='btn-floating btn-large halfway-fab waves-effect red darken-3 '
+						onClick={(e) => deleteBootcamp(current.id)}
 					>
 						<i className='fas fa-trash-alt'></i>
-					</a>
+					</button>
 					<Link
-						to='/manageBootcamp/editBootcamp'
+						to={{
+							pathname: '/manageBootcamp/bootcampForm',
+							state: {
+								operation: 'edit',
+								current,
+							},
+						}}
 						className='btn-floating btn-large halfway-fab waves-effect blue-grey darken-3'
 						style={{ marginRight: '3.1rem' }}
 					>
@@ -70,7 +76,9 @@ const ManageBootcampDetail = ({ current, uploadImage }) => {
 					<h5 className='card-title'>
 						<Link to='/singleBootcamp'>{current.name}</Link>
 						<span className='light-blue right white-text valign-wrapper rating'>
-							{current.averageRating}
+							{current.averageRating === null
+								? 'UR'
+								: current.averageRating}
 						</span>
 					</h5>
 					<p className='blue-grey-text'>
@@ -96,4 +104,6 @@ const ManageBootcampDetail = ({ current, uploadImage }) => {
 	);
 };
 
-export default connect(null, { uploadImage })(ManageBootcampDetail);
+export default connect(null, { uploadImage, deleteBootcamp })(
+	ManageBootcampDetail,
+);

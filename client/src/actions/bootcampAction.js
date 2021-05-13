@@ -26,22 +26,21 @@ export const getAllBootcamp = (query) => async (dispatch) => {
 };
 
 // Get Bootcamp by radius
-export const getDistanceBootcamp = (query, distance, pincode) => async (
-	dispatch,
-) => {
-	try {
-		dispatch(setLoading());
-		const option = {
-			method: 'GET',
-			url: `/api/v1/bootcamps/radius/${pincode}/${distance}?` + query,
-			timeout: '4000',
-		};
-		const bootcamp = await axios(option);
-		dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
-	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
-	}
-};
+export const getDistanceBootcamp =
+	(query, distance, pincode) => async (dispatch) => {
+		try {
+			dispatch(setLoading());
+			const option = {
+				method: 'GET',
+				url: `/api/v1/bootcamps/radius/${pincode}/${distance}?` + query,
+				timeout: '4000',
+			};
+			const bootcamp = await axios(option);
+			dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
+		} catch (error) {
+			dispatch({ type: BOOTCAMPERROR, payload: error });
+		}
+	};
 
 // Set Searching Distance & Pincode in State
 export const setParams = (distance, pincode) => async (dispatch) => {

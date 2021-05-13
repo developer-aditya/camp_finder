@@ -39,7 +39,12 @@ const SingleBootcamp = ({ loading, current, clearCurrent }) => {
 		);
 
 	return current === null ? (
-		<NotFound />
+		<NotFound
+			link='Go To Bootcamp List'
+			heading='Oops! Unable to Locate Selected Bootcamp...'
+			msg='Go to the Bootcamp List and Select Again'
+			route='/bootcamps'
+		/>
 	) : (
 		<Router>
 			<div className='grey lighten-4 page-layout'>
@@ -85,7 +90,10 @@ const SingleBootcamp = ({ loading, current, clearCurrent }) => {
 												<i className='fas fa-arrow-circle-left'></i>{' '}
 												View Course Details
 											</Link>
-											<WriteReview id={current.id} />
+											<WriteReview
+												operation='add'
+												data={current.id}
+											/>
 										</React.Fragment>
 									)}
 								></Route>

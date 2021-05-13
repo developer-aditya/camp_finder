@@ -26,7 +26,7 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				courses: state.courses.filter(
-					(element) => element._id !== action.payload._id,
+					(element) => element._id !== action.payload,
 				),
 				error: null,
 				loading: false,

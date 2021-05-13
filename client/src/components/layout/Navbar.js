@@ -8,10 +8,19 @@ import { connect } from 'react-redux';
 
 const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 	const history = useHistory();
-	const logout = () => {
+
+	const allBootcamp = (e) => {
+		e.preventDefault();
+		removeParams();
+		history.push('/bootcamps');
+	};
+
+	const logout = (e) => {
+		e.preventDefault();
 		userLogout();
 		history.push('/');
 	};
+
 	return (
 		<React.Fragment>
 			<ul id='account' className='dropdown-content'>
@@ -27,16 +36,17 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 					</li>
 				)}
 
-				{/* For all users */}
 				<li>
 					<Link to='/manageAccount'>Manage Account</Link>
 				</li>
 				<li>
-					<a href='#none' onClick={logout}>
+					{/* eslint-disable-next-line */}
+					<a href='' onClick={logout}>
 						<i className='fas fa-sign-out-alt'></i>Logout
 					</a>
 				</li>
 			</ul>
+
 			<nav className='blue-grey darken-4'>
 				<div className='nav-wrapper container'>
 					<Link to='/' className='brand-logo'>
@@ -68,7 +78,12 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 
 						<li className='dropdown-trigger' data-target='account'>
 							{auth.isAuthenticated ? (
-								<a href='#!' className='valign-wrapper'>
+								// eslint-disable-next-line
+								<a
+									href=''
+									onClick={(e) => e.preventDefault()}
+									className='valign-wrapper'
+								>
 									My Account
 									<i
 										className='fas fa-caret-down'
@@ -80,12 +95,12 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 							)}
 						</li>
 
-						{/* Always show */}
 						<li>
-							<Link to='/bootcamps' onClick={removeParams}>
+							{/* eslint-disable-next-line */}
+							<a href='' onClick={allBootcamp}>
 								<i className='fas fa-search-location left'></i> All
 								Bootcamp
-							</Link>
+							</a>
 						</li>
 					</ul>
 				</div>

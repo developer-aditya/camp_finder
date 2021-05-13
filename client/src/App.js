@@ -93,9 +93,7 @@ const App = () => {
 						<Route
 							path='*'
 							render={(props) => (
-								<h3>
-									Have you ever been lost? If so, how did you feel?
-								</h3>
+								<h3>Have you ever been lost? If so, Go To home Page</h3>
 							)}
 						></Route>
 					</Switch>

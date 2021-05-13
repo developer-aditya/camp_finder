@@ -7,6 +7,7 @@ const {
 	addReview,
 	updateReview,
 	deleteReview,
+	getUserReview,
 } = require('../controller/reviews.controller');
 const Review = require('../models/reviews.model');
 const advanceQueryResult = require('../middleware/advanceQuery');
@@ -22,6 +23,8 @@ router
 		getReviews,
 	)
 	.post(protected, authorized('user', 'admin'), addReview);
+
+router.route('/me').get(protected, authorized('user', 'admin'), getUserReview);
 
 router
 	.route('/:id')

@@ -57,7 +57,7 @@ const advanceQueryResult = (model, populate) => async (req, res, next) => {
 	}
 
 	const page = parseInt(req.query.page, 10) || 1;
-	const lim = parseInt(req.query.limit, 10) || 4;
+	const lim = parseInt(req.query.limit, 10) || 6;
 	const lowerLim = (page - 1) * lim;
 	const upperLim = page * lim;
 	const total = await model.countDocuments();

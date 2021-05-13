@@ -1,22 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { addReview } from '../../actions/reviewAction';
-import { setCurrentBootcamp } from '../../actions/bootcampAction';
+import {
+	addReview,
+	clearCurrentReview,
+	updateReview,
+} from '../../actions/reviewAction';
 
-const WriteReview = ({ id, addReview, setCurrentBootcamp }) => {
+const WriteReview = ({
+	operation,
+	data,
+	addReview,
+	clearCurrentReview,
+	updateReview,
+	current,
+}) => {
 	const [rating, setRating] = useState('1');
 	const [title, setTitle] = useState('');
 	const [text, setText] = useState('');
 
-	const submit = (e) => {
-		if (title === '' || text === '') {
-			console.log('Please Enter Title and Review');
-		} else {
-			addReview(id, { title, text, rating });
+	useEffect(() => {
+		if (operation === 'edit' && current !== null) {
+			setRating(current.rating);
+			setTitle(current.title);
+			setText(current.text);
+			document.getElementById('review-submit').disabled = false;
+		} else if (operation === 'edit' && current === null) {
+			document.getElementById('review-submit').disabled = true;
 			setTitle('');
 			setText('');
 			setRating('1');
+		}
+		//eslint-disable-next-line
+	}, [current]);
+
+	const submit = (e) => {
+		if (title === '' || text === '') {
+			console.log('Please Enter Title and Review');
+		} else if (operation === 'add') {
+			addReview(data, { title, text, rating });
+			setTitle('');
+			setText('');
+			setRating('1');
+		} else if (operation === 'edit') {
+			updateReview(current._id, { title, text, rating });
+			clearCurrentReview();
 		}
 		e.preventDefault();
 	};
@@ -80,6 +108,7 @@ const WriteReview = ({ id, addReview, setCurrentBootcamp }) => {
 
 							<div className='input-feild'>
 								<button
+									id='review-submit'
 									className='btn waves-effect light-blue submit-btn'
 									name='action'
 									onClick={submit}
@@ -95,4 +124,10 @@ const WriteReview = ({ id, addReview, setCurrentBootcamp }) => {
 	);
 };
 
-export default connect(null, { addReview, setCurrentBootcamp })(WriteReview);
+const mapStateToProps = (state) => ({ current: state.review.currentReview });
+
+export default connect(mapStateToProps, {
+	addReview,
+	clearCurrentReview,
+	updateReview,
+})(WriteReview);

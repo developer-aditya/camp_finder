@@ -90,7 +90,7 @@ const BootcampList = ({
 					style={{ textTransform: 'capitalize' }}
 					onClick={(e) => setPage(pagination.next.page)}
 				>
-					Next Page <i class='fas fa-arrow-alt-circle-right'></i>
+					Next Page <i className='fas fa-arrow-alt-circle-right'></i>
 				</button>
 			) : (
 				''
@@ -101,7 +101,7 @@ const BootcampList = ({
 					style={{ textTransform: 'capitalize' }}
 					onClick={(e) => setPage(pagination.prev.page)}
 				>
-					<i class='fas fa-arrow-alt-circle-left'></i> Previous Page
+					<i className='fas fa-arrow-alt-circle-left'></i> Previous Page
 				</button>
 			) : (
 				''

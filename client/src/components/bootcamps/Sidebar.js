@@ -7,7 +7,21 @@ import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 import noUiSlider from '../../../node_modules/materialize-css/extras/noUiSlider/nouislider.min';
 import '../../../node_modules/materialize-css/extras/noUiSlider/nouislider.css';
 
-const Sidebar = ({ setParams, setQuery }) => {
+const Sidebar = ({ setParams, setQuery, params }) => {
+	const [distance, setDistance] = useState('');
+	const [pincode, setPincode] = useState('');
+	const [rating, setRating] = useState('0');
+
+	useEffect(() => {
+		if (params !== null) {
+			setDistance(params.distance);
+			setPincode(params.pincode);
+		} else {
+			setDistance('');
+			setPincode('');
+		}
+	}, [params]);
+
 	useEffect(() => {
 		let slider = document.getElementById('test-slider');
 		noUiSlider.create(slider, {
@@ -18,13 +32,7 @@ const Sidebar = ({ setParams, setQuery }) => {
 				max: 20000,
 			},
 		});
-		// eslint-disable-next-line
 	}, []);
-
-	const [distance, setDistance] = useState('');
-	const [pincode, setPincode] = useState('');
-
-	const [rating, setRating] = useState('0');
 
 	const setParamsState = (e) => {
 		if (distance === '' || pincode === '') {
@@ -141,4 +149,6 @@ const Sidebar = ({ setParams, setQuery }) => {
 	);
 };
 
-export default connect(null, { setParams })(Sidebar);
+const mapStateToProps = (state) => ({ params: state.bootcamp.params });
+
+export default connect(mapStateToProps, { setParams })(Sidebar);

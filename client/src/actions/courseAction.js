@@ -32,8 +32,8 @@ export const deleteCourse = (id) => async (dispatch) => {
 			url: `/api/v1/courses/${id}`,
 			timeout: '4000',
 		};
-		const course = await axios(option);
-		dispatch({ type: DELETECOURSE, payload: course.data.data });
+		await axios(option);
+		dispatch({ type: DELETECOURSE, payload: id });
 	} catch (error) {
 		dispatch({ type: COURSEERROR, payload: error });
 	}

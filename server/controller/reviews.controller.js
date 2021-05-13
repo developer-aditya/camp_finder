@@ -44,21 +44,39 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 exports.getReview = asyncHandler(async (req, res, next) => {
 	const review = await Review.findById(req.params.id).populate({
 		path: 'bootcamp',
-		select: 'name description',
+		select: 'name',
 	});
 
 	if (!review) {
 		return next(
-			new ErrorResponse(
-				`Review Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
 	res.status(200).json({
 		success: true,
 		msg: `Review Fetched With ID: ${req.params.id}`,
+		data: review,
+	});
+});
+
+// @desc  GET Logged in user bootcamp
+// @route /api/v1/reviews/me
+// @access protected
+exports.getUserReview = asyncHandler(async (req, res, next) => {
+	const review = await Review.find({ user: req.user.id }).populate(
+		'bootcamp',
+		'name',
+	);
+
+	if (!review) {
+		return next(
+			new ErrorResponse(`Reviews Not Found for User ${req.user.id}`, 404),
+		);
+	}
+	res.status(200).json({
+		success: true,
+		msg: `Review Fetched For User ${req.user.id}`,
 		data: review,
 	});
 });
@@ -100,10 +118,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 
 	if (!review) {
 		return next(
-			new ErrorResponse(
-				`Review Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -122,7 +137,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 	review = await Review.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
-	});
+	}).populate('bootcamp', 'name');
 
 	review.save();
 
@@ -141,10 +156,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 
 	if (!review) {
 		return next(
-			new ErrorResponse(
-				`Review Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 

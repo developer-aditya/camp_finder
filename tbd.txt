@@ -1,8 +1,6 @@
 2. Set proper access specifier for api in controllers
 3. Improve status code and response message
 4. Postman Description Title of all Api improve
-// Error in add delete bootcamp: populate don't use it
-// FIND PROPER STEPS OF CREATING THIS APIS FROM DOCUMENTATION IN BRAD GITHUB
 // CREATE DB DIAGRAM WITH RELATION BETWEEN USER(type) BOOTCAMP AND COURSE with all pre psot static and method functions
 //CORS Skipped TBD
 
@@ -13,4 +11,5 @@ to run forgot password
 // Setup fullscreen page spinner for all auth while getting response from action
 // Return Server response from action to calling function and display message on UI for all auth
 // above must be completed for all response show on UI
+// Bootcamp Photo doesnt update on Upload Photo
 // Average rating doesnt update on adding review 

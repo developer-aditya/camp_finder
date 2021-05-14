@@ -21,7 +21,8 @@ export const getAllBootcamp = (query) => async (dispatch) => {
 		const bootcamp = await axios(option);
 		dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
 	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
+		dispatch({ type: BOOTCAMPERROR });
+		return Promise.reject(error);
 	}
 };
 
@@ -38,7 +39,8 @@ export const getDistanceBootcamp =
 			const bootcamp = await axios(option);
 			dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
 		} catch (error) {
-			dispatch({ type: BOOTCAMPERROR, payload: error });
+			dispatch({ type: BOOTCAMPERROR });
+			return Promise.reject(error);
 		}
 	};
 
@@ -64,7 +66,7 @@ export const setCurrentBootcamp = (bootcampId) => async (dispatch) => {
 		const bootcamp = await axios(option);
 		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
 	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
+		dispatch({ type: BOOTCAMPERROR });
 	}
 };
 
@@ -80,75 +82,58 @@ export const getUserBootcamp = () => async (dispatch) => {
 		const bootcamp = await axios(option);
 		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
 	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
+		dispatch({ type: BOOTCAMPERROR });
+		return Promise.reject(error);
 	}
 };
 
 // delete Bootcamp
 export const deleteBootcamp = (bootcampId) => async (dispatch) => {
-	try {
-		dispatch(setLoading());
-		const option = {
-			method: 'DELETE',
-			url: `/api/v1/bootcamps/${bootcampId}`,
-			timeout: '4000',
-		};
-		await axios(option);
-		dispatch({ type: CLEARCURRENT });
-	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
-	}
+	const option = {
+		method: 'DELETE',
+		url: `/api/v1/bootcamps/${bootcampId}`,
+		timeout: '4000',
+	};
+	await axios(option);
+	dispatch({ type: CLEARCURRENT });
 };
 
 // Put (upload) a new Bootcamp Image
 export const uploadImage = (id, formdata) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: `/api/v1/bootcamps/${id}/photo`,
-			headers: {
-				'Content-type': 'image/jpeg',
-			},
-			data: formdata,
-			timeout: '4000',
-		};
-		const bootcamp = await axios(option);
-		console.log(bootcamp.data);
-	} catch (error) {
-		console.log(error);
-	}
+	const option = {
+		method: 'PUT',
+		url: `/api/v1/bootcamps/${id}/photo`,
+		headers: {
+			'Content-type': 'image/jpeg',
+		},
+		data: formdata,
+		timeout: '4000',
+	};
+	await axios(option);
 };
 
 // Update Bootcamp
 export const updateBootcamp = (bootcampId, Bootcamp) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: `/api/v1/bootcamps/${bootcampId}`,
-			data: Bootcamp,
-			timeout: '4000',
-		};
-		const bootcamp = await axios(option);
-		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
-	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
-	}
+	const option = {
+		method: 'PUT',
+		url: `/api/v1/bootcamps/${bootcampId}`,
+		data: Bootcamp,
+		timeout: '4000',
+	};
+	const bootcamp = await axios(option);
+	dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
 };
 
 // Add New Bootcamp
 export const addBootcamp = (Bootcamp) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'POST',
-			url: '/api/v1/bootcamps',
-			data: Bootcamp,
-			timeout: '4000',
-		};
-		const bootcamp = await axios(option);
-		dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
-	} catch (error) {
-		dispatch({ type: BOOTCAMPERROR, payload: error });
-	}
+	const option = {
+		method: 'POST',
+		url: '/api/v1/bootcamps',
+		data: Bootcamp,
+		timeout: '4000',
+	};
+	const bootcamp = await axios(option);
+	dispatch({ type: SETCURRENT, payload: bootcamp.data.data });
 };
 
 // Setting loading values

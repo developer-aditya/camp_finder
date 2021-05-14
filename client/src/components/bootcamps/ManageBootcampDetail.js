@@ -4,19 +4,51 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { uploadImage, deleteBootcamp } from '../../actions/bootcampAction';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 	const submit = (e) => {
 		const imgInput = document.getElementById('img-input');
 		const file = imgInput.files[0];
 
 		if (!file || !file.type.match(/image.*/)) {
-			console.log('Please Select An Image File');
+			M.toast({
+				html: 'Please Select An Image File',
+			});
 		} else {
 			const fd = new FormData();
 			fd.append('file', file);
-			uploadImage(current.id, fd);
+			uploadImage(current.id, fd)
+				.then((res) =>
+					M.toast({
+						html: "You've Successfully Updated Bootcamp Photo, Reload the Page ",
+					}),
+				)
+				.catch((error) => {
+					M.toast({
+						html: `${error.response.status} Error! ${
+							error.response.data.error || 'Internal Server Error'
+						}`,
+					});
+				});
 		}
 		e.preventDefault();
+	};
+
+	const deleteBootcampFunc = (id) => {
+		deleteBootcamp(id)
+			.then((res) =>
+				M.toast({
+					html: "You've Successfully Deleted Your Bootcamp ",
+				}),
+			)
+			.catch((error) => {
+				M.toast({
+					html: `${error.response.status} Error! ${
+						error.response.data.error || 'Internal Server Error'
+					}`,
+				});
+			});
 	};
 
 	return (
@@ -54,7 +86,7 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 					<img src={`/uploads/${current.photo}`} alt='camp-img' />
 					<button
 						className='btn-floating btn-large halfway-fab waves-effect red darken-3 '
-						onClick={(e) => deleteBootcamp(current.id)}
+						onClick={(e) => deleteBootcampFunc(current.id)}
 					>
 						<i className='fas fa-trash-alt'></i>
 					</button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ManageBootcampDetail from './ManageBootcampDetail';
 import ManageCourse from '../course/ManageCourse';
 
@@ -7,9 +7,16 @@ import { getUserBootcamp } from '../../actions/bootcampAction';
 
 import AddBootcamp from '../reponse/AddBootcamp';
 
-function ManageBootcamp({ getUserBootcamp, current, loading }) {
+import ServerError from '../reponse/ServerError';
+
+const ManageBootcamp = ({ getUserBootcamp, current, loading }) => {
+	const [statusCode, setStatusCode] = useState(200);
 	useEffect(() => {
-		getUserBootcamp();
+		getUserBootcamp()
+			.then((res) => setStatusCode(200))
+			.catch((error) => {
+				setStatusCode(error.response.status);
+			});
 		// eslint-disable-next-line
 	}, []);
 
@@ -32,23 +39,26 @@ function ManageBootcamp({ getUserBootcamp, current, loading }) {
 			</div>
 		);
 
-	return current === null ? (
-		<AddBootcamp />
-	) : (
-		<div className='grey lighten-4 page-layout'>
-			<div className='container'>
-				<div className='row'>
-					<div className='col s12 m7'>
-						<ManageBootcampDetail current={current} />
-					</div>
-					<div className='col s12 m5'>
-						<ManageCourse id={current.id} />
+	if (current === null && statusCode !== 500) return <AddBootcamp />;
+	else if (statusCode === 500) {
+		return <ServerError />;
+	} else {
+		return (
+			<div className='grey lighten-4 page-layout'>
+				<div className='container'>
+					<div className='row'>
+						<div className='col s12 m7'>
+							<ManageBootcampDetail current={current} />
+						</div>
+						<div className='col s12 m5'>
+							<ManageCourse id={current.id} />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	);
-}
+		);
+	}
+};
 const mapStateToProps = (state) => ({
 	current: state.bootcamp.currentBootcamp,
 	loading: state.bootcamp.loading,

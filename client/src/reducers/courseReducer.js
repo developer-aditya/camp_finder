@@ -10,7 +10,6 @@ import {
 const initialState = {
 	loading: false,
 	courses: [],
-	error: null,
 };
 
 const courseReducer = (state = initialState, action) => {
@@ -19,7 +18,7 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				courses: action.payload,
-				error: null,
+
 				loading: false,
 			};
 		case DELETECOURSE:
@@ -28,14 +27,14 @@ const courseReducer = (state = initialState, action) => {
 				courses: state.courses.filter(
 					(element) => element._id !== action.payload,
 				),
-				error: null,
+
 				loading: false,
 			};
 		case ADDCOURSE:
 			return {
 				...state,
 				courses: [...state.courses, action.payload],
-				error: null,
+
 				loading: false,
 			};
 
@@ -45,7 +44,7 @@ const courseReducer = (state = initialState, action) => {
 				courses: state.courses.map((course) =>
 					course._id === action.payload._id ? action.payload : course,
 				),
-				error: null,
+
 				loading: false,
 			};
 		case COURSELOADING:
@@ -56,7 +55,7 @@ const courseReducer = (state = initialState, action) => {
 		case COURSEERROR:
 			return {
 				...state,
-				error: action.payload,
+				courses: [],
 				loading: false,
 			};
 		default:

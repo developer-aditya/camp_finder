@@ -50,7 +50,6 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 			<nav className='blue-grey darken-4'>
 				<div className='nav-wrapper container'>
 					<Link to='/' className='brand-logo'>
-						<i className={icon} style={{ fontSize: '2rem' }} />
 						{title}
 					</Link>
 					<ul id='nav-mobile' className='right hide-on-med-and-down'>
@@ -110,7 +109,6 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 };
 
 Navbar.propTypes = {
-	icon: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 };
 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { addBootcamp, updateBootcamp } from '../../actions/bootcampAction';
@@ -6,6 +7,8 @@ import { addBootcamp, updateBootcamp } from '../../actions/bootcampAction';
 import M from 'materialize-css/dist/js/materialize.min';
 
 const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
+	const history = useHistory();
+
 	useEffect(() => {
 		let elems = document.querySelectorAll('select');
 		M.FormSelect.init(elems);
@@ -46,6 +49,10 @@ const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
 
 	const submit = (e) => {
 		e.preventDefault();
+
+		const formBtn = document.getElementById('bootcampForm-btn');
+		formBtn.classList.add('button--loading');
+
 		let form = e.target;
 		let bootcamp = {};
 		let error = '';
@@ -100,12 +107,49 @@ const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
 
 		if (error === '') {
 			if (location.state.operation === 'edit') {
-				updateBootcamp(location.state.current.id, bootcamp);
+				updateBootcamp(location.state.current.id, bootcamp)
+					.then((res) => {
+						M.toast({
+							html: `Your Bootcamp Has Been Updated Successfully`,
+						});
+						setTimeout(() => {
+							formBtn.classList.remove('button--loading');
+							history.push('/manageBootcamp');
+						}, 1000);
+					})
+					.catch((err) => {
+						M.toast({
+							html: `${err.response.status} Error! ${
+								err.response.data.error || 'Internal Server Error'
+							}`,
+						});
+						formBtn.classList.remove('button--loading');
+					});
 			} else if (location.state.operation === 'add') {
-				addBootcamp(bootcamp);
+				addBootcamp(bootcamp)
+					.then((res) => {
+						M.toast({
+							html: `You Have Successfully Created a bootcamp`,
+						});
+						setTimeout(() => {
+							formBtn.classList.remove('button--loading');
+							history.push('/manageBootcamp');
+						}, 1000);
+					})
+					.catch((err) => {
+						M.toast({
+							html: `${err.response.status} Error! ${
+								err.response.data.error || 'Internal Server Error'
+							}`,
+						});
+						formBtn.classList.remove('button--loading');
+					});
 			}
 		} else {
-			console.log(error);
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
 		}
 	};
 
@@ -262,9 +306,10 @@ const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
 						</div>
 					</div>
 					<div className='row'>
-						<div className=' center'>
+						<div className='center'>
 							<button
-								className='btn submit-btn waves-effect light-blue w-50'
+								id='bootcampForm-btn'
+								className='btn submit-btn waves-effect light-blue w-50 center'
 								type='submit'
 								form='bootcamp-form'
 							>

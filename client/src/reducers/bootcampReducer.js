@@ -11,7 +11,6 @@ import {
 const initialState = {
 	loading: false,
 	bootcamps: [],
-	error: null,
 	pagination: {},
 	params: null,
 	currentBootcamp: null,
@@ -24,7 +23,7 @@ const bootcampReducer = (state = initialState, action) => {
 				...state,
 				bootcamps: action.payload.data,
 				pagination: action.payload.pagination,
-				error: null,
+
 				loading: false,
 			};
 		case SETLOADING:
@@ -45,9 +44,9 @@ const bootcampReducer = (state = initialState, action) => {
 		case BOOTCAMPERROR:
 			return {
 				...state,
-				error: action.payload,
 				loading: false,
 				currentBootcamp: null,
+				bootcamps: [],
 			};
 		case SETCURRENT:
 			return {

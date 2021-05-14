@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { getCourses, deleteCourse } from '../../actions/courseAction';
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
 const ManageCourse = ({
 	id,
@@ -14,6 +15,22 @@ const ManageCourse = ({
 		getCourses(id);
 		// eslint-disable-next-line
 	}, []);
+
+	const deleteCourseFunc = (id) => {
+		deleteCourse(id)
+			.then((res) =>
+				M.toast({
+					html: "You've Successfully Deleted Selected Course ",
+				}),
+			)
+			.catch((error) => {
+				M.toast({
+					html: `${error.response.status} Error! ${
+						error.response.data.error || 'Internal Server Error'
+					}`,
+				});
+			});
+	};
 
 	if (loading)
 		return (
@@ -53,7 +70,7 @@ const ManageCourse = ({
 										href='#d'
 										className='red-text'
 										style={{ marginLeft: '0.5rem' }}
-										onClick={(e) => deleteCourse(course._id)}
+										onClick={(e) => deleteCourseFunc(course._id)}
 									>
 										<i className='fas fa-trash'></i>
 									</a>

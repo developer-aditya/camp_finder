@@ -13,3 +13,5 @@ to run forgot password
 // above must be completed for all response show on UI
 // Bootcamp Photo doesnt update on Upload Photo
 // Average rating doesnt update on adding review 
+
+clean up and auth response left

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { addCourse, updateCourse } from '../../actions/courseAction';
@@ -6,6 +7,7 @@ import { addCourse, updateCourse } from '../../actions/courseAction';
 import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
 const CourseForm = ({ location, addCourse, updateCourse }) => {
+	const history = useHistory();
 	useEffect(() => {
 		let elems = document.querySelectorAll('select');
 		M.FormSelect.init(elems);
@@ -30,6 +32,9 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 	const submit = (e) => {
 		e.preventDefault();
 
+		const formBtn = document.getElementById('courseForm-btn');
+		formBtn.classList.add('button--loading');
+
 		const form = e.target;
 		const names = ['title', 'tuition', 'weeks', 'description'];
 		let courseObject = {};
@@ -53,12 +58,49 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 
 		if (error === '') {
 			if (location.state.operation === 'edit') {
-				updateCourse(location.state.course._id, courseObject);
+				updateCourse(location.state.course._id, courseObject)
+					.then((res) => {
+						M.toast({
+							html: `Your Course Has Been Updated Successfully`,
+						});
+						setTimeout(() => {
+							formBtn.classList.remove('button--loading');
+							history.push('/manageBootcamp');
+						}, 1000);
+					})
+					.catch((err) => {
+						M.toast({
+							html: `${err.response.status} Error! ${
+								err.response.data.error || 'Internal Server Error'
+							}`,
+						});
+						formBtn.classList.remove('button--loading');
+					});
 			} else if (location.state.operation === 'add') {
-				addCourse(location.state.bootcampId, courseObject);
+				addCourse(location.state.bootcampId, courseObject)
+					.then((res) => {
+						M.toast({
+							html: `Your Course Has Been Added Successfully`,
+						});
+						setTimeout(() => {
+							formBtn.classList.remove('button--loading');
+							history.push('/manageBootcamp');
+						}, 1000);
+					})
+					.catch((err) => {
+						M.toast({
+							html: `${err.response.status} Error! ${
+								err.response.data.error || 'Internal Server Error'
+							}`,
+						});
+						formBtn.classList.remove('button--loading');
+					});
 			}
 		} else {
-			console.log(error);
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
 		}
 	};
 
@@ -165,6 +207,7 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 					<div className='row'>
 						<div className=' center'>
 							<button
+								id='courseForm-btn'
 								className='btn submit-btn waves-effect light-blue w-50'
 								type='submit'
 								form='course-form'

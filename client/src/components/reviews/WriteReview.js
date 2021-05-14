@@ -7,6 +7,8 @@ import {
 	updateReview,
 } from '../../actions/reviewAction';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const WriteReview = ({
 	operation,
 	data,
@@ -36,15 +38,44 @@ const WriteReview = ({
 
 	const submit = (e) => {
 		if (title === '' || text === '') {
-			console.log('Please Enter Title and Review');
+			M.toast({
+				html: 'Please Enter Title and Review',
+			});
 		} else if (operation === 'add') {
-			addReview(data, { title, text, rating });
-			setTitle('');
-			setText('');
-			setRating('1');
+			addReview(data, { title, text, rating })
+				.then((res) => {
+					M.toast({
+						html: "You've Successfully Reviewed This Bootcamp",
+					});
+					setTitle('');
+					setText('');
+					setRating('1');
+				})
+				.catch((error) => {
+					M.toast({
+						html: `${error.response.status} Error! ${
+							error.response.data.error || 'Internal Server Error'
+						}`,
+					});
+				});
 		} else if (operation === 'edit') {
-			updateReview(current._id, { title, text, rating });
-			clearCurrentReview();
+			updateReview(current._id, { title, text, rating })
+				.then((res) => {
+					M.toast({
+						html: "You've Successfully Edited Your Review ",
+					});
+					setTitle('');
+					setText('');
+					setRating('1');
+					clearCurrentReview();
+				})
+				.catch((error) => {
+					M.toast({
+						html: `${error.response.status} Error! ${
+							error.response.data.error || 'Internal Server Error'
+						}`,
+					});
+				});
 		}
 		e.preventDefault();
 	};

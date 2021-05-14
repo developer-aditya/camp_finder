@@ -20,55 +20,43 @@ export const getCourses = (id) => async (dispatch) => {
 		const course = await axios(option);
 		dispatch({ type: GETCOURSES, payload: course.data.data });
 	} catch (error) {
-		dispatch({ type: COURSEERROR, payload: error });
+		dispatch({ type: COURSEERROR });
 	}
 };
 
 // Delete Course By Course Id
 export const deleteCourse = (id) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'DELETE',
-			url: `/api/v1/courses/${id}`,
-			timeout: '4000',
-		};
-		await axios(option);
-		dispatch({ type: DELETECOURSE, payload: id });
-	} catch (error) {
-		dispatch({ type: COURSEERROR, payload: error });
-	}
+	const option = {
+		method: 'DELETE',
+		url: `/api/v1/courses/${id}`,
+		timeout: '4000',
+	};
+	await axios(option);
+	dispatch({ type: DELETECOURSE, payload: id });
 };
 
 // Update Course By Course Id
 export const updateCourse = (id, course) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: `/api/v1/courses/${id}`,
-			data: course,
-			timeout: '4000',
-		};
-		const courseRes = await axios(option);
-		dispatch({ type: UPDATECOURSE, payload: courseRes.data.data });
-	} catch (error) {
-		dispatch({ type: COURSEERROR, payload: error });
-	}
+	const option = {
+		method: 'PUT',
+		url: `/api/v1/courses/${id}`,
+		data: course,
+		timeout: '4000',
+	};
+	const courseRes = await axios(option);
+	dispatch({ type: UPDATECOURSE, payload: courseRes.data.data });
 };
 
 // Add course to Bootcamp
 export const addCourse = (id, course) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'POST',
-			url: `/api/v1/bootcamps/${id}/courses`,
-			data: course,
-			timeout: '4000',
-		};
-		const courseRes = await axios(option);
-		dispatch({ type: ADDCOURSE, payload: courseRes.data.data });
-	} catch (error) {
-		dispatch({ type: COURSEERROR, payload: error });
-	}
+	const option = {
+		method: 'POST',
+		url: `/api/v1/bootcamps/${id}/courses`,
+		data: course,
+		timeout: '4000',
+	};
+	const courseRes = await axios(option);
+	dispatch({ type: ADDCOURSE, payload: courseRes.data.data });
 };
 
 // Setting loading values

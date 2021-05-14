@@ -43,7 +43,7 @@ const App = () => {
 		<Provider store={store}>
 			<Router>
 				<div className='App'>
-					<Navbar title='CampFinder' icon='fas fa-laptop-house' />
+					<Navbar title='campFinder' />
 					<SignIn />
 					<SignUp />
 					<ForgotPassword />
@@ -51,7 +51,6 @@ const App = () => {
 						<Route exact path='/' component={Home}></Route>
 						<Route exact path='/bootcamps' component={Bootcamps}></Route>
 						<Route
-							exact
 							path='/singleBootcamp'
 							component={SingleBootcamp}
 						></Route>

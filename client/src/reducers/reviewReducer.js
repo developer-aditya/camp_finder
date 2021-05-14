@@ -6,12 +6,12 @@ import {
 	SETCURRENTREVIEW,
 	CLEARCURRENTREVIEW,
 	UPDATEREVIEW,
+	ADDREVIEW,
 } from '../actions/types';
 
 const initialState = {
 	loading: false,
 	reviews: null,
-	error: null,
 	currentReview: null,
 };
 
@@ -21,7 +21,6 @@ const reviewReducer = (state = initialState, action) => {
 			return {
 				...state,
 				reviews: action.payload,
-				error: null,
 				loading: false,
 			};
 		case DELETEREVIEW:
@@ -35,7 +34,7 @@ const reviewReducer = (state = initialState, action) => {
 					(state.currentReview._id === action.payload
 						? null
 						: state.currentReview),
-				error: null,
+
 				loading: false,
 			};
 		case UPDATEREVIEW:
@@ -44,7 +43,13 @@ const reviewReducer = (state = initialState, action) => {
 				reviews: state.reviews.map((review) =>
 					review._id === action.payload._id ? action.payload : review,
 				),
-				error: null,
+
+				loading: false,
+			};
+		case ADDREVIEW:
+			return {
+				...state,
+				reviews: [...state.reviews, action.payload],
 				loading: false,
 			};
 		case REVIEWLOADING:
@@ -65,8 +70,7 @@ const reviewReducer = (state = initialState, action) => {
 		case REVIEWERROR:
 			return {
 				...state,
-				review: null,
-				error: action.payload,
+				reviews: null,
 				loading: false,
 			};
 		default:

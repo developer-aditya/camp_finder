@@ -164,7 +164,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 		return next(
 			new ErrorResponse(
 				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
-				404,
+				401,
 			),
 		);
 	}

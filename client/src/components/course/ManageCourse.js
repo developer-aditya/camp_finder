@@ -25,7 +25,7 @@ const ManageCourse = ({
 			)
 			.catch((error) => {
 				M.toast({
-					html: `${error.response.status} Error! ${
+					html: `${error.response.status} ${
 						error.response.data.error || 'Internal Server Error'
 					}`,
 				});

@@ -56,7 +56,8 @@ const BootcampList = ({
 			</div>
 		);
 
-	if (bootcamps.length === 0 && statusCode !== 500) {
+	if (statusCode === 500) return <ServerError />;
+	else if (bootcamps.length === 0)
 		return (
 			<NotFound
 				heading='Oops! Unable to Get Bootcamps Try Again...'
@@ -65,7 +66,6 @@ const BootcampList = ({
 				route='/'
 			/>
 		);
-	} else if (statusCode === 500) return <ServerError />;
 	else
 		return (
 			<React.Fragment>
@@ -132,6 +132,7 @@ const BootcampList = ({
 };
 
 const mapStateToProps = (state) => ({ bootcamp: state.bootcamp });
+
 export default connect(mapStateToProps, {
 	getAllBootcamp,
 	getDistanceBootcamp,

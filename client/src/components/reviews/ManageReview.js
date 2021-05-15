@@ -46,14 +46,14 @@ const ManageReview = ({
 			})
 			.catch((error) => {
 				M.toast({
-					html: `${error.response.status} Error! ${
+					html: `${error.response.status} ${
 						error.response.data.error || 'Internal Server Error'
 					}`,
 				});
 			});
 	};
 
-	if (loading === true)
+	if (loading)
 		return (
 			<div
 				className='progress'
@@ -72,19 +72,17 @@ const ManageReview = ({
 			</div>
 		);
 
-	if (statusCode === 500) {
-		return <ServerError />;
-	} else if (statusCode === 404 && reviews.length === 0) {
-		return (
+	if (statusCode === 500) return <ServerError />;
+	else if (reviews === null) return '';
+	else {
+		return reviews.length === 0 ? (
 			<NotFound
 				heading='Oh No! You Have Not Reviewed Any Bootcamps Yet...'
 				msg='You Have Not Reviewed Any Bootcamp.Go And Start Reviewing, Help Other Find Useful Bootcamp'
 				link='Go To Bootcamp List'
 				route='/bootcamps'
 			/>
-		);
-	} else {
-		return (
+		) : (
 			<div className='grey lighten-4 page-layout'>
 				<div className='row'>
 					<div className='col s12 l4'>

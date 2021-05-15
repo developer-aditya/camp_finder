@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { updateAccount } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const ManageAccount = ({ updateAccount, user }) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
@@ -15,24 +17,39 @@ const ManageAccount = ({ updateAccount, user }) => {
 		}
 	}, [user]);
 
-	const submit = () => {
-		let update = {};
-		if (name !== '') {
-			update['name'] = name;
-		}
-		if (email !== '') {
-			if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
-				update['email'] = email;
-			} else {
-				update = {};
-			}
-		}
-		if (JSON.stringify(update) === '{}') {
-			console.log('Please Enter One of the Details properly');
+	const submit = (e) => {
+		e.preventDefault();
+		const formBtn = document.getElementById('accountForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (name === '' || email === '') error = 'Please Enter Your Details';
+		else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false)
+			error = 'Please Enter Proper Email Id';
+
+		if (error === '') {
+			updateAccount({ name, email })
+				.then((res) => {
+					M.toast({
+						html: 'Account Updated Successfully...',
+					});
+					setTimeout(() => {
+						formBtn.classList.remove('button--loading');
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
 		} else {
-			updateAccount(update);
-			setName('');
-			setEmail('');
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
 		}
 	};
 
@@ -40,8 +57,8 @@ const ManageAccount = ({ updateAccount, user }) => {
 		<div className='grey lighten-4 page-layout'>
 			<div className='container'>
 				<div className='row'>
-					<div className='col s12 m2'></div>
-					<div className='col s12 m8'>
+					<div className='col s12 l2'></div>
+					<div className='col s12 l8'>
 						<div className='card'>
 							<div
 								className='card-title blue-grey darken-3 white-text'
@@ -88,8 +105,10 @@ const ManageAccount = ({ updateAccount, user }) => {
 						</div>
 						<div className='row'>
 							<div className='col s6'>
+								{/* eslint-disable-next-line */}
 								<a
-									href='#submit'
+									id='accountForm-btn'
+									href=''
 									className='btn light-blue waves-effect'
 									style={{ width: '100%' }}
 									onClick={submit}

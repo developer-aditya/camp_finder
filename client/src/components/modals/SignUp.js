@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { userRegister } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const SignUp = ({ userRegister }) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
@@ -11,26 +13,54 @@ const SignUp = ({ userRegister }) => {
 	const [type, setType] = useState('none');
 
 	const submit = (e) => {
-		if (name === '' || email === '' || password === '' || type === 'none') {
-			console.log('Please Enter All Details');
-		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false) {
-			console.log('Please Enter Proper Email Id');
-		} else if (/^\S{5,}\S$/.test(password) === false) {
-			console.log(
-				'Password must be atleast 6 character Long without spaces',
-			);
-		} else if (password !== cnf) {
-			console.log('Password and Confirm Password do not match');
-			setCnf('');
-		} else {
-			userRegister({ name, email, password, role: type });
-			setName('');
-			setEmail('');
-			setPassword('');
-			setCnf('');
-			setType('none');
-		}
 		e.preventDefault();
+		const formBtn = document.getElementById('registerForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (name === '' || email === '' || password === '' || type === 'none') {
+			error = 'Please Enter All Details';
+		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false) {
+			error = 'Please Enter Proper Email Id';
+		} else if (/^\S{5,}\S$/.test(password) === false) {
+			error = 'Password must be atleast 6 character Long without spaces';
+		} else if (password !== cnf) {
+			error = 'Password and Confirm Password do not match';
+			setCnf('');
+		}
+
+		if (error === '') {
+			userRegister({ name, email, password, role: type })
+				.then((res) => {
+					M.toast({
+						html: 'User Registered Successfully...',
+					});
+					setTimeout(() => {
+						setName('');
+						setEmail('');
+						setPassword('');
+						setCnf('');
+						setType('none');
+						formBtn.classList.remove('button--loading');
+						M.Modal.getInstance(
+							document.getElementById('signup-modal'),
+						).close();
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
+		} else {
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
+		}
 	};
 
 	const comparePassword = (e) => {
@@ -111,6 +141,7 @@ const SignUp = ({ userRegister }) => {
 
 					<div className='input-feild'>
 						<button
+							id='registerForm-btn'
 							className='btn waves-effect light-blue sign-btn'
 							type='submit'
 							name='action'

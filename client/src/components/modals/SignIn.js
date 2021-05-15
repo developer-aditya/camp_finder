@@ -3,23 +3,52 @@ import React, { useState } from 'react';
 import { userLogin } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const SignIn = ({ userLogin }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const submit = (e) => {
-		if (email === '' || password === '') {
-			console.log('Please Enter User Credentials');
-		} else {
-			if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
-				userLogin({ email, password });
-				setEmail('');
-				setPassword('');
-			} else {
-				console.log('Wrong email');
-			}
-		}
 		e.preventDefault();
+		const formBtn = document.getElementById('loginForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (email === '' || password === '')
+			error = 'Please Enter User Credentials';
+		else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false)
+			error = 'Please Enter Proper Email Id';
+
+		if (error === '') {
+			userLogin({ email, password })
+				.then((res) => {
+					M.toast({
+						html: 'Login Success...',
+					});
+					setTimeout(() => {
+						setEmail('');
+						setPassword('');
+						formBtn.classList.remove('button--loading');
+						M.Modal.getInstance(
+							document.getElementById('signin-modal'),
+						).close();
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
+		} else {
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
+		}
 	};
 
 	return (
@@ -54,6 +83,7 @@ const SignIn = ({ userLogin }) => {
 						</div>
 						<div className='input-feild'>
 							<button
+								id='loginForm-btn'
 								className='btn waves-effect light-blue sign-btn'
 								type='submit'
 								form='signin'

@@ -39,10 +39,9 @@ const ManageBootcamp = ({ getUserBootcamp, current, loading }) => {
 			</div>
 		);
 
-	if (current === null && statusCode !== 500) return <AddBootcamp />;
-	else if (statusCode === 500) {
-		return <ServerError />;
-	} else {
+	if (statusCode === 500) return <ServerError />;
+	else if (current === null) return <AddBootcamp />;
+	else
 		return (
 			<div className='grey lighten-4 page-layout'>
 				<div className='container'>
@@ -57,8 +56,8 @@ const ManageBootcamp = ({ getUserBootcamp, current, loading }) => {
 				</div>
 			</div>
 		);
-	}
 };
+
 const mapStateToProps = (state) => ({
 	current: state.bootcamp.currentBootcamp,
 	loading: state.bootcamp.loading,

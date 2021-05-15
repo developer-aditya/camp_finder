@@ -66,11 +66,11 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 						setTimeout(() => {
 							formBtn.classList.remove('button--loading');
 							history.push('/manageBootcamp');
-						}, 1000);
+						}, 500);
 					})
 					.catch((err) => {
 						M.toast({
-							html: `${err.response.status} Error! ${
+							html: `${err.response.status}! ${
 								err.response.data.error || 'Internal Server Error'
 							}`,
 						});
@@ -85,11 +85,11 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 						setTimeout(() => {
 							formBtn.classList.remove('button--loading');
 							history.push('/manageBootcamp');
-						}, 1000);
+						}, 500);
 					})
 					.catch((err) => {
 						M.toast({
-							html: `${err.response.status} Error! ${
+							html: `${err.response.status}! ${
 								err.response.data.error || 'Internal Server Error'
 							}`,
 						});

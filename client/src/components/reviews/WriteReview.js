@@ -37,6 +37,7 @@ const WriteReview = ({
 	}, [current]);
 
 	const submit = (e) => {
+		e.preventDefault();
 		if (title === '' || text === '') {
 			M.toast({
 				html: 'Please Enter Title and Review',
@@ -53,7 +54,7 @@ const WriteReview = ({
 				})
 				.catch((error) => {
 					M.toast({
-						html: `${error.response.status} Error! ${
+						html: `${error.response.status} ${
 							error.response.data.error || 'Internal Server Error'
 						}`,
 					});
@@ -71,13 +72,12 @@ const WriteReview = ({
 				})
 				.catch((error) => {
 					M.toast({
-						html: `${error.response.status} Error! ${
+						html: `${error.response.status} ${
 							error.response.data.error || 'Internal Server Error'
 						}`,
 					});
 				});
 		}
-		e.preventDefault();
 	};
 
 	return (

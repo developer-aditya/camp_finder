@@ -8,6 +8,7 @@ import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
 const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 	const submit = (e) => {
+		e.preventDefault();
 		const imgInput = document.getElementById('img-input');
 		const file = imgInput.files[0];
 
@@ -32,7 +33,6 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 					});
 				});
 		}
-		e.preventDefault();
 	};
 
 	const deleteBootcampFunc = (id) => {

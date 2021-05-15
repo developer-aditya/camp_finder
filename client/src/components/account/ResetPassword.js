@@ -4,6 +4,8 @@ import { useParams, useHistory } from 'react-router';
 import { resetPassword } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const ResetPassword = ({ resetPassword }) => {
 	const [password, setPassword] = useState('');
 	const [cnf, setCnf] = useState('');
@@ -11,22 +13,55 @@ const ResetPassword = ({ resetPassword }) => {
 	const { resetToken } = useParams();
 	const history = useHistory();
 
-	const submit = () => {
-		if (password === '') {
-			console.log('Please Enter Password');
-		} else if (/^\S{5,}\S$/.test(password) === false) {
-			console.log(
-				'Password must be atleast 6 character Long without spaces',
-			);
-		} else if (password !== cnf) {
+	const submit = (e) => {
+		e.preventDefault();
+		const formBtn = document.getElementById('resetPasswordForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (password === '') error = 'Please Enter Password';
+		else if (/^\S{5,}\S$/.test(password) === false)
+			error = 'Password must be atleast 6 character Long without spaces';
+		else if (password !== cnf) {
+			error = 'Entered Passwords does not Match';
 			setCnf('');
-			console.log('Entered Passwords does not Match');
+		}
+
+		if (error === '') {
+			resetPassword({ password }, resetToken)
+				.then((res) => {
+					M.toast({
+						html: 'Reset Password Successful...',
+					});
+					setTimeout(() => {
+						setPassword('');
+						setCnf('');
+						formBtn.classList.remove('button--loading');
+						history.push('/');
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
 		} else {
-			// call reset password
-			resetPassword({ password }, resetToken);
-			setPassword('');
-			setCnf('');
-			history.push('/');
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
+		}
+	};
+
+	const comparePassword = (e) => {
+		setCnf(e.target.value);
+		if (e.target.value !== password) {
+			e.target.style.color = 'red';
+		} else {
+			e.target.style.color = 'green';
 		}
 	};
 
@@ -34,8 +69,8 @@ const ResetPassword = ({ resetPassword }) => {
 		<div className='grey lighten-4 page-layout'>
 			<div className='container'>
 				<div className='row'>
-					<div className='col s12 m3'></div>
-					<div className='col s12 m6'>
+					<div className='col s12 m2 l3'></div>
+					<div className='col s12 m8 l6'>
 						<div className='card'>
 							<div
 								className='card-title blue-grey darken-3 white-text'
@@ -67,7 +102,7 @@ const ResetPassword = ({ resetPassword }) => {
 										id='confirm_password'
 										type='password'
 										value={cnf}
-										onChange={(e) => setCnf(e.target.value)}
+										onChange={comparePassword}
 									/>
 									<label htmlFor='confirm_password'>
 										Confirm Password
@@ -78,8 +113,10 @@ const ResetPassword = ({ resetPassword }) => {
 						<div className='row'>
 							<div className='col s3'></div>
 							<div className='col s6'>
+								{/* eslint-disable-next-line */}
 								<a
-									href='#submit'
+									id='resetPasswordForm-btn'
+									href=''
 									className='btn light-blue waves-effect w-100'
 									onClick={submit}
 								>

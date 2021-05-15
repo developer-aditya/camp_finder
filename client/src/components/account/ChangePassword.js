@@ -4,26 +4,54 @@ import { Link } from 'react-router-dom';
 import { updatePassword } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const ChangePassword = ({ updatePassword }) => {
 	const [current, setCurrent] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirm, setConfirm] = useState('');
 
-	const submit = () => {
-		if (current === '' || newPassword === '' || confirm === '') {
-			console.log('Please Enter Details');
-		} else if (/^\S{5,}\S$/.test(newPassword) === false) {
-			console.log(
-				'Password must be atleast 6 character Long without spaces',
-			);
-		} else if (confirm !== newPassword) {
-			console.log('Password and Confirm Password do not match');
+	const submit = (e) => {
+		e.preventDefault();
+		const formBtn = document.getElementById('updatePasswordForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (current === '' || newPassword === '' || confirm === '')
+			error = 'Please Enter Details';
+		else if (/^\S{5,}\S$/.test(newPassword) === false)
+			error = 'Password must be atleast 6 character Long without spaces';
+		else if (confirm !== newPassword) {
+			error = 'Password and Confirm Password do not match';
 			setConfirm('');
+		}
+
+		if (error === '') {
+			updatePassword({ oldPassword: current, newPassword: newPassword })
+				.then((res) => {
+					M.toast({
+						html: 'Password Updated Successfully...',
+					});
+					setTimeout(() => {
+						setCurrent('');
+						setNewPassword('');
+						setConfirm('');
+						formBtn.classList.remove('button--loading');
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
 		} else {
-			updatePassword({ oldPassword: current, newPassword: newPassword });
-			setCurrent('');
-			setNewPassword('');
-			setConfirm('');
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
 		}
 	};
 
@@ -40,8 +68,8 @@ const ChangePassword = ({ updatePassword }) => {
 		<div className='grey lighten-4 page-layout'>
 			<div className='container'>
 				<div className='row'>
-					<div className='col s12 m2'></div>
-					<div className='col s12 m8'>
+					<div className='col s12 l2'></div>
+					<div className='col s12 l8'>
 						<Link
 							to='/manageAccount'
 							className='btn blue-grey darken-3 mt-0'
@@ -72,7 +100,7 @@ const ChangePassword = ({ updatePassword }) => {
 										}}
 									/>
 									<label htmlFor='current_password'>
-										Current Password
+										Old Password
 									</label>
 								</div>
 
@@ -109,8 +137,10 @@ const ChangePassword = ({ updatePassword }) => {
 						<div className='row'>
 							<div className='col s3'></div>
 							<div className='col s6'>
+								{/* eslint-disable-next-line */}
 								<a
-									href='#submit'
+									id='updatePasswordForm-btn'
+									href=''
 									className='btn light-blue waves-effect w-100'
 									onClick={submit}
 								>

@@ -53,7 +53,6 @@ export const addReview = (id, newReview) => async (dispatch) => {
 	};
 	const review = await axios(option);
 	dispatch({ type: ADDREVIEW, payload: review.data.data });
-	return review;
 };
 
 // delete review

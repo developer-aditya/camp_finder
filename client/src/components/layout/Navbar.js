@@ -6,6 +6,8 @@ import { removeParams } from '../../actions/bootcampAction';
 import { userLogout } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
+
 const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 	const history = useHistory();
 
@@ -17,8 +19,20 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 
 	const logout = (e) => {
 		e.preventDefault();
-		userLogout();
-		history.push('/');
+		userLogout()
+			.then((res) => {
+				M.toast({
+					html: 'Logout Success...',
+				});
+				history.push('/');
+			})
+			.catch((err) => {
+				M.toast({
+					html: `${err.response.status} ${
+						err.response.data.error || 'Internal Server Error'
+					}`,
+				});
+			});
 	};
 
 	return (

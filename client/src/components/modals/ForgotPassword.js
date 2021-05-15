@@ -2,20 +2,50 @@ import React, { useState } from 'react';
 
 import { resetPasswordLinkRequest } from '../../actions/authAction';
 import { connect } from 'react-redux';
+import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
 const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 	const [email, setEmail] = useState('');
 
 	const submit = (e) => {
-		if (email === '') {
-			console.log('Please Enter User Email');
-		} else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === true) {
-			resetPasswordLinkRequest({ email });
-			setEmail('');
-		} else {
-			console.log('Wrong email');
-		}
 		e.preventDefault();
+		const formBtn = document.getElementById('forgotForm-btn');
+		formBtn.classList.add('button--loading');
+		let error = '';
+
+		if (email === '') error = 'Please Enter User Email';
+		else if (/^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/.test(email) === false)
+			error = 'Please Enter Proper Email Id';
+
+		if (error === '') {
+			resetPasswordLinkRequest({ email })
+				.then((res) => {
+					console.log(res);
+					M.toast({
+						html: 'Reset Link Sent To Email...',
+					});
+					setTimeout(() => {
+						setEmail('');
+						formBtn.classList.remove('button--loading');
+						M.Modal.getInstance(
+							document.getElementById('forgot-modal'),
+						).close();
+					}, 500);
+				})
+				.catch((err) => {
+					M.toast({
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
+						}`,
+					});
+					formBtn.classList.remove('button--loading');
+				});
+		} else {
+			M.toast({
+				html: `${error}`,
+			});
+			formBtn.classList.remove('button--loading');
+		}
 	};
 
 	return (
@@ -49,6 +79,7 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 
 						<div className='row center'>
 							<button
+								id='forgotForm-btn'
 								className='btn waves-effect light-blue w-50'
 								form='reset'
 								onClick={submit}

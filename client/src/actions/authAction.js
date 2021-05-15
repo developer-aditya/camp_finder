@@ -20,13 +20,10 @@ export const userLogin = (userCredentials) => async (dispatch) => {
 			timeout: '4000',
 		};
 		const user = await axios(option);
-		if (user.data.success === true) {
-			dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
-		} else {
-			dispatch({ type: LOGIN_FAIL });
-		}
+		dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
 	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
+		dispatch({ type: LOGIN_FAIL });
+		return Promise.reject(error);
 	}
 };
 
@@ -40,29 +37,22 @@ export const userRegister = (userDetails) => async (dispatch) => {
 			timeout: '4000',
 		};
 		const user = await axios(option);
-		if (user.data.success === true) {
-			dispatch({ type: REGISTER_SUCCESS, payload: user.data.user });
-		} else {
-			dispatch({ type: REGISTER_FAIL });
-		}
+		dispatch({ type: REGISTER_SUCCESS, payload: user.data.user });
 	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
+		dispatch({ type: REGISTER_FAIL });
+		return Promise.reject(error);
 	}
 };
 
 export const userLogout = () => async (dispatch) => {
-	try {
-		dispatch(userLoading);
-		const option = {
-			method: 'GET',
-			url: '/api/v1/auth/logout',
-			timeout: '4000',
-		};
-		await axios(option);
-		dispatch({ type: LOGOUT_SUCCESS });
-	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
-	}
+	dispatch(userLoading);
+	const option = {
+		method: 'GET',
+		url: '/api/v1/auth/logout',
+		timeout: '4000',
+	};
+	await axios(option);
+	dispatch({ type: LOGOUT_SUCCESS });
 };
 
 export const userGet = () => async (dispatch) => {
@@ -74,84 +64,53 @@ export const userGet = () => async (dispatch) => {
 			timeout: '4000',
 		};
 		const user = await axios(option);
-		if (user.data.success === true) {
-			dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
-		} else {
-			dispatch({ type: LOGIN_FAIL });
-		}
+		dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
 	} catch (error) {
 		dispatch({ type: AUTH_ERROR });
 	}
 };
 
 export const resetPasswordLinkRequest = (email) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'POST',
-			url: '/api/v1/auth/forgotpassword',
-			data: email,
-			timeout: '4000',
-		};
-		const user = await axios(option);
-		if (user.data.success === true) {
-			console.log(user.data.msg);
-		} else {
-			console.log(user.data.error);
-		}
-	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
-	}
+	const option = {
+		method: 'POST',
+		url: '/api/v1/auth/forgotpassword',
+		data: email,
+		timeout: '4000',
+	};
+	await axios(option);
 };
 
 export const resetPassword = (password, resetToken) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: `/api/v1/auth/resetpassword/${resetToken}`,
-			data: password,
-			timeout: '4000',
-		};
-		const user = await axios(option);
-		if (user.data.success === true) {
-			dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
-		} else {
-			console.log(user.data.error);
-			dispatch({ type: LOGIN_FAIL });
-		}
-	} catch (error) {
-		dispatch({ type: AUTH_ERROR });
-	}
+	const option = {
+		method: 'PUT',
+		url: `/api/v1/auth/resetpassword/${resetToken}`,
+		data: password,
+		timeout: '4000',
+	};
+	const user = await axios(option);
+	dispatch({ type: LOGIN_SUCCESS, payload: user.data.user });
 };
 
 export const updatePassword = (password) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: '/api/v1/auth/updatepassword',
-			data: password,
-			timeout: '4000',
-		};
-		const user = await axios(option);
-		console.log(user.data.msg);
-	} catch (error) {
-		console.log(error);
-	}
+	const option = {
+		method: 'PUT',
+		url: '/api/v1/auth/updatepassword',
+		data: password,
+		timeout: '4000',
+	};
+	await axios(option);
 };
 
 export const updateAccount = (update) => async (dispatch) => {
-	try {
-		const option = {
-			method: 'PUT',
-			url: '/api/v1/auth/updateuser',
-			data: update,
-			timeout: '4000',
-		};
-		const user = await axios(option);
-		const { name, email, role } = user.data.data;
-		dispatch({ type: UPDATEUSER, payload: { name, email, role } });
-	} catch (error) {
-		console.log(error);
-	}
+	const option = {
+		method: 'PUT',
+		url: '/api/v1/auth/updateuser',
+		data: update,
+		timeout: '4000',
+	};
+	const user = await axios(option);
+	const { name, email, role } = user.data.data;
+	dispatch({ type: UPDATEUSER, payload: { name, email, role } });
 };
 
 // Setting loading values

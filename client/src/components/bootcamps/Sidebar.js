@@ -35,6 +35,7 @@ const Sidebar = ({ setParams, setQuery, params }) => {
 	}, []);
 
 	const setParamsState = (e) => {
+		e.preventDefault();
 		if (distance === '' || pincode === '') {
 			M.toast({ html: 'Please Enter Pincode and Distance' });
 		} else if (
@@ -45,7 +46,6 @@ const Sidebar = ({ setParams, setQuery, params }) => {
 		} else {
 			setParams(distance, pincode);
 		}
-		e.preventDefault();
 	};
 
 	return (
@@ -130,13 +130,13 @@ const Sidebar = ({ setParams, setQuery, params }) => {
 							<button
 								className='btn waves-effect light-blue find-bootcamp-btn'
 								onClick={(e) => {
+									e.preventDefault();
 									setQuery(
 										rating,
 										document
 											.getElementById('test-slider')
 											.noUiSlider.get(),
 									);
-									e.preventDefault();
 								}}
 							>
 								Apply Filter

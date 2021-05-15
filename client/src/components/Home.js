@@ -10,6 +10,7 @@ const Home = ({ setParams, history }) => {
 	const [pincode, setPincode] = useState('');
 
 	const setParamsState = (e) => {
+		e.preventDefault();
 		if (distance === '' || pincode === '') {
 			M.toast({ html: 'Please Enter Pincode and Distance' });
 		} else if (
@@ -21,7 +22,6 @@ const Home = ({ setParams, history }) => {
 			setParams(distance, pincode);
 			history.push('/bootcamps');
 		}
-		e.preventDefault();
 	};
 
 	return (

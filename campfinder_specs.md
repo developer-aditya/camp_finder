@@ -1,6 +1,6 @@
 # CampFinder Backend API Specifications
 
-Create the backend for a bootcamp directory website. The frontend/UI will be created by another team (future course). The html/css template has been created and can be used as a reference for functionality. All of the functionality below needs to be fully implmented in this project.
+Create the backend for a bootcamp directory website. The frontend/UI is Created Using React with Redux for state management. All of the functionality below needs to be fully implmented in this project.
 
 ### Bootcamps
 
@@ -12,6 +12,7 @@ Create the backend for a bootcamp directory website. The frontend/UI will be cre
 -  Search bootcamps by radius from zipcode
    -  Use a geocoder to get exact location and coords from a single address field
 -  Get single bootcamp
+-  Get bootcamps of Logged in User
 -  Create new bootcamp
    -  Authenticated users only
    -  Must have the role "publisher" or "admin"
@@ -50,6 +51,7 @@ Create the backend for a bootcamp directory website. The frontend/UI will be cre
 -  List all reviews in general
    -  Pagination, filtering, etc
 -  Get a single review
+-  Get reviews of Logged in User
 -  Create a review
    -  Authenticated users only
    -  Must have the role "user" or "admin" (no publishers)
@@ -95,23 +97,6 @@ Create the backend for a bootcamp directory website. The frontend/UI will be cre
 -  Add a rate limit for requests of 100 requests per 10 minutes
 -  Protect against http param polution (https://github.com/analog-nico/hpp)
 -  Use cors to make API public (for now)
-
-## Documentation
-
--  Use Postman to create documentation
--  Use docgen to create HTML files from Postman
--  Add html files as the / route for the api
-
-## Deployment (Digital Ocean)
-
--  Push to Github
--  Create a droplet - https://m.do.co/c/5424d440c63a
--  Clone repo on to server
--  Use PM2 process manager
--  Enable firewall (ufw) and open needed ports
--  Create an NGINX reverse proxy for port 80
--  Connect a domain name
--  Install an SSL using Let's Encrypt
 
 ## Code Related Suggestions
 

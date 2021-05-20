@@ -81,9 +81,13 @@ const BootcampList = ({
 						<div className='card-stacked'>
 							<div className='card-content'>
 								<div className='card-title'>
+									{/* eslint-disable-next-line */}
 									<a
-										href='#single'
-										onClick={(e) => setCurrent(element.id)}
+										href=''
+										onClick={(e) => {
+											e.preventDefault();
+											setCurrent(element.id);
+										}}
 									>
 										{element.name}
 									</a>

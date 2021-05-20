@@ -44,7 +44,7 @@ exports.getUserBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findOne({ user: req.user.id });
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 401),
+			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 404),
 		);
 	}
 	res.status(200).json({

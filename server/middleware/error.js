@@ -18,15 +18,13 @@ const errorHandler = (err, req, res, next) => {
 	if (err.code === 11000) {
 		const duplicateKey = Object.keys(err.keyValue);
 		const duplicateValue = Object.values(err.keyValue);
-		const message = ` { ${duplicateKey} : ${duplicateValue} } Already Exists in Record`;
+		const message = ` ${duplicateKey} : ${duplicateValue}  Already Exists in Record`;
 		error = new ErrorResponse(message, 400);
 	}
 
 	// Mongoose Validation Error
 	if (err.name === 'ValidationError') {
-		const message = Object.values(err.errors).map(
-			(value) => value.message,
-		);
+		const message = Object.values(err.errors).map((value) => value.message);
 		error = new ErrorResponse(message, 400);
 	}
 

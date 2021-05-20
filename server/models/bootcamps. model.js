@@ -16,7 +16,7 @@ const BootcampSchema = new Mongoose.Schema(
 			trim: true,
 			maxlength: [50, 'Name cannot be greater than 50 words'],
 		},
-		// Slug is lowercase simplified form of name (url friendly) (CampFinder Bootcamp ->CampFinder-bootcamp)
+		// Slug is lowercase simplified form of name (url friendly) (CampFinder Bootcamp -> campfinder-bootcamp)
 		slug: String,
 		description: {
 			type: String,
@@ -52,6 +52,7 @@ const BootcampSchema = new Mongoose.Schema(
 				enum: ['Point'],
 			},
 			coordinates: {
+				// Array of Number [lat, long]
 				type: [Number],
 				index: '2dsphere',
 			},

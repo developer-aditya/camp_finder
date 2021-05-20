@@ -39,12 +39,12 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 
 // @desc  GET Logged in user bootcamp
 // @route /api/v1/bootcamps/me
-// @access protected
+// @access private
 exports.getUserBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findOne({ user: req.user.id });
 	if (!bootcamp) {
 		return next(
-			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 404),
+			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 401),
 		);
 	}
 	res.status(200).json({
@@ -56,7 +56,7 @@ exports.getUserBootcamp = asyncHandler(async (req, res, next) => {
 
 // @desc  POST one bootcamp
 // @route /api/v1/bootcamps
-// @access public
+// @access private
 exports.addBootcamp = asyncHandler(async (req, res, next) => {
 	let published = await Bootcamp.findOne({ user: req.user._id });
 
@@ -64,7 +64,7 @@ exports.addBootcamp = asyncHandler(async (req, res, next) => {
 		return next(
 			new ErrorResponse(
 				`Publisher User: ${req.user._id} Already has a Bootcamp`,
-				404,
+				400,
 			),
 		);
 	}
@@ -80,7 +80,7 @@ exports.addBootcamp = asyncHandler(async (req, res, next) => {
 
 // @desc  PUT(update) one bootcamp
 // @route /api/v1/bootcamps/:id
-// @access public
+// @access private
 exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 	let bootcamp = await Bootcamp.findById(req.params.id);
 
@@ -97,7 +97,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 		return next(
 			new ErrorResponse(
 				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
-				404,
+				401,
 			),
 		);
 	}
@@ -116,7 +116,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 
 // @desc  DELETE one bootcamp
 // @route /api/v1/bootcamps/:id
-// @access public
+// @access private
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
@@ -132,7 +132,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 		return next(
 			new ErrorResponse(
 				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
-				404,
+				401,
 			),
 		);
 	}
@@ -147,7 +147,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 
 // @desc  PUT(update) bootcamp with photo
 // @route /api/v1/bootcamps/:id/photo
-// @access public
+// @access private
 exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 	let bootcamp = await Bootcamp.findById(req.params.id);
 
@@ -173,7 +173,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 		return next(new ErrorResponse(`Please upload a file`, 400));
 	}
 
-	const file = req.files.file;
+	const file = req.files.image;
 
 	if (!file.mimetype.startsWith('image')) {
 		return next(new ErrorResponse(`Please upload a image file`, 400));

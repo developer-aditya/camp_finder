@@ -5,7 +5,7 @@ const asyncHandler = require('../middleware/async');
 
 // @desc  GET all users with query
 // @route /api/v1/users
-// @access public
+// @access private Admin Use
 exports.getUsers = asyncHandler(async (req, res, next) => {
 	// RESPONSE
 	res.status(200).json(res.resource);
@@ -13,15 +13,12 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 
 // @desc  GET all users with user ID
 // @route /api/v1/users/:id
-// @access public
+// @access private Admin Use
 exports.getUser = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.params.id);
 	if (!user) {
 		return next(
-			new ErrorResponse(
-				`User Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 	res.status(200).json({
@@ -33,7 +30,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 
 // @desc  POST one users
 // @route /api/v1/users
-// @access public
+// @access private Admin Use
 exports.addUser = asyncHandler(async (req, res, next) => {
 	const { name, email, role, password } = req.body;
 	let user = await User.create({ name, email, role, password });
@@ -46,7 +43,7 @@ exports.addUser = asyncHandler(async (req, res, next) => {
 
 // @desc  PUT(update) one Users
 // @route /api/v1/users/:id
-// @access public
+// @access private Admin Use
 exports.updateUser = asyncHandler(async (req, res, next) => {
 	const { name, email, role, password } = req.body;
 	let user = await User.findByIdAndUpdate(
@@ -60,10 +57,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 
 	if (!user) {
 		return next(
-			new ErrorResponse(
-				`User Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -79,15 +73,12 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 
 // @desc  DELETE one user
 // @route /api/v1/users/:id
-// @access public
+// @access private Admin Use
 exports.deleteUser = asyncHandler(async (req, res, next) => {
 	const user = await User.findByIdAndDelete(req.params.id);
 	if (!user) {
 		return next(
-			new ErrorResponse(
-				`User Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 

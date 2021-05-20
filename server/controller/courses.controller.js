@@ -47,10 +47,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 
 	if (!course) {
 		return next(
-			new ErrorResponse(
-				`Course Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -63,7 +60,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 
 // @desc  POST course to bootcamps for bootcampID
 // @route /api/v1/bootcamps/:bootcampsId/courses
-// @access public
+// @access private
 exports.addCourse = asyncHandler(async (req, res, next) => {
 	// Adding bootcamp Id to req body to add that feild in course document
 	req.body.bootcamp = req.params.bootcampId;
@@ -104,16 +101,13 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 
 // @desc  PUT(UPDATE) course By Id
 // @route /api/v1/courses/:id
-// @access public
+// @access private
 exports.updateCourse = asyncHandler(async (req, res, next) => {
 	let course = await Course.findById(req.params.id);
 
 	if (!course) {
 		return next(
-			new ErrorResponse(
-				`Course Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 
@@ -145,15 +139,12 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 
 // @desc  DELETE course By Id
 // @route /api/v1/courses/:id
-// @access public
+// @access private
 exports.deleteCourse = asyncHandler(async (req, res, next) => {
 	const course = await Course.findById(req.params.id);
 	if (!course) {
 		return next(
-			new ErrorResponse(
-				`Course Not Found With ID: ${req.params.id}`,
-				404,
-			),
+			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
 		);
 	}
 

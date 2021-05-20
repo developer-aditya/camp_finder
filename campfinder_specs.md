@@ -96,15 +96,4 @@ Create the backend for a bootcamp directory website. The frontend/UI is Created 
 -  Prevent cross site scripting - XSS
 -  Add a rate limit for requests of 100 requests per 10 minutes
 -  Protect against http param polution (https://github.com/analog-nico/hpp)
--  Use cors to make API public (for now)
-
-## Code Related Suggestions
-
--  NPM scripts for dev and production env
--  Config file for important constants
--  Use controller methods with documented descriptions/routes
--  Error handling middleware
--  Authentication middleware for protecting routes and setting user roles
--  Validation using Mongoose and no external libraries
--  Use async/await (create middleware to clean up controller methods)
--  Create a database seeder to import and destroy data
+-  Use cors to make API public (cors makes api accessible even if request comes from a different origin)

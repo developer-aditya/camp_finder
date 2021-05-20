@@ -3,7 +3,7 @@ const asyncHandler = require('../middleware/async');
 const User = require('../models/user.model');
 const ErrorResponse = require('../utils/errorResponse');
 
-// TO check if token exist and user of id in token exists in User Collection
+// To check if token exist and user of id in token exists in User Collection
 exports.protected = asyncHandler(async (req, res, next) => {
 	let token;
 
@@ -50,7 +50,7 @@ exports.authorized = (...roles) => {
 			return next(
 				new ErrorResponse(
 					`${req.user.role} Not Authorized to access this route`,
-					403,
+					401,
 				),
 			);
 		}

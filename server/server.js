@@ -38,8 +38,15 @@ app.use(express.static(path.join(__dirname, '/public')));
 // Middleware to read req body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// Middleware to upload file
+
+// Middleware to upload files (All Files will be available in req.files)
+// Fileupload Parses the formdata and stores all different files in req.files
+// FormData named 'image', its data/file will be in req.files.image
 app.use(fileupload());
+
+// Middleware to parse cookies (All Cookies will be available in req.cookies)
+// Fileupload Parses the cookies sent from client and stores all different cookie in req.cookies
+// Cookie named 'token', its data will be in req.cookies.token
 app.use(cookieParser());
 
 // SECURITY
@@ -89,7 +96,14 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 
-// Error Middleware for custom error message
+// Error Middleware : any error in req-res cycle is transfered to this last middleware skipping all other middlware it  ends with cycle with error res from server
+// All Middleware run in same order as declared route handlers run at last and req-res cycle end
+// But Error handler middlware must be declared at last as this should be last middleware to run
+// If there is any error in above middlewares or route handler it will be transfered to this
+// and req-res cycle shall end after this
+
+// Order of middleware -----
+// app-level -> route-level(before route handler) -> route-handlers -> error-handling middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;

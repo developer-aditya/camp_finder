@@ -9,8 +9,7 @@ import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 	const submit = (e) => {
 		e.preventDefault();
-		const imgInput = document.getElementById('img-input');
-		const file = imgInput.files[0];
+		const file = e.target.elements['file'].files[0];
 
 		if (!file || !file.type.match(/image.*/)) {
 			M.toast({
@@ -18,7 +17,7 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 			});
 		} else {
 			const fd = new FormData();
-			fd.append('file', file);
+			fd.append('image', file);
 			uploadImage(current.id, fd)
 				.then((res) =>
 					M.toast({
@@ -69,7 +68,7 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 									></i>
 									Upload Image
 								</span>
-								<input type='file' id='img-input' accept='image/*' />
+								<input name='file' type='file' accept='image/*' />
 							</div>
 							<div className='input-field center'>
 								<button

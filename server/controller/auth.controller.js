@@ -45,7 +45,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 // @desc GET logged in user
 // @route /api/v1/auth/me
-// @access public
+// @access private
 exports.getMe = asyncHandler(async (req, res, next) => {
 	const { role, name, email } = req.user;
 	res.status(200).json({ success: true, user: { role, name, email } });
@@ -63,7 +63,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 	}
 	const resetToken = user.resetPasswordTokenGenerator();
 
-	// saving resetPasswordToken, resetPasswordTokenExpire assigned in above functionto generate token in DB
+	// saving resetPasswordToken, resetPasswordTokenExpire assigned in above function to generate token in DB
 	await user.save({ validateBeforeSave: true });
 
 	const resetRoute = `${req.protocol}://${req.get(
@@ -72,6 +72,8 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
 	const message = `You have Recieved this email because you (or someone else) has requested reset password.\nPlease send a put request on the route to reset Password:\n\n ${resetRoute}`;
 
+	// Catching Error In NodeMailer And Modifing It
+	// Error From outside function are not handled by asyncHandler we need to catch it manually
 	try {
 		await sendEmail({
 			email: user.email,
@@ -122,12 +124,15 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 	const samePassword = await user.validatePassword(req.body.password);
 	if (samePassword) {
 		return next(
-			new ErrorResponse(`New Password Cannot same as Last 5 Password `, 400),
+			new ErrorResponse(`New Password Cannot same as Last 3 Password `, 400),
 		);
 	}
 
+	// Runs the .pre('save') Static Function for Modified Feild Password
 	user.password = req.body.password;
 	await user.save({ validateBeforeSave: true });
+
+	// Runs the .pre('save') Static Function for Modified Feild Other Than Password
 	user.resetPasswordToken = undefined;
 	user.resetPasswordExpire = undefined;
 	await user.save({ validateBeforeSave: true });
@@ -142,7 +147,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
 // @desc PUT Update User name email
 // @route /api/v1/auth/updateuser
-// @access public
+// @access private
 exports.updateUser = asyncHandler(async (req, res, next) => {
 	const { password, resetPasswordToken, role } = req.body;
 	if (password || resetPasswordToken) {
@@ -174,7 +179,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 
 // @desc PUT Update User password
 // @route /api/v1/auth/updatepassword
-// @access public
+// @access private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
 	const { oldPassword, newPassword } = req.body;
 
@@ -211,7 +216,8 @@ exports.logout = asyncHandler(async (req, res, next) => {
 		.json({ success: true, data: {} });
 });
 
-//
+//Utils
+
 //
 //
 //

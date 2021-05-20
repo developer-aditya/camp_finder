@@ -62,7 +62,7 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 
 // @desc  GET Logged in user bootcamp
 // @route /api/v1/reviews/me
-// @access protected
+// @access private
 exports.getUserReview = asyncHandler(async (req, res, next) => {
 	const review = await Review.find({ user: req.user.id }).populate(
 		'bootcamp',
@@ -83,7 +83,7 @@ exports.getUserReview = asyncHandler(async (req, res, next) => {
 
 // @desc  POST Review
 // @route /api/v1/bootcamps/:bootcampId/reviews
-// @access public
+// @access private
 exports.addReview = asyncHandler(async (req, res, next) => {
 	// Adding bootcamp Id to req body to add that feild in review document
 	req.body.bootcamp = req.params.bootcampId;
@@ -112,7 +112,7 @@ exports.addReview = asyncHandler(async (req, res, next) => {
 
 // @desc  PUT one reviews by ID
 // @route /api/v1/reviews/:id
-// @access public
+// @access private
 exports.updateReview = asyncHandler(async (req, res, next) => {
 	let review = await Review.findById(req.params.id);
 
@@ -150,7 +150,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 
 // @desc  DELETE one reviews by ID
 // @route /api/v1/reviews/:id
-// @access public
+// @access private
 exports.deleteReview = asyncHandler(async (req, res, next) => {
 	let review = await Review.findById(req.params.id);
 

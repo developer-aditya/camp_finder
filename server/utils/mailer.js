@@ -1,3 +1,4 @@
+// Util To send Email
 const nodemailer = require('nodemailer');
 
 const sendEmail = async (options) => {

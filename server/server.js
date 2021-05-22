@@ -33,7 +33,9 @@ connectDB();
 const app = express();
 
 // making public folder static
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, 'public')));
+if (process.env.NODE_ENV === 'production')
+	app.use(express.static(path.join(process.cwd(), 'client', 'build')));
 
 // Middleware to read req body
 app.use(express.json());
@@ -95,6 +97,11 @@ app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+
+if (process.env.NODE_ENV === 'production')
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(process.cwd(), 'client', 'build', 'index.html'));
+	});
 
 // Error Middleware : any error in req-res cycle is transfered to this last middleware skipping all other middlware it  ends with cycle with error res from server
 // All Middleware run in same order as declared route handlers run at last and req-res cycle end

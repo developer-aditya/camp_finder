@@ -38,26 +38,41 @@ const WriteReview = ({
 
 	const submit = (e) => {
 		e.preventDefault();
+
+		const formBtn = document.getElementById('review-submit');
+		formBtn.classList.add('button--loading');
+
 		if (title === '' || text === '') {
 			M.toast({
 				html: 'Please Enter Title and Review',
 			});
+			formBtn.classList.remove('button--loading');
 		} else if (operation === 'add') {
 			addReview(data, { title, text, rating })
 				.then((res) => {
 					M.toast({
 						html: "You've Successfully Reviewed This Bootcamp",
 					});
-					setTitle('');
-					setText('');
-					setRating('1');
+					setTimeout(() => {
+						formBtn.classList.remove('button--loading');
+						setTitle('');
+						setText('');
+						setRating('1');
+					}, 500);
 				})
 				.catch((error) => {
-					M.toast({
-						html: `${error.response.status} ${
-							error.response.data.error || 'Internal Server Error'
-						}`,
-					});
+					if (error.response.status === 400) {
+						M.toast({
+							html: '400! You Have Already Reviewed This Bootcamp',
+						});
+					} else {
+						M.toast({
+							html: `${error.response.status}! ${
+								error.response.data.error || 'Internal Server Error'
+							}`,
+						});
+					}
+					formBtn.classList.remove('button--loading');
 				});
 		} else if (operation === 'edit') {
 			updateReview(current._id, { title, text, rating })
@@ -65,17 +80,21 @@ const WriteReview = ({
 					M.toast({
 						html: "You've Successfully Edited Your Review ",
 					});
-					setTitle('');
-					setText('');
-					setRating('1');
-					clearCurrentReview();
+					setTimeout(() => {
+						formBtn.classList.remove('button--loading');
+						setTitle('');
+						setText('');
+						setRating('1');
+						clearCurrentReview();
+					}, 500);
 				})
-				.catch((error) => {
+				.catch((err) => {
 					M.toast({
-						html: `${error.response.status} ${
-							error.response.data.error || 'Internal Server Error'
+						html: `${err.response.status}! ${
+							err.response.data.error || 'Internal Server Error'
 						}`,
 					});
+					formBtn.classList.remove('button--loading');
 				});
 		}
 	};

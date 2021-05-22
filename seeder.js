@@ -19,7 +19,7 @@ const User = require('./server/models/user.model');
 const Review = require('./server/models/reviews.model');
 
 async function connectDB() {
-	const conn = await Mongoose.connect('mongodb://localhost:27017/campfinder', {
+	const conn = await Mongoose.connect(process.env.MONGO_URI, {
 		useNewUrlParser: true,
 		useCreateIndex: true,
 		useFindAndModify: false,

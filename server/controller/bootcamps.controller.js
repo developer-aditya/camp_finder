@@ -192,7 +192,6 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 
 	file.mv(`${process.env.UPLOAD_PATH}/${file.name}`, async (err) => {
 		if (err) {
-			console.log(err);
 			return next(new ErrorResponse(`Problem in Uploading File `, 500));
 		}
 

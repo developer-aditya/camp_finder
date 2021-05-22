@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
+import './webfonts-with-css/css/all.min.css';
 
 import Navbar from './components/layout/Navbar';
 import Home from './components/Home';

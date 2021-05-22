@@ -20,7 +20,6 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 		if (error === '') {
 			resetPasswordLinkRequest({ email })
 				.then((res) => {
-					console.log(res);
 					M.toast({
 						html: 'Reset Link Sent To Email...',
 					});

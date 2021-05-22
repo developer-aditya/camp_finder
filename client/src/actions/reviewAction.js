@@ -45,14 +45,18 @@ export const getUserReview = () => async (dispatch) => {
 
 // Post new Review by bootcamp Id
 export const addReview = (id, newReview) => async (dispatch) => {
-	const option = {
-		method: 'POST',
-		url: `/api/v1/bootcamps/${id}/reviews`,
-		data: newReview,
-		timeout: '4000',
-	};
-	const review = await axios(option);
-	dispatch({ type: ADDREVIEW, payload: review.data.data });
+	try {
+		const option = {
+			method: 'POST',
+			url: `/api/v1/bootcamps/${id}/reviews`,
+			data: newReview,
+			timeout: '4000',
+		};
+		const review = await axios(option);
+		dispatch({ type: ADDREVIEW, payload: review.data.data });
+	} catch (error) {
+		return Promise.reject(error);
+	}
 };
 
 // delete review

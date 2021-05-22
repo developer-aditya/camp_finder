@@ -134,12 +134,9 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	}).populate('bootcamp', 'name');
-
-	review.save();
+	for (let elem in req.body) review[elem] = req.body[elem];
+	await review.save();
+	review = await Review.findById(req.params.id).populate('bootcamp', 'name');
 
 	res.status(200).json({
 		success: true,

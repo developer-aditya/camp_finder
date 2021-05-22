@@ -2,25 +2,35 @@
 	"name": "camp-finder-api",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "./server/server.js",
 	"scripts": {
-		"start": "set NODE_ENV=production && node ./server/server.js",
-		"dev": "nodemon ./server/server.js"
+		"build-react": "set INLINE_RUNTIME_CHUNK=false&& npm run build --prefix client",
+		"start": "set NODE_ENV=production&& node ./server/server.js",
+		"server": "nodemon ./server/server.js",
+		"client": "npm start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
 	},
-	"author": "",
+	"author": "Aditya Singh",
 	"license": "ISC",
 	"devDependencies": {
 		"nodemon": "^2.0.7"
 	},
+	"engines": {
+		"node": "14.x",
+		"npm": "6.x"
+	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"colors": "^1.4.0",
+		"concurrently": "^6.1.0",
 		"cookie-parser": "^1.4.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"express-fileupload": "^1.2.1",
 		"express-mongo-sanitize": "^2.0.2",
 		"express-rate-limit": "^5.2.6",
+		"googleapis": "^73.0.0",
 		"helmet": "^4.4.1",
 		"hpp": "^0.2.3",
 		"jsonwebtoken": "^8.5.1",

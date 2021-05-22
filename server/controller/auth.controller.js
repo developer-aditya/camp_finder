@@ -66,19 +66,18 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 	// saving resetPasswordToken, resetPasswordTokenExpire assigned in above function to generate token in DB
 	await user.save({ validateBeforeSave: true });
 
-	const resetRoute = `${req.protocol}://${req.get(
-		'host',
-	)}/manageAccount/resetPassword/${resetToken}`;
+	const resetRoute = `https://camp-finder-app.herokuapp.com/manageAccount/resetPassword/${resetToken}`;
 
-	const message = `You have Recieved this email because you (or someone else) has requested reset password.\nPlease send a put request on the route to reset Password:\n\n ${resetRoute}`;
+	const message = `You have Recieved this email because you (or someone else) has requested reset password.\n\nPlease send a put request on the route to reset Password:\n\n${resetRoute}`;
 
 	// Catching Error In NodeMailer And Modifing It
 	// Error From outside function are not handled by asyncHandler we need to catch it manually
 	try {
 		await sendEmail({
-			email: user.email,
 			subject: 'Reset Your Forgot Password...',
-			message,
+			text: message,
+			to: user.email,
+			from: process.env.EMAIL,
 		});
 		res.status(200).json({
 			success: true,
@@ -234,9 +233,10 @@ function setTokenInCookie(user, res, statusCode, msg) {
 		httpOnly: true,
 	};
 
-	if (process.env.NODE_ENV == 'production') {
-		options.secure = true;
-	}
+	// Add Secure to cookies is https implemented remove comment on adding ssl
+	// if (process.env.NODE_ENV == 'production') {
+	// 	options.secure = true;
+	// }
 
 	const { role, email, name, id } = user;
 	res.status(statusCode).cookie('token', token, options).json({

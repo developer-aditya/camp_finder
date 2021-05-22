@@ -30,6 +30,6 @@ Create the backend for a bootcamp directory website. The frontend/UI is Created 
 
 ### Execute Commands
 
--  node seeder -i 'to add raw data to your database'
+-  node seeder -i 'to add dummy data to your database'
 -  npm run dev 'to run in development mode'
 -  npm run build-react then npm start 'to run in production mode'

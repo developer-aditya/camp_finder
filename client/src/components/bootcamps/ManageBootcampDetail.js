@@ -1,12 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { uploadImage, deleteBootcamp } from '../../actions/bootcampAction';
+import {
+	uploadImage,
+	deleteBootcamp,
+	setCurrentBootcamp,
+} from '../../actions/bootcampAction';
 
 import M from '../../../node_modules/materialize-css/dist/js/materialize.min';
 
-const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
+const ManageBootcampDetail = ({
+	current,
+	uploadImage,
+	deleteBootcamp,
+	setCurrentBootcamp,
+}) => {
+	const history = useHistory();
+
 	const submit = (e) => {
 		e.preventDefault();
 		const file = e.target.elements['file'].files[0];
@@ -48,6 +59,11 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 					}`,
 				});
 			});
+	};
+
+	const setCurrent = (id) => {
+		setCurrentBootcamp(id);
+		history.push('/singleBootcamp');
 	};
 
 	return (
@@ -105,7 +121,16 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 				</div>
 				<div className='card-content'>
 					<h5 className='card-title'>
-						<Link to='/singleBootcamp'>{current.name}</Link>
+						{/* eslint-disable-next-line */}
+						<a
+							href=''
+							onClick={(e) => {
+								e.preventDefault();
+								setCurrent(current._id);
+							}}
+						>
+							{current.name}
+						</a>
 						<span className='light-blue right white-text valign-wrapper rating'>
 							{current.averageRating === null
 								? 'UR'
@@ -135,6 +160,8 @@ const ManageBootcampDetail = ({ current, uploadImage, deleteBootcamp }) => {
 	);
 };
 
-export default connect(null, { uploadImage, deleteBootcamp })(
-	ManageBootcampDetail,
-);
+export default connect(null, {
+	uploadImage,
+	deleteBootcamp,
+	setCurrentBootcamp,
+})(ManageBootcampDetail);

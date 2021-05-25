@@ -102,10 +102,9 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	});
+	for (let elem in req.body) bootcamp[elem] = req.body[elem];
+	await bootcamp.save();
+	bootcamp = await Bootcamp.findById(req.params.id);
 
 	res.status(200).json({
 		success: true,
@@ -137,7 +136,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	bootcamp.remove();
+	await bootcamp.remove();
 	res.status(200).json({
 		success: true,
 		msg: 'Bootcamp deleted sucessfully',

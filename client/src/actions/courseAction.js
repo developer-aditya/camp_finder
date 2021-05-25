@@ -39,6 +39,9 @@ export const deleteCourse = (id) => async (dispatch) => {
 export const updateCourse = (id, course) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: `/api/v1/courses/${id}`,
 		data: course,
 		timeout: '4000',
@@ -51,6 +54,9 @@ export const updateCourse = (id, course) => async (dispatch) => {
 export const addCourse = (id, course) => async (dispatch) => {
 	const option = {
 		method: 'POST',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: `/api/v1/bootcamps/${id}/courses`,
 		data: course,
 		timeout: '4000',

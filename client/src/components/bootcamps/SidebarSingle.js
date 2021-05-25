@@ -99,9 +99,9 @@ const SidebarSingle = ({ auth, current }) => {
 							</span>
 						</li>
 						<li className='collection-item'>
-							Accepts GI Bill{' '}
+							Accepts Periodic Payments{' '}
 							<span className='secondary-content'>
-								{current.acceptGi ? (
+								{current.periodicPayment ? (
 									<i className='fas fa-check green-text'></i>
 								) : (
 									<i className='fas fa-times red-text'></i>
@@ -110,6 +110,26 @@ const SidebarSingle = ({ auth, current }) => {
 						</li>
 					</ul>
 				</div>
+			</div>
+			<div className='center'>
+				<small className='grey-text'>
+					Scan Below Code to View Location on Map
+				</small>
+			</div>
+			<div className='center'>
+				<img
+					src={`https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2F%3Fapi%3D1%26query=${current.address}`}
+					alt='qrcode'
+				/>
+			</div>
+			<div className='center' style={{ marginBottom: '2rem' }}>
+				<a
+					href={`https://www.google.com/maps/search/?api=1&query=${current.address}`}
+					target='_blank'
+					rel='noreferrer noopener'
+				>
+					<i className='fas fa-map-marker-alt'></i> View Location on Map
+				</a>
 			</div>
 		</React.Fragment>
 	);

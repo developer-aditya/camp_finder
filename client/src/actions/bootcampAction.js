@@ -34,7 +34,7 @@ export const getDistanceBootcamp =
 			const option = {
 				method: 'GET',
 				url: `/api/v1/bootcamps/radius/${pincode}/${distance}?` + query,
-				timeout: '4000',
+				timeout: '10000',
 			};
 			const bootcamp = await axios(option);
 			dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
@@ -102,10 +102,10 @@ export const deleteBootcamp = (bootcampId) => async (dispatch) => {
 export const uploadImage = (id, formdata) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
-		url: `/api/v1/bootcamps/${id}/photo`,
 		headers: {
 			'Content-type': 'image/jpeg',
 		},
+		url: `/api/v1/bootcamps/${id}/photo`,
 		data: formdata,
 		timeout: '4000',
 	};
@@ -116,6 +116,9 @@ export const uploadImage = (id, formdata) => async (dispatch) => {
 export const updateBootcamp = (bootcampId, Bootcamp) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: `/api/v1/bootcamps/${bootcampId}`,
 		data: Bootcamp,
 		timeout: '4000',
@@ -128,6 +131,9 @@ export const updateBootcamp = (bootcampId, Bootcamp) => async (dispatch) => {
 export const addBootcamp = (Bootcamp) => async (dispatch) => {
 	const option = {
 		method: 'POST',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: '/api/v1/bootcamps',
 		data: Bootcamp,
 		timeout: '4000',

@@ -40,7 +40,7 @@ const Sidebar = ({ setParams, setQuery, params }) => {
 			M.toast({ html: 'Please Enter Pincode and Distance' });
 		} else if (
 			!/^\+?(0|[1-9]\d*)$/.test(distance) ||
-			!/^[0-9]{1}[0-9]{2}\s{0,1}[0-9]{2}$/.test(pincode)
+			!/^[0-9]{4,10}$/.test(pincode)
 		) {
 			M.toast({ html: 'Distance and Pincode must be valid' });
 		} else {

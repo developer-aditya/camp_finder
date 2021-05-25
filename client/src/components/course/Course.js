@@ -41,7 +41,8 @@ const Course = ({ id, getCourses, course: { loading, courses } }) => {
 							style={{ margin: '1rem 0' }}
 						>
 							<li className='collection-item'>
-								Cost: $ {course.tuition} USD
+								Cost: <i className='fas fa-rupee-sign'></i>{' '}
+								{course.tuition} INR
 							</li>
 							<li className='collection-item'>
 								Skill Required: {course.minimumSkill}

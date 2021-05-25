@@ -28,7 +28,7 @@ const advanceQueryResult = (model, populate) => async (req, res, next) => {
 		const { zipcode, distance } = req.params;
 		const radius = distance / 3958.8;
 		// Point of zipcode
-		const loc = await geocoder.geocode(zipcode);
+		const loc = await geocoder.geocode({ zipcode, country: 'India' });
 		reqQuery = {
 			...reqQuery,
 			location: {

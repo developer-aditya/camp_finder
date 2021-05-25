@@ -123,12 +123,9 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	course = await Course.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	});
-
-	course.save();
+	for (let elem in req.body) course[elem] = req.body[elem];
+	await course.save();
+	course = await Course.findById(req.params.id);
 
 	res.status(200).json({
 		success: true,
@@ -160,7 +157,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	course.remove();
+	await course.remove();
 	res.status(200).json({
 		success: true,
 		msg: `Course Delete for ID: ${req.params.id}`,

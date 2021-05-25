@@ -169,7 +169,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 		);
 	}
 
-	review.remove();
+	await review.remove();
 	res.status(200).json({
 		success: true,
 		msg: `Review  With ID: ${req.params.id} Deleted...`,

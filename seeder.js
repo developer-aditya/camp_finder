@@ -53,19 +53,19 @@ const reviews = JSON.parse(
 	}),
 );
 
-const importData = async (bootcamps) => {
-	const resUser = await User.create(users);
-	const resBootcamp = await Bootcamp.create(bootcamps);
-	const resCourse = await Course.create(courses);
-	const resReview = await Review.create(reviews);
+const importData = async () => {
+	await User.create(users);
+	await Bootcamp.create(bootcamps);
+	await Course.create(courses);
+	await Review.create(reviews);
 	console.log(colors.green.inverse('Data added Sucessfully...'));
 };
 
 const deleteAllData = async () => {
-	const resCourse = await Course.deleteMany();
-	const resBootcamp = await Bootcamp.deleteMany();
-	const resUser = await User.deleteMany();
-	const resReview = await Review.deleteMany();
+	await Course.deleteMany();
+	await Bootcamp.deleteMany();
+	await User.deleteMany();
+	await Review.deleteMany();
 	console.log(colors.red.inverse('Data Deleted Sucessfully...'));
 	Mongoose.connection.close(() => {
 		console.log('Mongoose default connection is disconnected');
@@ -74,5 +74,5 @@ const deleteAllData = async () => {
 
 connectDB();
 // console.log(process.argv);
-if (process.argv[2] === '-i') importData(bootcamps);
+if (process.argv[2] === '-i') importData();
 if (process.argv[2] === '-d') deleteAllData();

@@ -293,8 +293,8 @@ const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
 											<option value='jobGuarantee'>
 												Job Guarentee
 											</option>
-											<option value='acceptGi'>
-												Accepts GI Bill
+											<option value='periodicPayment'>
+												Accepts Periodic Payments
 											</option>
 										</select>
 										<label htmlFor='course_features'>

@@ -48,6 +48,9 @@ export const addReview = (id, newReview) => async (dispatch) => {
 	try {
 		const option = {
 			method: 'POST',
+			header: {
+				'Content-Type': 'application/json',
+			},
 			url: `/api/v1/bootcamps/${id}/reviews`,
 			data: newReview,
 			timeout: '4000',
@@ -74,6 +77,9 @@ export const deleteReview = (id) => async (dispatch) => {
 export const updateReview = (id, data) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: `/api/v1/reviews/${id}`,
 		data,
 		timeout: '4000',

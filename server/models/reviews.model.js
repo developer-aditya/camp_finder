@@ -68,7 +68,7 @@ ReviewSchema.post('save', function () {
 });
 
 // Calculating average review after removing a document
-ReviewSchema.pre('remove', function () {
+ReviewSchema.post('remove', function () {
 	this.model('Review').getAverageRating(this.bootcamp);
 });
 

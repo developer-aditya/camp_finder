@@ -15,6 +15,9 @@ export const userLogin = (userCredentials) => async (dispatch) => {
 		dispatch(userLoading());
 		const option = {
 			method: 'POST',
+			header: {
+				'Content-Type': 'application/json',
+			},
 			url: '/api/v1/auth/login',
 			data: userCredentials,
 			timeout: '4000',
@@ -32,6 +35,9 @@ export const userRegister = (userDetails) => async (dispatch) => {
 		dispatch(userLoading);
 		const option = {
 			method: 'POST',
+			header: {
+				'Content-Type': 'application/json',
+			},
 			url: '/api/v1/auth/register',
 			data: userDetails,
 			timeout: '4000',
@@ -73,6 +79,9 @@ export const userGet = () => async (dispatch) => {
 export const resetPasswordLinkRequest = (email) => async (dispatch) => {
 	const option = {
 		method: 'POST',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: '/api/v1/auth/forgotpassword',
 		data: email,
 		timeout: '4000',
@@ -83,6 +92,9 @@ export const resetPasswordLinkRequest = (email) => async (dispatch) => {
 export const resetPassword = (password, resetToken) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: `/api/v1/auth/resetpassword/${resetToken}`,
 		data: password,
 		timeout: '4000',
@@ -94,6 +106,9 @@ export const resetPassword = (password, resetToken) => async (dispatch) => {
 export const updatePassword = (password) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: '/api/v1/auth/updatepassword',
 		data: password,
 		timeout: '4000',
@@ -104,6 +119,9 @@ export const updatePassword = (password) => async (dispatch) => {
 export const updateAccount = (update) => async (dispatch) => {
 	const option = {
 		method: 'PUT',
+		header: {
+			'Content-Type': 'application/json',
+		},
 		url: '/api/v1/auth/updateuser',
 		data: update,
 		timeout: '4000',

@@ -1,5 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
+// Parsing .env and getting Environment variable in process object of node
+dotenv.config({ path: process.cwd() + '/config/config.env' });
+
 const connectDB = require('./db');
 const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
@@ -22,9 +25,6 @@ const courseRouter = require('./routers/courses.route');
 const authRouter = require('./routers/auth.route');
 const userRouter = require('./routers/users.route');
 const reviewRouter = require('./routers/reviews.route');
-
-// Parsing .env and getting Environment variable in process object of node
-dotenv.config({ path: process.cwd() + '/config/config.env' });
 
 // Establishing DB Connection
 connectDB();

@@ -15,7 +15,7 @@ const SingleBootcampDetails = ({ current }) => {
 			<p className='flow-text'>
 				Average Cost:{' '}
 				<span className='light-blue custom-badge'>
-					$ {current.averageCost}
+					<i className='fas fa-rupee-sign'></i> {current.averageCost}
 				</span>
 			</p>
 		</React.Fragment>

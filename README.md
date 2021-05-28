@@ -6,6 +6,11 @@ Create the backend for a bootcamp directory website. The frontend/UI is Created 
 
 -  https://camp-finder-app.herokuapp.com/
 
+## Campfinder API Documentation published on:
+
+- https://documenter.getpostman.com/view/14019691/TzXwGK9c
+
+
 ## To Run This Project On Your System
 
 ### Setup Config file

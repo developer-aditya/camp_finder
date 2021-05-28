@@ -12,7 +12,7 @@ const Bootcamps = () => {
 	return (
 		<div className='grey lighten-4 page-layout'>
 			<div className='row'>
-				<div className='col col s12 xl3'>
+				<div className='col s12 xl3'>
 					<Sidebar setQuery={setQueryUtil} />
 				</div>
 				<div className='col s12 xl9'>

@@ -15,11 +15,10 @@ const SidebarSingle = ({ auth, current }) => {
 			<img
 				width='100%'
 				src={`/uploads/${current.photo}`}
-				className='materialboxed'
+				className='materialboxed hoverable'
 				alt='bootcamp-img'
 				style={{
-					boxShadow:
-						'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
+					border: '1px solid rgb(220, 220, 220)',
 					marginBottom: '1.5rem',
 				}}
 			/>
@@ -111,12 +110,12 @@ const SidebarSingle = ({ auth, current }) => {
 					</ul>
 				</div>
 			</div>
-			<div className='center'>
+			<div className='center hide-on-med-and-down'>
 				<small className='grey-text'>
 					Scan Below Code to View Location on Map
 				</small>
 			</div>
-			<div className='center'>
+			<div className='center hide-on-med-and-down'>
 				<img
 					src={`https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2F%3Fapi%3D1%26query=${current.address}`}
 					alt='qrcode'

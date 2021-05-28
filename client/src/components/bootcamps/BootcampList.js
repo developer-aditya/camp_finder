@@ -75,37 +75,40 @@ const BootcampList = ({
 						style={{ marginBottom: '2rem' }}
 						key={index}
 					>
-						<div className='card-image'>
-							<img src={`/uploads/${element.photo}`} alt='camp-img' />
+						<div className='card-image hide-on-small-only'>
+							<img
+								src={`/uploads/${element.photo}`}
+								alt='camp-img'
+								style={{ width: '100%', height: '100%' }}
+							/>
 						</div>
-						<div className='card-stacked'>
-							<div className='card-content'>
-								<div className='card-title'>
-									{/* eslint-disable-next-line */}
-									<a
-										href=''
-										onClick={(e) => {
-											e.preventDefault();
-											setCurrent(element.id);
-										}}
-									>
-										{element.name}
-									</a>
-									<span className='light-blue right white-text valign-wrapper rating'>
-										{element.averageRating === null
-											? 'UR'
-											: element.averageRating}
-									</span>
-								</div>
-								<p className='blue-grey-text'>
-									{element.location.city} , {element.location.country}
-								</p>
-								<ul>
-									{element.careers.map((career, index) => (
-										<li key={index}>{career}</li>
-									))}
-								</ul>
+
+						<div className='card-content' style={{ width: '100%' }}>
+							<div className='card-title'>
+								{/* eslint-disable-next-line */}
+								<a
+									href=''
+									onClick={(e) => {
+										e.preventDefault();
+										setCurrent(element.id);
+									}}
+								>
+									{element.name}
+								</a>
+								<span className='light-blue right white-text valign-wrapper rating'>
+									{element.averageRating === null
+										? 'UR'
+										: element.averageRating}
+								</span>
 							</div>
+							<p className='blue-grey-text'>
+								{element.location.city} , {element.location.country}
+							</p>
+							<ul>
+								{element.careers.map((career, index) => (
+									<li key={index}>{career}</li>
+								))}
+							</ul>
 						</div>
 					</div>
 				))}

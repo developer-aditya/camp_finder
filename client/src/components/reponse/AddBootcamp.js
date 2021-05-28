@@ -20,7 +20,10 @@ const AddBootcamp = () => {
 				<h5 className='grey-text'>
 					You Don't Have Any Bootcamp Registered Yet...
 				</h5>
-				<p className='grey-text' style={{ margin: '1rem 0 1.25rem 0' }}>
+				<p
+					className='grey-text'
+					style={{ margin: '1rem 1rem 1.25rem 1rem' }}
+				>
 					This is where you will create and manage your Bootcamp. Add
 					Courses to Publish
 				</p>

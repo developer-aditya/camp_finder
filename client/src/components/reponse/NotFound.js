@@ -18,7 +18,10 @@ const NotFound = ({ heading, msg, link, route }) => {
 					alt='add-bootcamp'
 				/>
 				<h5 className='grey-text'>{heading}</h5>
-				<p className='grey-text' style={{ margin: '1rem 0 1.25rem 0' }}>
+				<p
+					className='grey-text'
+					style={{ margin: '1rem 1rem 1.25rem 1rem' }}
+				>
 					{msg}
 				</p>
 				<Link

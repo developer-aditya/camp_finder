@@ -104,7 +104,7 @@ const ManageAccount = ({ updateAccount, user }) => {
 							</div>
 						</div>
 						<div className='row'>
-							<div className='col s6'>
+							<div className='col s12 m6' style={{ marginTop: '1rem' }}>
 								{/* eslint-disable-next-line */}
 								<a
 									id='accountForm-btn'
@@ -116,7 +116,7 @@ const ManageAccount = ({ updateAccount, user }) => {
 									Update Account
 								</a>
 							</div>
-							<div className='col s6'>
+							<div className='col s12 m6' style={{ marginTop: '1rem' }}>
 								<Link
 									to='/manageAccount/changePassword'
 									className='btn blue-grey darken-3 waves-effect'

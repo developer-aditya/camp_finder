@@ -111,8 +111,8 @@ const ResetPassword = ({ resetPassword }) => {
 							</div>
 						</div>
 						<div className='row'>
-							<div className='col s3'></div>
-							<div className='col s6'>
+							<div className='col s0 m3'></div>
+							<div className='col s12 m6'>
 								{/* eslint-disable-next-line */}
 								<a
 									id='resetPasswordForm-btn'

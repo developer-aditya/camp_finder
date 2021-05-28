@@ -66,31 +66,30 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 					<Link to='/' className='brand-logo'>
 						{title}
 					</Link>
+					{/* eslint-disable-next-line */}
+					<a href='' data-target='mobile' className='sidenav-trigger'>
+						<i className='fas fa-bars'></i>
+					</a>
 					<ul id='nav-mobile' className='right hide-on-med-and-down'>
-						{auth.isAuthenticated ? (
-							''
-						) : (
-							<li>
-								<a href='#signin-modal' className='modal-trigger'>
-									<i className='fas fa-sign-in-alt left'></i>
-									Sign In
-								</a>
-							</li>
-						)}
-
-						{auth.isAuthenticated ? (
-							''
-						) : (
-							<li>
-								<a href='#signup-modal' className='modal-trigger'>
-									<i className='fas fa-user-plus left' />
-									Sign Up
-								</a>
-							</li>
+						{!auth.isAuthenticated && (
+							<React.Fragment>
+								<li>
+									<a href='#signin-modal' className='modal-trigger'>
+										<i className='fas fa-sign-in-alt left'></i>
+										Sign In
+									</a>
+								</li>
+								<li>
+									<a href='#signup-modal' className='modal-trigger'>
+										<i className='fas fa-user-plus left' />
+										Sign Up
+									</a>
+								</li>
+							</React.Fragment>
 						)}
 
 						<li className='dropdown-trigger' data-target='account'>
-							{auth.isAuthenticated ? (
+							{auth.isAuthenticated && (
 								// eslint-disable-next-line
 								<a
 									href=''
@@ -103,8 +102,6 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 										style={{ marginLeft: '0.5rem' }}
 									></i>
 								</a>
-							) : (
-								''
 							)}
 						</li>
 
@@ -118,6 +115,58 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 					</ul>
 				</div>
 			</nav>
+
+			<ul className='sidenav' id='mobile'>
+				{!auth.isAuthenticated && (
+					<React.Fragment>
+						<li>
+							<a href='#signin-modal' className='modal-trigger'>
+								<i className='fas fa-sign-in-alt left'></i>
+								Sign In
+							</a>
+						</li>
+						<li>
+							<a href='#signup-modal' className='modal-trigger'>
+								<i className='fas fa-user-plus left' />
+								Sign Up
+							</a>
+						</li>
+					</React.Fragment>
+				)}
+
+				{auth.isAuthenticated && auth.user.role === 'publisher' && (
+					<li>
+						<Link to='/manageBootcamp'>Manage Bootcamp</Link>
+					</li>
+				)}
+
+				{auth.isAuthenticated && auth.user.role === 'user' && (
+					<li>
+						<Link to='/manageReview'>Manage Reviews</Link>
+					</li>
+				)}
+
+				{auth.isAuthenticated && (
+					<React.Fragment>
+						<li>
+							<Link to='/manageAccount'>Manage Account</Link>
+						</li>
+						<li>
+							{/* eslint-disable-next-line */}
+							<a href='' onClick={logout}>
+								<i className='fas fa-sign-out-alt'></i>Logout
+							</a>
+						</li>
+					</React.Fragment>
+				)}
+
+				<li>
+					{/* eslint-disable-next-line */}
+					<a href='' onClick={allBootcamp}>
+						<i className='fas fa-search-location left'></i> All Bootcamp
+					</a>
+				</li>
+			</ul>
 		</React.Fragment>
 	);
 };

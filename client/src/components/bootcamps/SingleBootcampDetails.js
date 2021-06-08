@@ -6,7 +6,9 @@ const SingleBootcampDetails = ({ current }) => {
 		<React.Fragment>
 			<h3 className='center mt-0'>{current.name}</h3>
 
-			<p>{current.description}</p>
+			<p style={{ textAlign: 'justify', padding: '0rem 1rem' }}>
+				{current.description}
+			</p>
 
 			<div style={{ margin: '2rem 0' }}>
 				<Course id={current.id} />

@@ -120,13 +120,19 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 				{!auth.isAuthenticated && (
 					<React.Fragment>
 						<li>
-							<a href='#signin-modal' className='modal-trigger'>
+							<a
+								href='#signin-modal'
+								className='modal-trigger sidenav-close'
+							>
 								<i className='fas fa-sign-in-alt left'></i>
 								Sign In
 							</a>
 						</li>
 						<li>
-							<a href='#signup-modal' className='modal-trigger'>
+							<a
+								href='#signup-modal'
+								className='modal-trigger sidenav-close'
+							>
 								<i className='fas fa-user-plus left' />
 								Sign Up
 							</a>
@@ -136,24 +142,30 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 
 				{auth.isAuthenticated && auth.user.role === 'publisher' && (
 					<li>
-						<Link to='/manageBootcamp'>Manage Bootcamp</Link>
+						<Link to='/manageBootcamp' className='sidenav-close'>
+							Manage Bootcamp
+						</Link>
 					</li>
 				)}
 
 				{auth.isAuthenticated && auth.user.role === 'user' && (
 					<li>
-						<Link to='/manageReview'>Manage Reviews</Link>
+						<Link to='/manageReview' className='sidenav-close'>
+							Manage Reviews
+						</Link>
 					</li>
 				)}
 
 				{auth.isAuthenticated && (
 					<React.Fragment>
 						<li>
-							<Link to='/manageAccount'>Manage Account</Link>
+							<Link to='/manageAccount' className='sidenav-close'>
+								Manage Account
+							</Link>
 						</li>
 						<li>
 							{/* eslint-disable-next-line */}
-							<a href='' onClick={logout}>
+							<a href='' onClick={logout} className='sidenav-close'>
 								<i className='fas fa-sign-out-alt'></i>Logout
 							</a>
 						</li>
@@ -162,7 +174,7 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 
 				<li>
 					{/* eslint-disable-next-line */}
-					<a href='' onClick={allBootcamp}>
+					<a href='' onClick={allBootcamp} className='sidenav-close'>
 						<i className='fas fa-search-location left'></i> All Bootcamp
 					</a>
 				</li>

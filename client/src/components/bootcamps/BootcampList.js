@@ -95,14 +95,14 @@ const BootcampList = ({
 								>
 									{element.name}
 								</a>
-								<span className='light-blue right white-text valign-wrapper rating'>
+							</div>
+							<p className='blue-grey-text'>
+								{element.location.city} , {element.location.country}
+								<span className='light-blue right white-text valign-wrapper rating flow-text'>
 									{element.averageRating === null
 										? 'UR'
 										: element.averageRating}
 								</span>
-							</div>
-							<p className='blue-grey-text'>
-								{element.location.city} , {element.location.country}
 							</p>
 							<ul>
 								{element.careers.map((career, index) => (

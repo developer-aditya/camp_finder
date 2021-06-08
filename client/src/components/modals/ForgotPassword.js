@@ -48,7 +48,7 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 	};
 
 	return (
-		<div id='forgot-modal' className='modal' style={modalStyle}>
+		<div id='forgot-modal' className='modal'>
 			<div className='card' style={{ margin: '0' }}>
 				<i className=' fas fa-times modal-close white-text close-btn'></i>
 				<div
@@ -57,11 +57,8 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 				>
 					Reset Password
 				</div>
-				<div
-					className='card-content'
-					style={{ padding: '2rem 3rem 1rem 3rem' }}
-				>
-					<span className='grey-text'>
+				<div className='card-content forgot-padding'>
+					<span className='grey-text' style={{ textAlign: 'justify' }}>
 						*Use this form to reset your password using the registered
 						email address.
 					</span>
@@ -91,11 +88,6 @@ const ForgotPassword = ({ resetPasswordLinkRequest }) => {
 			</div>
 		</div>
 	);
-};
-
-const modalStyle = {
-	width: '500px',
-	color: '#555',
 };
 
 export default connect(null, { resetPasswordLinkRequest })(ForgotPassword);

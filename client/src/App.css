@@ -142,6 +142,15 @@ button {
 	color: #555 !important;
 }
 
+/* Forgot Modal */
+#forgot-modal {
+	max-width: 500px !important;
+	color: #555 !important;
+}
+.forgot-padding {
+	padding: 2rem 3rem 1rem 3rem !important;
+}
+
 /* Input Feilds custom color */
 input:focus,
 textarea:focus {
@@ -206,5 +215,11 @@ input[type='range']:focus {
 		width: 100% !important;
 		top: 0% !important;
 		min-height: 100vh !important;
+	}
+	#forgot-modal {
+		width: 100% !important;
+	}
+	.forgot-padding {
+		padding: 1.5rem !important;
 	}
 }

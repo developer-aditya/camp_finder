@@ -95,7 +95,7 @@ button {
 /* all pages basic style */
 .page-layout {
 	padding: 3rem 2rem !important;
-	min-height: 90vh !important;
+	min-height: 100vh !important;
 }
 
 /* Image Upload for bootcamp style */
@@ -119,14 +119,14 @@ button {
 	position: relative !important;
 	width: 100% !important;
 	min-height: 91.5vh !important;
-	background: url(./public/image/background.jpg) no-repeat center top/cover !important;
+	background: url(./public/image/background.jpg) repeat !important;
 }
 .showcase-inner {
 	z-index: 2 !important;
-	padding: 2.5rem !important;
+	padding: 3rem !important;
 	margin: auto !important;
 	border-radius: 5px !important;
-	background: rgba(0, 0, 0, 0.45) !important;
+	background: rgba(0, 0, 0, 0.75) !important;
 }
 
 /* SignIn Modal */
@@ -203,23 +203,29 @@ input[type='range']:focus {
 	}
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
 	.container {
 		width: 100% !important;
 	}
 	.page-layout {
-		padding: 0px !important;
+		padding: 1.5rem 0 !important;
 	}
 	#signin-modal,
 	#signup-modal {
 		width: 100% !important;
 		top: 0% !important;
-		min-height: 100vh !important;
+		min-height: 93vh !important;
 	}
 	#forgot-modal {
 		width: 100% !important;
 	}
 	.forgot-padding {
 		padding: 1.5rem !important;
+	}
+	.row {
+		margin-bottom: 0rem !important;
+	}
+	.showcase {
+		min-height: 92.5vh !important;
 	}
 }

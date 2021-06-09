@@ -3,6 +3,7 @@ const Bootcamp = require('../models/bootcamps. model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const path = require('path');
+const fs = require('fs');
 
 // @desc  GET all bootcamps with query
 // @route /api/v1/bootcamps
@@ -134,6 +135,28 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 				401,
 			),
 		);
+	}
+
+	// Deleting image of that bootcamp from file system
+	if (bootcamp.photo !== 'no-photo.jpg') {
+		try {
+			fs.unlinkSync(
+				path.resolve(
+					process.cwd(),
+					'server',
+					'public',
+					'uploads',
+					`${bootcamp.photo}`,
+				),
+			);
+		} catch (error) {
+			return next(
+				new ErrorResponse(
+					`Unable to remove bootcamp image try again!`,
+					500,
+				),
+			);
+		}
 	}
 
 	await bootcamp.remove();

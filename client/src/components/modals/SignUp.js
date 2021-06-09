@@ -127,16 +127,16 @@ const SignUp = ({ userRegister }) => {
 					<div className='input-field'>
 						<select
 							id='user_type'
+							className='browser-default'
 							value={type}
 							onChange={(e) => setType(e.target.value)}
 						>
 							<option value='none' disabled>
 								Select User Type
 							</option>
-							<option value='user'>Normal User</option>
-							<option value='publisher'>Bootcamp Publisher</option>
+							<option value='user'>Student</option>
+							<option value='publisher'>Publisher</option>
 						</select>
-						{/* <label>Materialize Select</label> */}
 					</div>
 
 					<div className='input-feild'>

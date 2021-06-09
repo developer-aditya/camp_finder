@@ -109,7 +109,7 @@ const CourseForm = ({ location, addCourse, updateCourse }) => {
 			<div className='container'>
 				<div className='center'>
 					<h3 className='mt-0'>{location.state.operation} Course</h3>
-					<p>
+					<p style={{ textAlign: 'center', padding: '0rem 0.5rem' }}>
 						Important: You must be affiliated with the bootcamp to{' '}
 						{location.state.operation} this Course
 					</p>

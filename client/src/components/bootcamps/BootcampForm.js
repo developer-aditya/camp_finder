@@ -158,7 +158,7 @@ const BootcampForm = ({ location, addBootcamp, updateBootcamp }) => {
 			<div className='container'>
 				<div className='center'>
 					<h3 className='mt-0'>{location.state.operation} Bootcamp</h3>
-					<p>
+					<p style={{ textAlign: 'center', padding: '0rem 0.5rem' }}>
 						Important: You must be affiliated with a bootcamp to{' '}
 						{location.state.operation} to CampFinder
 					</p>

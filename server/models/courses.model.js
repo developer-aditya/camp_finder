@@ -3,7 +3,6 @@
 // Collection -- Tables
 // Documents -- record/rows/tuple
 // Feilds -- column/attribute
-const colors = require('colors');
 const Mongoose = require('mongoose');
 
 const CourseSchema = new Mongoose.Schema({

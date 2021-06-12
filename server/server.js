@@ -25,6 +25,7 @@ const courseRouter = require('./routers/courses.route');
 const authRouter = require('./routers/auth.route');
 const userRouter = require('./routers/users.route');
 const reviewRouter = require('./routers/reviews.route');
+const paymentRouter = require('./routers/payments.route');
 
 // Establishing DB Connection
 connectDB();
@@ -97,6 +98,7 @@ app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/orders', paymentRouter);
 
 if (process.env.NODE_ENV === 'production')
 	app.get('*', (req, res) => {

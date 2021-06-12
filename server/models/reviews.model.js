@@ -1,4 +1,3 @@
-const colors = require('colors');
 const Mongoose = require('mongoose');
 
 const ReviewSchema = new Mongoose.Schema({

@@ -102,6 +102,10 @@ const BootcampList = ({
 									{element.averageRating === null
 										? 'UR'
 										: element.averageRating}
+									<i
+										style={{ fontSize: '1rem' }}
+										className='fas fa-star'
+									></i>
 								</span>
 							</p>
 							<ul>

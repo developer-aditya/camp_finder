@@ -16,7 +16,7 @@ const BootcampSchema = new Mongoose.Schema(
 			trim: true,
 			maxlength: [50, 'Name cannot be greater than 50 words'],
 		},
-		// Slug is lowercase simplified form of name (url friendly) (CampFinder Bootcamp -> campfinder-bootcamp)
+		// slug is lowercase simplified form of name (url friendly) (CampFinder Bootcamp -> campfinder-bootcamp)
 		slug: String,
 		description: {
 			type: String,

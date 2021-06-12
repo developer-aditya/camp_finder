@@ -30,6 +30,10 @@ const SidebarSingle = ({ auth, current }) => {
 							{current.averageRating === null
 								? 'UR'
 								: current.averageRating}
+							<i
+								style={{ fontSize: '1rem' }}
+								className='fas fa-star'
+							></i>
 						</span>
 					</p>
 

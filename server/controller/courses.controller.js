@@ -1,8 +1,9 @@
 // Bootcamp model to CRUD from DB
-const Course = require('../models/courses.model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const Course = require('../models/courses.model');
 const Bootcamp = require('../models/bootcamps. model');
+const Enroll = require('../models/enrolls.model');
 
 // @desc  GET all courses
 // @route /api/v1/courses
@@ -12,12 +13,7 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 	if (req.params.bootcampId) {
 		let bootcamp = await Bootcamp.findById(req.params.bootcampId);
 		if (!bootcamp) {
-			return next(
-				new ErrorResponse(
-					`Bootcamp Not Found with ID: ${req.params.bootcampId}`,
-					404,
-				),
-			);
+			return next(new ErrorResponse('Bootcamp Not Found', 404));
 		}
 		let course = await Course.find({
 			bootcamp: req.params.bootcampId,
@@ -28,12 +24,30 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 		return res.status(200).json({
 			success: true,
 			count: course.length,
-			msg: `Sucessfully fetched courses of bootcamp: ${req.params.bootcampId}`,
+			msg: 'Sucessfully fetched courses of bootcamp',
 			data: course,
 		});
 	} else {
 		res.status(200).json(res.resource);
 	}
+});
+
+// @desc  GET enrolled courses of user
+// @route /api/v1/courses/enrolled
+// @access private
+exports.getEnrolledCourses = asyncHandler(async (req, res, next) => {
+	let course = await Enroll.find({
+		user: req.user.id,
+	})
+		.populate({ path: 'course', select: 'title tuition' })
+		.select('course bootcamp createdAt');
+
+	return res.status(200).json({
+		success: true,
+		count: course.length,
+		msg: 'Sucessfully fetched courses of User',
+		data: course,
+	});
 });
 
 // @desc  GET one courses by ID
@@ -46,14 +60,12 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 	});
 
 	if (!course) {
-		return next(
-			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Course Not Found', 404));
 	}
 
 	res.status(200).json({
 		success: true,
-		msg: `Course Fetched With ID: ${req.params.id}`,
+		msg: 'Course Fetched',
 		data: course,
 	});
 });
@@ -69,12 +81,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.bootcampId}`,
-				404,
-			),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 
 	if (
@@ -83,7 +90,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User ID: ${req.user._id} is not authorized to add course in Bootcamp: ${req.params.bootcampId}`,
+				'Useris not authorized to add course in this Bootcamp',
 				401,
 			),
 		);
@@ -94,7 +101,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 
 	res.status(200).json({
 		success: true,
-		msg: `Course Created For Bootcamp: ${req.params.bootcampId}`,
+		msg: 'Course Created For Bootcamp',
 		data: course,
 	});
 });
@@ -106,9 +113,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 	let course = await Course.findById(req.params.id);
 
 	if (!course) {
-		return next(
-			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Course Not Found', 404));
 	}
 
 	if (
@@ -117,7 +122,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User: ${req.user._id} is not authorized to update courses in Bootcamp: ${course.bootcamp._id}`,
+				'User is not authorized to update courses in this Bootcamp',
 				401,
 			),
 		);
@@ -129,7 +134,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 
 	res.status(200).json({
 		success: true,
-		msg: `Course Updated for ID: ${req.params.id}`,
+		msg: 'Course Updated',
 		data: course,
 	});
 });
@@ -140,9 +145,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 exports.deleteCourse = asyncHandler(async (req, res, next) => {
 	const course = await Course.findById(req.params.id);
 	if (!course) {
-		return next(
-			new ErrorResponse(`Course Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Course Not Found', 404));
 	}
 
 	if (
@@ -151,7 +154,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User: ${req.user._id} is not authorized to delete courses in Bootcamp: ${course.bootcamp._id}`,
+				'User is not authorized to delete courses in Bootcamp',
 				401,
 			),
 		);
@@ -160,7 +163,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
 	await course.remove();
 	res.status(200).json({
 		success: true,
-		msg: `Course Delete for ID: ${req.params.id}`,
+		msg: 'Course Delete',
 		data: course,
 	});
 });

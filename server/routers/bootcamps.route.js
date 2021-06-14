@@ -10,6 +10,7 @@ const {
 	deleteBootcamp,
 	uploadBootcampPhoto,
 	getUserBootcamp,
+	getEnrolledUser,
 } = require('../controller/bootcamps.controller');
 const Bootcamp = require('../models/bootcamps. model');
 const advanceQueryResult = require('../middleware/advanceQuery');
@@ -24,6 +25,10 @@ const reviewRouter = require('./reviews.route');
 router.use('/:bootcampId/courses', courseRouter);
 // Re-routing to courses for /bootcamps/:bootcampId/reviews
 router.use('/:bootcampId/reviews', reviewRouter);
+
+router
+	.route('/enrolled')
+	.get(protected, authorized('admin', 'publisher'), getEnrolledUser);
 
 router.route('/radius/:zipcode/:distance').get(
 	advanceQueryResult(Bootcamp, {

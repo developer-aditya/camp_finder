@@ -12,12 +12,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 	if (req.params.bootcampId) {
 		let bootcamp = await Bootcamp.findById(req.params.bootcampId);
 		if (!bootcamp) {
-			return next(
-				new ErrorResponse(
-					`Bootcamp Not Found with ID: ${req.params.bootcampId}`,
-					404,
-				),
-			);
+			return next(new ErrorResponse('Bootcamp Not Found', 404));
 		}
 
 		let review = await Review.find({
@@ -30,7 +25,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 		return res.status(200).json({
 			success: true,
 			count: review.length,
-			msg: `Sucessfully fetched reviews of bootcamp: ${req.params.bootcampId}`,
+			msg: 'Sucessfully fetched reviews of bootcamp',
 			data: review,
 		});
 	} else {
@@ -48,14 +43,12 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 	});
 
 	if (!review) {
-		return next(
-			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Review Not Found', 404));
 	}
 
 	res.status(200).json({
 		success: true,
-		msg: `Review Fetched With ID: ${req.params.id}`,
+		msg: 'Review Fetched',
 		data: review,
 	});
 });
@@ -70,13 +63,11 @@ exports.getUserReview = asyncHandler(async (req, res, next) => {
 	);
 
 	if (!review) {
-		return next(
-			new ErrorResponse(`Reviews Not Found for User ${req.user.id}`, 404),
-		);
+		return next(new ErrorResponse('Reviews Not Found for User', 404));
 	}
 	res.status(200).json({
 		success: true,
-		msg: `Review Fetched For User ${req.user.id}`,
+		msg: 'Review Fetched For User',
 		data: review,
 	});
 });
@@ -92,12 +83,7 @@ exports.addReview = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(
-				`Bootcamp Not Found With ID: ${req.params.bootcampId}`,
-				404,
-			),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 
 	// calls the pre save in model as create internally raises save event: Calculates averageRating
@@ -105,7 +91,7 @@ exports.addReview = asyncHandler(async (req, res, next) => {
 
 	res.status(200).json({
 		success: true,
-		msg: `Review Created For Bootcamp: ${req.params.bootcampId}`,
+		msg: 'Review Created For This Bootcamp',
 		data: review,
 	});
 });
@@ -117,9 +103,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 	let review = await Review.findById(req.params.id);
 
 	if (!review) {
-		return next(
-			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Review Not Found', 404));
 	}
 
 	if (
@@ -128,7 +112,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`Unathorized User can update his own Reviews Only`,
+				'Unathorized User can update his own Reviews Only',
 				401,
 			),
 		);
@@ -140,7 +124,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
 
 	res.status(200).json({
 		success: true,
-		msg: `Review  With ID: ${req.params.id} Updated...`,
+		msg: 'Review Updated...',
 		data: review,
 	});
 });
@@ -152,9 +136,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 	let review = await Review.findById(req.params.id);
 
 	if (!review) {
-		return next(
-			new ErrorResponse(`Review Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Review Not Found', 404));
 	}
 
 	if (
@@ -163,7 +145,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`Unathorized User can delete his own Reviews Only`,
+				'Unathorized User can delete his own Reviews Only',
 				401,
 			),
 		);
@@ -172,7 +154,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
 	await review.remove();
 	res.status(200).json({
 		success: true,
-		msg: `Review  With ID: ${req.params.id} Deleted...`,
+		msg: 'Review Deleted...',
 		data: review,
 	});
 });

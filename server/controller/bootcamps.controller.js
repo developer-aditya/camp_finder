@@ -1,5 +1,6 @@
 // Bootcamp model to CRUD from DB
 const Bootcamp = require('../models/bootcamps. model');
+const Enroll = require('../models/enrolls.model');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const path = require('path');
@@ -21,19 +22,41 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
 	res.status(200).json(res.resource);
 });
 
+// @desc  GET users enrolled in Bootcamp
+// @route /api/v1/bootcamps/enrolled
+// @access private
+exports.getEnrolledUser = asyncHandler(async (req, res, next) => {
+	const boot = await Bootcamp.findOne({ user: req.user.id });
+	if (!boot) {
+		return next(new ErrorResponse('Bootcamp Not Found for User', 404));
+	}
+
+	let course = await Enroll.find({
+		bootcamp: boot._id,
+	})
+		.select('course user createdAt')
+		.populate({ path: 'user', select: 'name email' })
+		.populate({ path: 'course', select: 'title tuition' });
+
+	return res.status(200).json({
+		success: true,
+		count: course.length,
+		msg: `Sucessfully fetched Enrolled Users`,
+		data: course,
+	});
+});
+
 // @desc  GET one bootcamp by id
 // @route /api/v1/bootcamps/:id
 // @access public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 	res.status(200).json({
 		success: true,
-		msg: `Bootcamp Fetched With id: ${req.params.id}`,
+		msg: 'Bootcamp Fetched ',
 		data: bootcamp,
 	});
 });
@@ -44,13 +67,11 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 exports.getUserBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findOne({ user: req.user.id });
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(`Bootcamp Not Found for User ${req.user.id}`, 404),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found for User', 404));
 	}
 	res.status(200).json({
 		success: true,
-		msg: `Bootcamp Fetched For User ${req.user.id}`,
+		msg: 'Bootcamp Fetched For User',
 		data: bootcamp,
 	});
 });
@@ -62,12 +83,7 @@ exports.addBootcamp = asyncHandler(async (req, res, next) => {
 	let published = await Bootcamp.findOne({ user: req.user._id });
 
 	if (published && req.user.role !== 'admin') {
-		return next(
-			new ErrorResponse(
-				`Publisher User: ${req.user._id} Already has a Bootcamp`,
-				400,
-			),
-		);
+		return next(new ErrorResponse('Publisher Already has a Bootcamp', 400));
 	}
 
 	req.body.user = req.user._id;
@@ -86,9 +102,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 	let bootcamp = await Bootcamp.findById(req.params.id);
 
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 
 	if (
@@ -97,7 +111,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
+				'User is not authorized to access this Bootcamp',
 				401,
 			),
 		);
@@ -120,9 +134,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 
 	if (
@@ -131,7 +143,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
+				'User is not authorized to access this Bootcamp',
 				401,
 			),
 		);
@@ -174,9 +186,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 	let bootcamp = await Bootcamp.findById(req.params.id);
 
 	if (!bootcamp) {
-		return next(
-			new ErrorResponse(`Bootcamp Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('Bootcamp Not Found', 404));
 	}
 
 	if (
@@ -185,7 +195,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
 	) {
 		return next(
 			new ErrorResponse(
-				`User ID: ${req.user._id} is not authorized to access Bootcamp ID: ${req.params.id}`,
+				'User is not authorized to access this Bootcamp',
 				401,
 			),
 		);

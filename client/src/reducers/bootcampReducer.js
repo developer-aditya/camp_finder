@@ -6,6 +6,7 @@ import {
 	REMOVEPARAMS,
 	SETCURRENT,
 	CLEARCURRENT,
+	GETENROLLEDUSERS,
 } from '../actions/types';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
 	pagination: {},
 	params: null,
 	currentBootcamp: null,
+	enrolledUsers: [],
 };
 
 const bootcampReducer = (state = initialState, action) => {
@@ -23,7 +25,12 @@ const bootcampReducer = (state = initialState, action) => {
 				...state,
 				bootcamps: action.payload.data,
 				pagination: action.payload.pagination,
-
+				loading: false,
+			};
+		case GETENROLLEDUSERS:
+			return {
+				...state,
+				enrolledUsers: action.payload,
 				loading: false,
 			};
 		case SETLOADING:
@@ -47,6 +54,7 @@ const bootcampReducer = (state = initialState, action) => {
 				loading: false,
 				currentBootcamp: null,
 				bootcamps: [],
+				enrolledUsers: [],
 			};
 		case SETCURRENT:
 			return {

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
 	COURSELOADING,
 	GETCOURSES,
+	GETENROLLEDCOURSES,
 	COURSEERROR,
 	DELETECOURSE,
 	ADDCOURSE,
@@ -19,6 +20,22 @@ export const getCourses = (id) => async (dispatch) => {
 		};
 		const course = await axios(option);
 		dispatch({ type: GETCOURSES, payload: course.data.data });
+	} catch (error) {
+		dispatch({ type: COURSEERROR });
+	}
+};
+
+// Get all Course by bootcamp Id
+export const getEnrolledCourses = () => async (dispatch) => {
+	try {
+		dispatch(setLoading());
+		const option = {
+			method: 'GET',
+			url: `/api/v1/courses/enrolled`,
+			timeout: '4000',
+		};
+		const course = await axios(option);
+		dispatch({ type: GETENROLLEDCOURSES, payload: course.data.data });
 	} catch (error) {
 		dispatch({ type: COURSEERROR });
 	}

@@ -7,10 +7,15 @@ const {
 	addCourse,
 	updateCourse,
 	deleteCourse,
+	getEnrolledCourses,
 } = require('../controller/courses.controller');
 const Course = require('../models/courses.model');
 const advanceQueryResult = require('../middleware/advanceQuery');
 const { protected, authorized } = require('../middleware/auth');
+
+router
+	.route('/enrolled')
+	.get(protected, authorized('admin', 'user'), getEnrolledCourses);
 
 router
 	.route('/')

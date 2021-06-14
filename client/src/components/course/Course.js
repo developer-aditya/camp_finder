@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { getCourses } from '../../actions/courseAction';
+import { getCourses, getEnrolledCourses } from '../../actions/courseAction';
 import { setOrder, confirmOrder } from '../../actions/paymentAction';
 
 import M from 'materialize-css/dist/js/materialize.min';
@@ -9,13 +9,15 @@ import M from 'materialize-css/dist/js/materialize.min';
 const Course = ({
 	id,
 	getCourses,
+	getEnrolledCourses,
 	setOrder,
 	confirmOrder,
-	course: { loading, courses },
+	course: { loading, courses, hash },
 	auth,
 	bootcamp,
 }) => {
 	useEffect(() => {
+		getEnrolledCourses();
 		getCourses(id);
 		// eslint-disable-next-line
 	}, []);
@@ -61,7 +63,7 @@ const Course = ({
 						contact: '',
 					},
 					theme: {
-						color: '#263238',
+						color: '#049FEC',
 					},
 				};
 				var rzp1 = new window.Razorpay(options);
@@ -95,6 +97,13 @@ const Course = ({
 						style={{ padding: '0.75rem 1.5rem' }}
 					>
 						{course.title}
+						{hash[course._id] !== undefined ? (
+							<span className='secondary-content'>
+								<i className='fas fa-clipboard-check green-text'></i>
+							</span>
+						) : (
+							''
+						)}
 					</div>
 					<div className='card-content'>
 						<p className='flow-text blue-grey-text'>
@@ -148,6 +157,9 @@ const mapStateToProps = (state) => ({
 	bootcamp: state.bootcamp.currentBootcamp,
 });
 
-export default connect(mapStateToProps, { getCourses, setOrder, confirmOrder })(
-	Course,
-);
+export default connect(mapStateToProps, {
+	getCourses,
+	setOrder,
+	confirmOrder,
+	getEnrolledCourses,
+})(Course);

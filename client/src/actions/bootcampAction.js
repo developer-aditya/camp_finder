@@ -7,6 +7,7 @@ import {
 	REMOVEPARAMS,
 	SETCURRENT,
 	CLEARCURRENT,
+	GETENROLLEDUSERS,
 } from './types';
 
 // Get Bootcamp by query
@@ -20,6 +21,23 @@ export const getAllBootcamp = (query) => async (dispatch) => {
 		};
 		const bootcamp = await axios(option);
 		dispatch({ type: GETBOOTCAMP, payload: bootcamp.data });
+	} catch (error) {
+		dispatch({ type: BOOTCAMPERROR });
+		return Promise.reject(error);
+	}
+};
+
+// Get all Enrolled Users
+export const getEnrolledUsers = () => async (dispatch) => {
+	try {
+		dispatch(setLoading());
+		const option = {
+			method: 'GET',
+			url: `/api/v1/bootcamps/enrolled`,
+			timeout: '4000',
+		};
+		const user = await axios(option);
+		dispatch({ type: GETENROLLEDUSERS, payload: user.data.data });
 	} catch (error) {
 		dispatch({ type: BOOTCAMPERROR });
 		return Promise.reject(error);

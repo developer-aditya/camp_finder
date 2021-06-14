@@ -17,13 +17,11 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 exports.getUser = asyncHandler(async (req, res, next) => {
 	const user = await User.findById(req.params.id);
 	if (!user) {
-		return next(
-			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('User Not Found', 404));
 	}
 	res.status(200).json({
 		success: true,
-		msg: `User Fetched With id: ${req.params.id}`,
+		msg: 'User Fetched',
 		data: user,
 	});
 });
@@ -56,9 +54,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 	).select('+password');
 
 	if (!user) {
-		return next(
-			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('User Not Found', 404));
 	}
 
 	user.password = password;
@@ -77,9 +73,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 exports.deleteUser = asyncHandler(async (req, res, next) => {
 	const user = await User.findByIdAndDelete(req.params.id);
 	if (!user) {
-		return next(
-			new ErrorResponse(`User Not Found With ID: ${req.params.id}`, 404),
-		);
+		return next(new ErrorResponse('User Not Found', 404));
 	}
 
 	res.status(200).json({

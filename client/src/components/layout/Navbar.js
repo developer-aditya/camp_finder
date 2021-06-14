@@ -44,9 +44,21 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 					</li>
 				)}
 
+				{auth.isAuthenticated && auth.user.role === 'publisher' && (
+					<li>
+						<Link to='/usersEnrolled'>Users Enrolled</Link>
+					</li>
+				)}
+
 				{auth.isAuthenticated && auth.user.role === 'user' && (
 					<li>
 						<Link to='/manageReview'>Manage Reviews</Link>
+					</li>
+				)}
+
+				{auth.isAuthenticated && auth.user.role === 'user' && (
+					<li>
+						<Link to='/courseEnrolled'>Courses Enrolled</Link>
 					</li>
 				)}
 
@@ -148,10 +160,26 @@ const Navbar = ({ icon, title, removeParams, auth, userLogout }) => {
 					</li>
 				)}
 
+				{auth.isAuthenticated && auth.user.role === 'publisher' && (
+					<li>
+						<Link to='/usersEnrolled' className='sidenav-close'>
+							Users Enrolled
+						</Link>
+					</li>
+				)}
+
 				{auth.isAuthenticated && auth.user.role === 'user' && (
 					<li>
 						<Link to='/manageReview' className='sidenav-close'>
 							Manage Reviews
+						</Link>
+					</li>
+				)}
+
+				{auth.isAuthenticated && auth.user.role === 'user' && (
+					<li>
+						<Link to='/courseEnrolled' className='sidenav-close'>
+							Courses Enrolled
 						</Link>
 					</li>
 				)}

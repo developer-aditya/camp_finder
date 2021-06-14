@@ -25,7 +25,11 @@ const CourseForm = lazy(() => import('./components/course/CourseForm'));
 const ManageBootcamp = lazy(() =>
 	import('./components/bootcamps/ManageBootcamp'),
 );
+const UsersEnrolled = lazy(() =>
+	import('./components/bootcamps/UsersEnrolled'),
+);
 const ManageReview = lazy(() => import('./components/reviews/ManageReview'));
+const CourseEnrolled = lazy(() => import('./components/course/CourseEnrolled'));
 const ManageAccount = lazy(() => import('./components/account/ManageAccount'));
 const ChangePassword = lazy(() =>
 	import('./components/account/ChangePassword'),
@@ -91,6 +95,11 @@ const App = () => {
 							></Route>
 							<Route
 								exact
+								path='/usersEnrolled'
+								component={UsersEnrolled}
+							></Route>
+							<Route
+								exact
 								path='/manageBootcamp/bootcampForm'
 								component={BootcampForm}
 							></Route>
@@ -103,6 +112,11 @@ const App = () => {
 								exact
 								path='/manageReview'
 								component={ManageReview}
+							></Route>
+							<Route
+								exact
+								path='/courseEnrolled'
+								component={CourseEnrolled}
 							></Route>
 							<Route
 								exact

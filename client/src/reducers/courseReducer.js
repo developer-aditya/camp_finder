@@ -1,6 +1,7 @@
 import {
 	COURSELOADING,
 	GETCOURSES,
+	GETENROLLEDCOURSES,
 	COURSEERROR,
 	DELETECOURSE,
 	ADDCOURSE,
@@ -10,6 +11,8 @@ import {
 const initialState = {
 	loading: false,
 	courses: [],
+	enrolledCourses: [],
+	hash: {},
 };
 
 const courseReducer = (state = initialState, action) => {
@@ -18,9 +21,19 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				courses: action.payload,
-
 				loading: false,
 			};
+		case GETENROLLEDCOURSES: {
+			let newHash = {};
+			for (let i = 0; i < action.payload.length; i++)
+				newHash[action.payload[i].course._id] = 1;
+			return {
+				...state,
+				enrolledCourses: action.payload,
+				hash: newHash,
+				loading: false,
+			};
+		}
 		case DELETECOURSE:
 			return {
 				...state,
@@ -56,6 +69,8 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				courses: [],
+				enrolledCourses: [],
+				hash: {},
 				loading: false,
 			};
 		default:

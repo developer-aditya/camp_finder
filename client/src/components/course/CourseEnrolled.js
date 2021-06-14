@@ -26,10 +26,13 @@ const CourseEnrolled = ({
 		<div className='grey lighten-4 page-layout'>
 			<div className='container'>
 				<div className='row'>
-					<div className='col s12 l2'></div>
-					<div className='col s12 l8'>
-						<ul className='collection with-header'>
-							<li className='collection-header center'>
+					<div className='col s12 l1'></div>
+					<div className='col s12 l9'>
+						<ul
+							className='collection with-header'
+							style={{ borderRadius: '8px' }}
+						>
+							<li className='collection-header center white-text blue-grey darken-4'>
 								<h4>Enrolled Courses</h4>
 							</li>
 							{loading ? (
@@ -52,7 +55,10 @@ const CourseEnrolled = ({
 									</div>
 								</li>
 							) : enrolledCourses.length === 0 ? (
-								<li className='collection-item center grey-text'>
+								<li
+									className='collection-item center grey-text'
+									style={{ padding: '2rem 0' }}
+								>
 									Oops! Enrolled Courses Not Found...
 								</li>
 							) : (
@@ -69,12 +75,19 @@ const CourseEnrolled = ({
 											<h5>{element.course.title}</h5>
 										</a>
 										<p className='grey-text'>
-											<span className='secondary-content'>
-												<i className='fas fa-clipboard-check fa-2x green-text'></i>
+											<span
+												className='secondary-content'
+												style={{ fontSize: '2.25rem' }}
+											>
+												<i className='fas fa-clipboard-check green-text'></i>
 											</span>
 											Tuition Fee : {element.course.tuition}
 											<br /> Enrolled On :{' '}
 											{new Date(element.createdAt).toDateString()}
+											<br />
+											Razorpay Order Id : {element.orderId}
+											<br />
+											Razorpay Payment Id : {element.paymentId}
 										</p>
 									</li>
 								))

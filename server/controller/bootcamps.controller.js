@@ -34,7 +34,6 @@ exports.getEnrolledUser = asyncHandler(async (req, res, next) => {
 	let course = await Enroll.find({
 		bootcamp: boot._id,
 	})
-		.select('course user createdAt')
 		.populate({ path: 'user', select: 'name email' })
 		.populate({ path: 'course', select: 'title tuition' });
 

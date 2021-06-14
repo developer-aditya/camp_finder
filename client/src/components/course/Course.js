@@ -93,14 +93,18 @@ const Course = ({
 			courses.map((course, index) => (
 				<div className='card' key={index}>
 					<div
-						className='card-title blue-grey darken-3 white-text'
-						style={{ padding: '0.75rem 1.5rem' }}
+						className='card-title blue-grey darken-3 white-text valign-wrapper'
+						style={{
+							padding: '0.75rem 1.5rem',
+							justifyContent: 'space-between',
+						}}
 					>
 						{course.title}
 						{hash[course._id] !== undefined ? (
-							<span className='secondary-content'>
-								<i className='fas fa-clipboard-check green-text'></i>
-							</span>
+							<i
+								style={{ fontSize: '2.25rem' }}
+								className='fas fa-clipboard-check green-text'
+							></i>
 						) : (
 							''
 						)}

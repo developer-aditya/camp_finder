@@ -38,9 +38,7 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 exports.getEnrolledCourses = asyncHandler(async (req, res, next) => {
 	let course = await Enroll.find({
 		user: req.user.id,
-	})
-		.populate({ path: 'course', select: 'title tuition' })
-		.select('course bootcamp createdAt');
+	}).populate({ path: 'course', select: 'title tuition' });
 
 	return res.status(200).json({
 		success: true,

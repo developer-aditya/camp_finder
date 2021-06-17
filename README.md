@@ -1,6 +1,7 @@
 # CampFinder Complete Project
 
-Create the backend for a bootcamp directory website. The frontend/UI is Created Using React with Redux for state management. All of the functionality below needs to be fully implmented in this project.
+Create the backend for a bootcamp directory website. The frontend/UI is Created Using React with Redux for state management. All of the functionality below needs to be fully implmented in this project. Geocoder Api helps translate entered Address of bootcamp into coordinates that are stored in DB as Geospatial points that can be used to find bootcamp within the entered radius of a coordinate.
+
 
 ## Project is deployed on:
 
